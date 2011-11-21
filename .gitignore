@@ -1,5 +1,3 @@
-#bin/
-obj/
 .idea/
 latest/
 /env-vars.bat
@@ -24,7 +22,7 @@ Thumbs.db
 *.cache
 *.ilk
 *.log
-[Bb]in
+#[Bb]in
 [Dd]ebug*/
 *.lib
 *.sbr
