@@ -1,0 +1,90 @@
+﻿@using SocialBootstrapApi.App_Start
+@using SocialBootstrapApi.Models
+@{
+    ViewBag.Title = "Home Page";
+    CustomUserSession session = ViewBag.UserSession;
+}
+
+<h2>@ViewBag.Message</h2>
+<p>
+    To learn more about ASP.NET MVC visit <a href="http://asp.net/mvc" title="ASP.NET MVC Website">http://asp.net/mvc</a>.
+</p>
+
+@section SideBar {
+
+<div id="register">
+    <div id="signup">
+        <h3>New Here? Join Today!</h3>
+        <form action="@Url.Content("~/api/register")" method="POST">
+            <b class="error"></b>
+            <input class="input-large" name="DisplayName" type="text" placeholder="Full Name" />
+            <input class="input-large" name="Email" type="text" placeholder="Email" />
+            <input class="input-large" name="Password" type="password" placeholder="Password" />
+            <button class="btn" type="submit">Sign up</button>
+        </form> 
+    </div>
+    <div id="register-login">
+        <h3>Thanks for Registering!</h3>
+        <p>   
+            You can now sign in:
+        </p>
+        <form action="@Url.Content("~/api/auth/credentials")">
+            <input class="input-large" name="UserName" type="text" placeholder="Username" />
+            <input class="input-large" name="Password" type="password" placeholder="Password" />
+            <button class="btn" type="submit">Sign in</button>
+        </form>
+    </div>
+</div>
+
+<script type="text/template" id="template-userprofile">
+<% if (UserName) { %>    
+    <div id="credential-info">
+        <h4>Credential Info</h4>
+        <img id="gravatar" src="<%= GravatarImageUrl64 %>" />
+        <dl>
+            <dt>Display Name</dt><dd><%= DisplayName %></dd>
+            <dt>Email</dt><dd><%= Email %></dd>
+        </dl>
+    </div>
+<% } if (TwitterUserId) { %>
+    <div id="twitter-info">
+        <h4>Twitter Info</h4>
+        <dl>
+            <dt>Screen Name</dt><dd><%= TwitterScreenName %></dd>
+            <dt>Name</dt><dd><%= TwitterName %></dd>
+            <dt>User Id</dt><dd><%= TwitterUserId %></dd>
+        </dl>
+    </div>
+<% } if (FacebookUserId) { %>
+    <div id="facebook-info">
+        <h4>Facebook Info</h4>
+        <dl>
+            <dt>Name</dt><dd><%= FacebookName %></dd>
+            <dt>First Name</dt><dd><%= FacebookFirstName %></dd>
+            <dt>Last Name</dt><dd><%= FacebookLastName %></dd>
+            <dt>User Name</dt><dd><%= FacebookUserName %></dd>
+            <dt>User Id</dt><dd><%= FacebookUserId %></dd>
+            <dt>Email</dt><dd><%= FacebookEmail %></dd>
+        </dl>
+    </div>
+<% } %>
+</script>
+
+<div id="user-profile">
+</div>
+
+<div id="facebook-signin">
+    <a href="@Url.Content("~/api/auth/facebook")"><img src="@Url.Content("~/Content/img/sign-in-with-facebook.png")" alt="Sign-in with Facebook" /></a>
+</div>
+
+<div id="twitter-signin">
+    <a href="@Url.Content("~/api/auth/twitter")"><img src="@Url.Content("~/Content/img/sign-in-with-twitter-l.png")" alt="Sign-in with Twitter" /></a>
+</div>
+
+}
+
+@section JavaScript {    
+<script type="text/javascript">    
+    App.login.set({ isAuthenticated: @session.IsAuthenticated.ToString().ToLower() });
+</script>
+}
