@@ -1,17 +1,11 @@
-using System;
-using System.Web;
 using System.Web.Mvc;
 using ServiceStack.CacheAccess;
 using ServiceStack.CacheAccess.Providers;
-using ServiceStack.Common;
 using ServiceStack.Configuration;
 using ServiceStack.OrmLite;
 using ServiceStack.OrmLite.SqlServer;
-using ServiceStack.Redis;
-using ServiceStack.ServiceHost;
 using ServiceStack.ServiceInterface.Auth;
 using ServiceStack.WebHost.Endpoints;
-using SocialBootstrapApi.App_Start;
 using SocialBootstrapApi.Logic;
 using SocialBootstrapApi.Models;
 using SocialBootstrapApi.ServiceInterface;
@@ -57,6 +51,7 @@ namespace SocialBootstrapApi.App_Start
 		public override void Configure(Funq.Container container)
 		{
 			App.Host = this;
+			ServiceStack.Text.JsConfig.EmitCamelCaseNames = true;
 
 			//Register Typed Config some services might need to access
 			container.Register(App.Config);

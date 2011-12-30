@@ -13,9 +13,9 @@
 
 				this.model.bind("change", this.render);
 
-				this.$("[name=DisplayName]").val("Demis");
-				this.$("[name=Email]").val("demis.bellot@gmail.com");
-				this.$("[name=Password]").val("test");
+				this.$("[name=displayName]").val("Demis");
+				this.$("[name=email]").val("demis.bellot@gmail.com");
+				this.$("[name=password]").val("test");
 
 				this.$el = $(this.el);
 				this.$errorMsg = this.$el.find("form b");
@@ -33,8 +33,7 @@
 				var form = this.$signup.find("form");
 				this.post(form.attr("action"), _(form).formData(), this.registerSuccess, this.registerError);
 
-				this.$registerLogin.find("INPUT[name=UserName]").val(
-					form.find("INPUT[name=Email]").val());
+				this.$registerLogin.find("INPUT[name=userName]").val( form.find("INPUT[name=email]").val() );
 			},
 			registerSuccess: function (r)
 			{

@@ -13,7 +13,7 @@ namespace SocialBootstrapApi.Models
 	/// fields required for your application. The base class is automatically populated with 
 	/// User Data as and when they authenticate with your application. 
 	/// </summary>
-	public class CustomUserSession : OAuthUserSession
+	public class CustomUserSession : AuthUserSession
 	{
 		public bool IsAuthenticated
 		{
@@ -27,7 +27,9 @@ namespace SocialBootstrapApi.Models
 			//Populate all matching fields from this session to your own custom User table
 			var user = this.TranslateTo<User>();
 			user.Id = int.Parse(this.UserAuthId);
-			user.GravatarImageUrl64 = CreateGravatarUrl(this.Email, 64);
+			user.GravatarImageUrl64 = !this.Email.IsNullOrEmpty()
+				? CreateGravatarUrl(this.Email, 64)
+				: null;
 
 			foreach (var authToken in ProviderOAuthAccess)
 			{

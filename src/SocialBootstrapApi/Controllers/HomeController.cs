@@ -44,7 +44,7 @@ namespace SocialBootstrapApi.Controllers
 
 		public ActionResult Index()
 		{
-			ViewBag.Message = "Welcome to ASP.NET MVC!";
+			ViewBag.Message = "MVC + ServiceStack PowerPack!";
 			ViewBag.UserSession = UserSession;
 			ViewBag.Config = Config;
 

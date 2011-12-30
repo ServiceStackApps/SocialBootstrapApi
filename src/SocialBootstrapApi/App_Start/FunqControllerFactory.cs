@@ -8,6 +8,9 @@ using ServiceStack.ServiceHost;
 
 namespace SocialBootstrapApi.App_Start
 {
+	//Add the line below in Application_Start() if you want MVC and ServiceStack to share the same IOC
+	//ControllerBuilder.Current.SetControllerFactory(new FunqControllerFactory(container));
+
 	/// <summary>
 	/// Get MVC and ServiceStack to share the same Funq IOC
 	/// </summary>
@@ -40,7 +43,4 @@ namespace SocialBootstrapApi.App_Start
 			return controller ?? base.GetControllerInstance(requestContext, controllerType);
 		}
 	}
-
-	//Add this some where in Application_Start()
-	//ControllerBuilder.Current.SetControllerFactory(new FunqControllerFactory(container));
 }

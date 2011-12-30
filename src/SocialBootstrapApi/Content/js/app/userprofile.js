@@ -5,7 +5,7 @@
 	var app = root.App;
 
 	app.UserProfile = app.BaseModel.extend({
-		urlRoot: "/api/profile",
+		urlRoot: "api/profile",
 		defaults: {
 			Id: 0,
 			UserName: null,
@@ -38,19 +38,19 @@
 			{
 				this.$el.hide();
 				var attrs = this.model.attributes;
-				attrs.TwitterUserId = attrs.TwitterUserId || null;
-				attrs.FacebookUserId = attrs.FacebookUserId || null;
+				attrs.twitterUserId = attrs.twitterUserId || null;
+				attrs.facebookUserId = attrs.facebookUserId || null;
 				console.log(attrs);				
 				var html = this.template(attrs);
 				this.$el.html(html);
 				this.$el.fadeIn('fast');
 
-				if (attrs.FacebookUserId)
+				if (attrs.facebookUserId)
 					$("#facebook-signin").hide();
 				else
 					$("#facebook-signin").show();
 
-				if (attrs.TwitterUserId)
+				if (attrs.twitterUserId)
 					$("#twitter-signin").hide();
 				else
 					$("#twitter-signin").show();

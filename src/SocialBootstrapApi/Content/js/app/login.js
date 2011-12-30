@@ -4,7 +4,7 @@
 	var app = root.App;
 	
 	app.Login = app.BaseModel.extend({
-		urlRoot: "/api/auth/credentials",
+		urlRoot: "api/auth/credentials",
 		defaults: {
 			isAuthenticated: false,
 			hasRegistered: false,

@@ -21,8 +21,8 @@
 			try
 			{
 				var respObj = JSON.parse(xhr.responseText);
-				if (!respObj.ResponseStatus) return null;
-				return respObj.ResponseStatus.Message;
+				if (!respObj.responseStatus) return null;
+				return respObj.responseStatus.message;
 			}
 			catch (e)
 			{
@@ -36,7 +36,7 @@
 		parse: function (resp, xhr)
 		{
 			if (!resp) return resp;
-			return resp.Result || resp.Results || resp;
+			return resp.result || resp.results || resp;
 		},
 		_super: function (funcName)
 		{
