@@ -5,23 +5,32 @@
 	var app = root.App;
 
 	app.UserProfile = app.BaseModel.extend({
-		urlRoot: "api/profile",
+		url: "api/profile",
 		defaults: {
-			Id: 0,
-			UserName: null,
-			DisplayName: null,
-			loginModel: null,
-			ProfileImageUrl64: null
+			id: null,
+			userName: null,
+			displayName: null,
+			profileImageUrl64: null,
+			showProfile: null,
+			email: null
 		},
 		initialize: function (opt)
 		{
-			_.bindAll(this, "authChange");
-			opt.loginModel.bind("change:isAuthenticated", this.authChange);
+			_.bindAll(this, "authChange", "onChange");
+
+			this.login = opt.login;
+			this.login.bind("change:isAuthenticated", this.authChange);
+			this.bind("change", this.onChange);
+		},
+		onChange: function () {
+			this.login.set({ displayName: this.get('displayName') });
 		},
 		authChange: function ()
 		{
-			console.log("AuthChange: ");
-			this.fetch();
+			if (this.login.get("isAuthenticated"))
+				this.fetch();
+			else
+				this.set({ showProfile: false });
 		}
 	});
 
@@ -40,21 +49,27 @@
 				var attrs = this.model.attributes;
 				attrs.twitterUserId = attrs.twitterUserId || null;
 				attrs.facebookUserId = attrs.facebookUserId || null;
-				console.log(attrs);				
-				var html = this.template(attrs);
-				this.$el.html(html);
-				this.$el.fadeIn('fast');
+				console.log(attrs);
 
-				if (attrs.facebookUserId)
-					$("#facebook-signin").hide();
+				var showProfile = attrs.showProfile
+					|| attrs.email
+					|| attrs.twitterUserId
+					|| attrs.facebookUserId;
+
+				if (showProfile)
+				{
+					var html = this.template(attrs);
+					this.$el.html(html);
+					this.$el.fadeIn('fast');
+				} 
 				else
-					$("#facebook-signin").show();
+				{
+					this.$el.html("");
+					this.$el.hide();
+				}
 
-				if (attrs.twitterUserId)
-					$("#twitter-signin").hide();
-				else
-					$("#twitter-signin").show();
-
+				$("#facebook-signin").toggle(!attrs.facebookUserId);
+				$("#twitter-signin").toggle(!attrs.twitterUserId);
 			}
 		});
 

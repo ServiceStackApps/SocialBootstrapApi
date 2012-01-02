@@ -9,7 +9,7 @@ using ServiceStack.Text;
 namespace SocialBootstrapApi.Models
 {
 	/// <summary>
-	/// Create your own strong-typed Custom UserSession where you can add additional UserSession 
+	/// Create your own strong-typed Custom AuthUserSession where you can add additional AuthUserSession 
 	/// fields required for your application. The base class is automatically populated with 
 	/// User Data as and when they authenticate with your application. 
 	/// </summary>

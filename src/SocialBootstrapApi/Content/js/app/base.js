@@ -31,20 +31,8 @@
 		}
 	});
 
-
-	app.BaseModel = Backbone.Model.extend({
-		parse: function (resp, xhr)
-		{
-			if (!resp) return resp;
-			return resp.result || resp.results || resp;
-		},
-		_super: function (funcName)
-		{
-			return this.constructor.__super__[funcName].apply(this, _.rest(arguments));
-		}
-	});
-
-	app.BaseView = Backbone.View.extend({
+	var emptyFn = function () {}, 
+	    ajax = {
 		get: function (url, data, success, error)
 		{
 			$.getJSON(url, data, success, error || App.error);
@@ -71,7 +59,28 @@
 				},
 				dataType: "json"
 			});
+		}
+	};
+
+	app.BaseModel = Backbone.Model.extend({
+		getJSON: ajax.get,
+		post: ajax.post,
+		loading: emptyFn,
+		finishedLoading: emptyFn,
+		parse: function (resp, xhr)
+		{
+			if (!resp) return resp;
+			return resp.result || resp.results || resp;
 		},
+		_super: function (funcName)
+		{
+			return this.constructor.__super__[funcName].apply(this, _.rest(arguments));
+		}
+	});
+
+	app.BaseView = Backbone.View.extend({		
+		get: ajax.get,
+		post: ajax.post,
 		loading: function ()
 		{
 			$(this.el).css({ opacity: 0.5 });

@@ -5,15 +5,36 @@
 (function (root)
 {
 	var app = root.App;
-	var login = new app.Login();
 
 	_.extend(app, {
 		UnAuthorized: 401,
-		login: login,
-		userProfile: new app.UserProfile({ loginModel: login }),
 		initialize: function ()
 		{
-			_.bindAll(this, "error");
+			_.bindAll(this, "error", "trigger");
+			this.handleClicks();
+		},
+		handleClicks: function ()
+		{
+			$(document.body).click(function (e)
+			{
+				var dataCmd = $(e.srcElement).data('cmd');
+				if (!dataCmd) return;
+
+				var cmd = dataCmd.split(':'),
+					evt = cmd[0],
+					args = cmd.length > 1 ? cmd[1].split(',') : [];
+
+				app.sendCmd(evt, args);
+			});
+		},
+		sendCmd: function (evt, args)
+		{
+			_.each(this.models, function (el) {
+				if (el[evt]) el[evt].apply(el, args);
+			});
+			_.each(this.views, function (el) {
+				if (el[evt]) el[evt].apply(el, args);
+			});
 		},
 		error: function (xhr, err, statusText)
 		{
@@ -32,20 +53,27 @@
 	});
 	_.extend(app, Backbone.Events);
 
-	console.log(app.login, app.userProfile);
+	var login = new app.Login();
+	var userProfile = new app.UserProfile({ login: login });
+	console.log(login.attributes, userProfile.attributes);
+
+	app.models = {
+		login: login,
+		userProfile: userProfile
+	};
 
 	app.views = {
 		login: new app.LoginView({
 			el: "#login",
-			model: app.login
+			model: login
 		}),
 		register: new app.RegisterView({
 			el: "#register",
-			model: app.login
+			model: login
 		}),
 		userProfile: new app.UserProfileView({
 			el: "#user-profile",
-			model: app.userProfile
+			model: userProfile
 		})
 	};
 

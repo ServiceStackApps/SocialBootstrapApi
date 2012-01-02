@@ -1,6 +1,8 @@
 ﻿@{
 	Assets.Stylesheets.Reference("~/Content/css/bootstrap.css");
 	Assets.Stylesheets.Reference("~/Content/default.css");
+    Assets.Scripts.Reference("~/Content/js/jquery-1.7.js");
+    Assets.Scripts.Reference("~/Content/js/bootstrap-dropdown.js");
     Assets.Scripts.Reference("~/Content/js/app/app.js");
 }
 <!DOCTYPE html>
@@ -33,21 +35,35 @@
     <div class="topbar">
       <div class="fill">
         <div class="container">
-          <a class="brand" href="https://github.com/ServiceStack/SocialBootstrapApi">Bootstrap API</a>
-          <ul class="nav">
-            <li class="active"><a href="@Url.Action("Index", "Home")">Home</a></li>
-            <li><a href="@Url.Action("Features", "Home")">Features</a></li>
-            <li><a href="@Url.Action("About", "Home")">About</a></li>
-          </ul>
-          <div id="login">
-              <form action="@Url.Content("~/api/auth/credentials")" class="pull-right">
-                <input class="input-small" name="UserName" type="text" placeholder="Username">
-                <input class="input-small" name="Password" type="password" placeholder="Password">
-                <button class="btn" type="submit">Sign in</button>
-              </form>
-              <div id="signed-in"></div>
-          </div>
-        </div>
+          <a class="brand" href="https://github.com/ServiceStack/SocialBootstrapApi">Bootstrap Stack</a>
+			<ul class="nav">
+				<li class="active"><a href="@Url.Action("Index", "Home")">Home</a></li>
+				<li><a href="@Url.Action("Features", "Home")">Features</a></li>
+				<li><a href="@Url.Action("About", "Home")">About</a></li>
+			</ul>
+            
+			<div id="login">
+			    <div id="signed-out">
+				    <form action="@Url.Content("~/api/auth/credentials")" class="pull-right">
+					    <input class="input-small" name="userName" type="text" placeholder="Username">
+					    <input class="input-small" name="password" type="password" placeholder="Password">
+					    <button class="btn" type="submit">Sign in</button>
+				    </form>
+			    </div>
+
+			    <ul id="signed-in" class="nav secondary-nav" data-dropdown="dropdown">				
+				    <li class="dropdown" data-dropdown="dropdown">
+					    <a href="#" class="dropdown-toggle"></a>
+					    <ul class="dropdown-menu">					
+						    <li><a href="#">Settings</a></li>
+						    <li class="divider"></li>
+						    <li><a href="#" data-cmd="signOut">Sign out</a></li>
+					    </ul>
+				    </li>				
+			    </ul>
+			</div>
+
+		</div>
       </div>
     </div>
 
@@ -61,7 +77,7 @@
 			}
             else
 			{
-				<h1>Bootstrap Stack <small> with Twitter and Facebook integration</small></h1>
+				<h1>Social API Bootstrap<small> with Twitter and Facebook auth built-in</small></h1>
 			}
         </div>
         <div class="row"> 

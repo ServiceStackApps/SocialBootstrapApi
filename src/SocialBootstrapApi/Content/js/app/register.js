@@ -5,11 +5,10 @@
 
 	app.RegisterView = app.BaseView.extend(
 		{
-			className: "view-register",			
+			className: "view-register",
 			initialize: function ()
 			{
-				_.bindAll(this, "render", "register", "registerSuccess", "registerError",
-					"login", "loginSuccess", "loginError");
+				_.bindAll(this, "render", "register", "registerSuccess", "registerError", "login");
 
 				this.model.bind("change", this.render);
 
@@ -21,7 +20,6 @@
 				this.$errorMsg = this.$el.find("form b");
 				this.$signup = $(this.el).find("#signup");
 				this.$registerLogin = $(this.el).find("#register-login");
-				this.$active = this.$signup;
 
 				this.$signup.find("form").submit(this.register);
 				this.$registerLogin.find("form").submit(this.login);
@@ -33,12 +31,12 @@
 				var form = this.$signup.find("form");
 				this.post(form.attr("action"), _(form).formData(), this.registerSuccess, this.registerError);
 
-				this.$registerLogin.find("INPUT[name=userName]").val( form.find("INPUT[name=email]").val() );
+				this.$registerLogin.find("INPUT[name=userName]").val(form.find("INPUT[name=email]").val());
 			},
 			registerSuccess: function (r)
 			{
 				this.$el.removeClass("error");
-				this.model.set({ hasRegistered: true, userId: r.UserId });
+				this.model.set({ hasRegistered: true, userId: r.userId });
 			},
 			registerError: function (xhr)
 			{
@@ -48,47 +46,22 @@
 			login: function (e)
 			{
 				if (e) e.preventDefault();
-
-				var form = this.$registerLogin.find("form");
-				this.post(form.attr("action"), _(form).formData(), this.loginSuccess, this.loginError);
+				this.model.login(this.$registerLogin.find("form"));
 			},
-			loginSuccess: function (r)
+			signIn: function (e)
 			{
-				this.$el.removeClass("error");
-				this.model.set({ isAuthenticated: true });
-			},
-			loginError: function ()
-			{
-				this.$el.addClass("error");
+				this.model.set({ hasRegistered: true });
 			},
 			render: function ()
 			{
-				var $this = this;
 				this.$errorMsg.html("");
-				if (this.model.get("isAuthenticated"))
-				{
-					this.$active.fadeOut("fast");
-				}
-				else if (this.model.get("hasRegistered"))
-				{
-					if (this.$active == this.$registerLogin) return;
 
-					this.$active.fadeOut("fast", function ()
-					{
-						$this.$registerLogin.fadeIn("fast");
-						$this.$active = $this.$registerLogin;
-					});
-				}
-				else
-				{
-					if (this.$active == this.$signup) return;
+				var auth = this.model.get("isAuthenticated");
+				var registered = this.model.get('hasRegistered');
+				console.log("register.render(): auth=" + auth);
 
-					this.$active.fadeOut("fast", function ()
-					{
-						$this.$signup.fadeIn("fast");
-						$this.$active = $this.$signup;
-					});
-				}
+				this.$registerLogin.toggle(registered && !auth);
+				this.$signup.toggle(!registered && !auth);
 			}
 		}
 	);

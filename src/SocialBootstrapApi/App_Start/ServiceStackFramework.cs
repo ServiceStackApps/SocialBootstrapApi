@@ -51,6 +51,8 @@ namespace SocialBootstrapApi.App_Start
 		public override void Configure(Funq.Container container)
 		{
 			App.Host = this;
+
+			//Set JSON web services to return idiomatic JSON camelCase properties
 			ServiceStack.Text.JsConfig.EmitCamelCaseNames = true;
 
 			//Register Typed Config some services might need to access

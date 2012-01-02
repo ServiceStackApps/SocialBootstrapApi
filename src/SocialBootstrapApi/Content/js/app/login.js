@@ -2,14 +2,39 @@
 (function (root)
 {
 	var app = root.App;
-	
+
 	app.Login = app.BaseModel.extend({
 		urlRoot: "api/auth/credentials",
 		defaults: {
-			isAuthenticated: false,
+			isAuthenticated: null,
 			hasRegistered: false,
 			sessionId: null,
-			userId: null
+			userId: null,
+			displayName: null,
+			form: null
+		},
+		initialize: function ()
+		{
+			_.bindAll(this, "loginSuccess", "loginError");
+		},
+		signOut: function ()
+		{
+			console.log('Login.signOut');
+			this.set({ isAuthenticated: false });
+		},
+		login: function ($form)
+		{
+			this.$form = $form;
+			this.post($form.attr("action"), _($form).formData(), this.loginSuccess, this.loginError);
+		},
+		loginSuccess: function (r)
+		{
+			this.$form.removeClass("error");
+			this.set({ isAuthenticated: true });
+		},
+		loginError: function ()
+		{
+			this.$form.addClass("error");
 		}
 	});
 
@@ -19,28 +44,29 @@
 
 			initialize: function ()
 			{
-				_.bindAll(this, "login", "render", "loginSuccess", "loginError");
-				$(this.el).find("form").submit(this.login);
+				_.bindAll(this, "login", "render");
+
+				this.model.bind("change:isAuthenticated", this.render);
+				this.model.bind("change:displayName", this.render);
+
+				this.$("form").submit(this.login);
 			},
 			login: function (e)
 			{
 				if (e) e.preventDefault();
-
-				var form = $(this.el).find("form");
-				this.post(form.attr("action"), _(form).formData(), this.loginSuccess, this.loginError);
+				this.model.login(this.$("form"));
 			},
-			loginSuccess: function (r)
-			{
-				$(this.el).removeClass("error");
-				this.model.set({ isAuthenticated: true });
-			},
-			loginError: function ()
-			{
-				$(this.el).addClass("error");
-			},
-
 			render: function ()
 			{
+				var isAuth = this.model.get('isAuthenticated');
+
+				$("#signed-out").toggle(!isAuth);
+				$("#signed-in").toggle(isAuth);
+				$("#signed-in a.dropdown-toggle").html(this.model.get('displayName') || '');
+			},
+			signOut: function ()
+			{
+				console.log('LoginView.signOut');
 			}
 		}
 	);
