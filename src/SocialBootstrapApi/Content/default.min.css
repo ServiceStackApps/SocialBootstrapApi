@@ -1,11 +1,11 @@
 html,body{background-color:#eee}
 body{padding-top:40px}
 .container>footer p{text-align:center}
-.container{width:820px}
+.container{width:1000px}
 .container>.content{background-color:#fff;padding:20px;margin:0 -20px;-webkit-border-radius:0 0 6px 6px;-moz-border-radius:0 0 6px 6px;border-radius:0 0 6px 6px;-webkit-box-shadow:0 1px 2px rgba(0,0,0,0.15);-moz-box-shadow:0 1px 2px rgba(0,0,0,0.15);box-shadow:0 1px 2px rgba(0,0,0,0.15)}
 .page-header{background-color:#f5f5f5;padding:20px 20px 10px;margin:-20px -20px 20px}
-.content .span10,.content .span4{min-height:500px}
-.content .span4{margin-left:0;padding-left:19px;border-left:1px solid #eee}
+.content .span12,.content .span4{min-height:500px}
+.content .span5{margin-left:0;padding-left:19px;border-left:1px solid #eee}
 .topbar .btn{border:0}
 #by-link{color:#999;position:absolute;bottom:5px;right:5px;font-size:11px}
 #by-link{text-decoration:none}
@@ -14,5 +14,8 @@ html,body{color:#555}
 #login.error INPUT{background-color:darkred}
 .error{color:darkred}
 #register input{margin:0 0 10px 0}
-form b.error{display:block;text-align:center;line-height:24px}
+.form-stacked{padding:0}
+.fade-when-loading{opacity:1;-webkit-transition:opacity 1s cubic-bezier(0.19,1,0.22,1);-moz-transition:opacity 1s cubic-bezier(0.19,1,0.22,1);-ms-transition:opacity 1s cubic-bezier(0.19,1,0.22,1);-o-transition:opacity 1s cubic-bezier(0.19,1,0.22,1);transition:opacity 1s cubic-bezier(0.19,1,0.22,1)}
+.loading.fade-when-loading{filter:alpha(opacity=20);-khtml-opacity:.2;-moz-opacity:.2;opacity:.2}
+.form-stacked div.clearfix.error{padding-top:0;padding-bottom:0}
 #twitter-signin{padding:10px 0 0 0}

@@ -1,3 +1,9 @@
+/* Variables.less
+ * Variables to customize the look and feel of Bootstrap 
+ * ----------------------------------------------------- */
+/* Mixins.less
+ * Snippets of reusable CSS to develop faster and keep code readable
+ * ----------------------------------------------------------------- */
 /* Override some defaults */
 html, body {
   background-color: #eee;
@@ -13,7 +19,7 @@ body {
 
 }
 .container {
-  width: 820px;
+  width: 1000px;
   /* downsize our container to make the content feel a bit tighter and more cohesive. NOTE: this removes two full columns from the grid, meaning you only go to 14 columns and not 16. */
 
 }
@@ -38,11 +44,11 @@ body {
   margin: -20px -20px 20px;
 }
 /* Styles you shouldn't keep as they are for displaying this base example only */
-.content .span10, .content .span4 {
+.content .span12, .content .span4 {
   min-height: 500px;
 }
 /* Give a quick and non-cross-browser friendly divider */
-.content .span4 {
+.content .span5 {
   margin-left: 0;
   padding-left: 19px;
   border-left: 1px solid #eee;
@@ -82,10 +88,28 @@ html, body {
 #register input {
   margin: 0 0 10px 0;
 }
-form b.error {
-  display: block;
-  text-align: center;
-  line-height: 24px;
+.form-stacked {
+  padding: 0;
+}
+.fade-when-loading {
+  opacity: 1;
+  -webkit-transition: opacity 1s cubic-bezier(0.19, 1, 0.22, 1);
+  -moz-transition: opacity 1s cubic-bezier(0.19, 1, 0.22, 1);
+  -ms-transition: opacity 1s cubic-bezier(0.19, 1, 0.22, 1);
+  -o-transition: opacity 1s cubic-bezier(0.19, 1, 0.22, 1);
+  transition: opacity 1s cubic-bezier(0.19, 1, 0.22, 1);
+  /* easeOutExpo */
+
+}
+.loading.fade-when-loading {
+  filter: alpha(opacity=20);
+  -khtml-opacity: 0.2;
+  -moz-opacity: 0.2;
+  opacity: 0.2;
+}
+.form-stacked div.clearfix.error {
+  padding-top: 0;
+  padding-bottom: 0;
 }
 #twitter-signin {
   padding: 10px 0 0 0;

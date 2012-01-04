@@ -2,8 +2,10 @@ using System.Web.Mvc;
 using ServiceStack.CacheAccess;
 using ServiceStack.CacheAccess.Providers;
 using ServiceStack.Configuration;
+using ServiceStack.FluentValidation;
 using ServiceStack.OrmLite;
 using ServiceStack.OrmLite.SqlServer;
+using ServiceStack.ServiceInterface;
 using ServiceStack.ServiceInterface.Auth;
 using ServiceStack.WebHost.Endpoints;
 using SocialBootstrapApi.Logic;
@@ -38,6 +40,17 @@ public static class App
 //Hold App wide configuration you want to accessible by your services
 public class AppConfig
 {
+}
+
+//Provide extra validation for the registration process
+public class CustomRegistrationValidator : RegistrationValidator
+{
+	public CustomRegistrationValidator()
+	{
+		RuleSet(ApplyTo.Post, () => {
+			RuleFor(x => x.DisplayName).NotEmpty();
+		});
+	}
 }
 
 namespace SocialBootstrapApi.App_Start
@@ -143,13 +156,12 @@ namespace SocialBootstrapApi.App_Start
 			//Provide service for new users to register so they can login with supplied credentials.
 			RegistrationService.Init(this);
 
+			//override the default registration validation
+			container.RegisterAs<CustomRegistrationValidator, IValidator<Registration>>();
+
 			//Add custom logic executed at runtime for the above services
 			//AuthService.ValidateFn = (service, httpMethod, requestDto) => {
 			//    //Add your own validation/logic/implementation/logging during authentication.                     	
-			//    return null; //returning any non-null will stop further execution and return the response dto
-			//};
-			//RegistrationService.ValidateFn = (service, httpMethod, requestDto) => {
-			//    //Add your own validation/logic/implementation/logging during new user registration.                     	
 			//    return null; //returning any non-null will stop further execution and return the response dto
 			//};
 

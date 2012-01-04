@@ -25,7 +25,13 @@
 		login: function ($form)
 		{
 			this.$form = $form;
-			this.post($form.attr("action"), _($form).formData(), this.loginSuccess, this.loginError);
+			_.post({
+			    form: $form,
+			    url: $form.attr("action"), 
+			    data: _.formData($form), 
+			    success: this.loginSuccess, 
+			    error: this.loginError
+			});
 		},
 		loginSuccess: function (r)
 		{
@@ -67,6 +73,10 @@
 			signOut: function ()
 			{
 				console.log('LoginView.signOut');
+			    var self = this;
+			    _.get("api/auth/logout", function() {
+			        self.model.set({ isAuthenticated: false });			        
+			    });
 			}
 		}
 	);

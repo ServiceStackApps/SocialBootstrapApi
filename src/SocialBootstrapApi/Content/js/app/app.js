@@ -43,8 +43,7 @@
 			if (xhr.status == this.UnAuthorized)
 			{
 				//verify user is no longer authenticated
-				$.getJSON("api/userinfo", function (r) { }, function (xhr)
-				{
+				$.getJSON("api/userinfo", function (r) { }, function (xhr) {
 					if (xhr.status == this.UnAuthorized)
 						location.href = location.href;
 				});

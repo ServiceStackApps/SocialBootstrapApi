@@ -49,12 +49,22 @@
 <div id="register">
     <div id="signup">
         <h3>New Here? Join Today!</h3>
-        <form action="@Url.Content("~/api/register")" method="POST">
-            <b class="error"></b>
-            <input class="input-large" name="displayName" type="text" placeholder="Full Name" />
-            <input class="input-large" name="email" type="text" placeholder="Email" />
-            <input class="input-large" name="password" type="password" placeholder="Password" />
-			<button class="btn" type="submit">Sign up</button>
+        <form class="form-stacked fade-when-loading error" action="@Url.Content("~/api/register")" method="POST">
+			<span class="error-summary"></span>
+			<div class="clearfix">
+    			<input class="input-medium" name="displayName" type="text" placeholder="Full Name" />
+				<span class="help-inline"></span>
+			</div>
+			<div class="clearfix">
+                <input class="input-medium" name="email" type="text" placeholder="Email" />
+                <span class="help-inline"></span>
+			</div>
+			<div class="clearfix">
+                <input class="input-medium" name="password" type="password" placeholder="Password" />
+                <span class="help-inline"></span>
+			</div>
+
+			<button class="btn" type="submit">Sign up</button><b data-ajax="loading"></b>
             or <a href="#" data-cmd="signIn">sign in</a>
         </form> 
     </div>
@@ -63,10 +73,18 @@
         <p>   
             You can now sign in:
         </p>
-        <form action="@Url.Content("~/api/auth/credentials")">
-            <input class="input-large" name="userName" type="text" placeholder="Username" />
-            <input class="input-large" name="password" type="password" placeholder="Password" />
-            <button class="btn" type="submit">Sign in</button>
+        <form class="form-stacked" action="@Url.Content("~/api/auth/credentials")">
+			<div class="clearfix">
+                <input class="input-large" name="userName" type="text" placeholder="Username" />
+                <span class="help-inline"></span>
+			</div>
+			<div class="clearfix">
+                <input class="input-large" name="password" type="password" placeholder="Password" />
+                <span class="help-inline"></span>
+			</div>
+
+			<button class="btn" type="submit">Sign in</button>
+            or <a href="#" data-cmd="unregistered">register</a>
         </form>
     </div>
 </div>

@@ -29,8 +29,8 @@
 		{
 			if (this.login.get("isAuthenticated"))
 				this.fetch();
-			else
-				this.set({ showProfile: false });
+			else 
+				this.clear();
 		}
 	});
 
@@ -51,11 +51,7 @@
 				attrs.facebookUserId = attrs.facebookUserId || null;
 				console.log(attrs);
 
-				var showProfile = attrs.showProfile
-					|| attrs.email
-					|| attrs.twitterUserId
-					|| attrs.facebookUserId;
-
+				var showProfile = attrs.email || attrs.twitterUserId || attrs.facebookUserId;
 				if (showProfile)
 				{
 					var html = this.template(attrs);

@@ -1,16 +1,19 @@
 /// <reference path="../jquery-1.7.js" />
 /// <reference path="../underscore.js" />
 /// <reference path="../backbone.js" />
+/// <reference path="ss-validation.js" />
 (function (root)
 {
-	var app = root.App = root.App || {};
+    $.ss.validation.overrideMessages = true;
 
+	var app = root.App = root.App || {};
+    var emptyFn = function() {};
+    
 	_.mixin({
 		formData: function (form)
 		{
 			var ret = {};
-			$(form).find("INPUT,TEXTAREA").each(function ()
-			{
+			$(form).find("INPUT,TEXTAREA").each(function() {
 				if (this.type == "button" || this.type == "submit") return;
 				ret[this.name] = $(this).val();
 			});
@@ -28,45 +31,66 @@
 			{
 				return null;
 			}
+		},
+        get: function (url, data, success, error) {
+            if (_.isFunction(data)) {
+                success = data;
+                error = success;
+                data = undefined;
+            }
+            return _.ajax({
+                type: 'GET',
+                url: url,
+                data: data,
+                success: success,
+                error: error
+            });
+        },
+		post: function (opt) {
+		    return _.ajax(opt);
+		},
+        ajax: function (opt)
+		{
+            var o = _.defaults(opt, {
+               type: 'POST',
+               loading: function() {
+                   $(document.body).add(opt.form).addClass("loading");
+               },
+               finishedLoading: function() {
+                   $(document.body).add(opt.form).removeClass("loading");
+               },
+               dataType: "json"
+            });
+			o.loading();
+			$.ajax({
+				type: o.type,
+				url: o.url,
+				data: o.data,
+				success: function()
+				{
+					//console.log(arguments);
+					o.finishedLoading();
+				    $(o.form).clearErrors();
+					if (o.success) o.success.apply(null, arguments);
+				},
+				error: function(xhr,err,status)
+				{
+					//console.log(arguments);
+					o.finishedLoading();
+				    try {
+				        if (o.form) {
+				            var r = JSON.parse(xhr.responseText);
+				            $(o.form).applyErrors(r && r.responseStatus);
+				        }
+				    } catch(e){}
+					(o.error || (app.error || emptyFn)).apply(null, arguments);
+				},
+				dataType: o.dataType
+			});
 		}
 	});
 
-	var emptyFn = function () {}, 
-	    ajax = {
-		get: function (url, data, success, error)
-		{
-			$.getJSON(url, data, success, error || App.error);
-		},
-		post: function (url, data, success, error)
-		{
-			var $this = this;
-			$this.loading();
-			$.ajax({
-				type: 'POST',
-				url: url,
-				data: data,
-				success: function ()
-				{
-					console.log(arguments);
-					$this.finishedLoading();
-					if (success) success.apply(null, arguments);
-				},
-				error: function ()
-				{
-					console.log(arguments);
-					$this.finishedLoading();
-					(error || App.error).apply(null, arguments);
-				},
-				dataType: "json"
-			});
-		}
-	};
-
 	app.BaseModel = Backbone.Model.extend({
-		getJSON: ajax.get,
-		post: ajax.post,
-		loading: emptyFn,
-		finishedLoading: emptyFn,
 		parse: function (resp, xhr)
 		{
 			if (!resp) return resp;
@@ -79,8 +103,6 @@
 	});
 
 	app.BaseView = Backbone.View.extend({		
-		get: ajax.get,
-		post: ajax.post,
 		loading: function ()
 		{
 			$(this.el).css({ opacity: 0.5 });

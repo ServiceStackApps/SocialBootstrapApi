@@ -163,6 +163,7 @@
     <Content Include="Content\img\sign-in-with-facebook.png" />
     <Content Include="Content\img\sign-in-with-twitter-l.png" />
     <Content Include="Content\js\app\base.js" />
+    <Content Include="Content\js\app\ss-validation.js" />
     <Content Include="Content\js\app\login.js" />
     <Content Include="Content\js\app\_blank.js" />
     <Content Include="Content\js\app\userprofile.js" />

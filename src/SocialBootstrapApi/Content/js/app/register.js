@@ -8,7 +8,7 @@
 			className: "view-register",
 			initialize: function ()
 			{
-				_.bindAll(this, "render", "register", "registerSuccess", "registerError", "login");
+				_.bindAll(this, "render", "register", "registerSuccess", "login");
 
 				this.model.bind("change", this.render);
 
@@ -17,7 +17,7 @@
 				this.$("[name=password]").val("test");
 
 				this.$el = $(this.el);
-				this.$errorMsg = this.$el.find("form b");
+				this.$errorMsg = this.$el.find("form b[data-error=summary]");
 				this.$signup = $(this.el).find("#signup");
 				this.$registerLogin = $(this.el).find("#register-login");
 
@@ -29,19 +29,18 @@
 				if (e) e.preventDefault();
 
 				var form = this.$signup.find("form");
-				this.post(form.attr("action"), _(form).formData(), this.registerSuccess, this.registerError);
+				_.post({
+				    form: form,
+				    url: form.attr("action"),
+				    data: _.formData(form),
+				    success: this.registerSuccess
+				});
 
 				this.$registerLogin.find("INPUT[name=userName]").val(form.find("INPUT[name=email]").val());
 			},
 			registerSuccess: function (r)
 			{
-				this.$el.removeClass("error");
 				this.model.set({ hasRegistered: true, userId: r.userId });
-			},
-			registerError: function (xhr)
-			{
-				this.$el.addClass("error");
-				this.$errorMsg.html(_(xhr).xhrMessage());
 			},
 			login: function (e)
 			{
@@ -52,7 +51,10 @@
 			{
 				this.model.set({ hasRegistered: true });
 			},
-			render: function ()
+            unregistered: function (e) {    
+                this.model.set({ hasRegistered: false });
+            },
+            render: function ()
 			{
 				this.$errorMsg.html("");
 
