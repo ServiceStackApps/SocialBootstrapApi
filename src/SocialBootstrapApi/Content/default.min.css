@@ -18,4 +18,5 @@ html,body{color:#555}
 .fade-when-loading{opacity:1;-webkit-transition:opacity 1s cubic-bezier(0.19,1,0.22,1);-moz-transition:opacity 1s cubic-bezier(0.19,1,0.22,1);-ms-transition:opacity 1s cubic-bezier(0.19,1,0.22,1);-o-transition:opacity 1s cubic-bezier(0.19,1,0.22,1);transition:opacity 1s cubic-bezier(0.19,1,0.22,1)}
 .loading.fade-when-loading{filter:alpha(opacity=20);-khtml-opacity:.2;-moz-opacity:.2;opacity:.2}
 .form-stacked div.clearfix.error{padding-top:0;padding-bottom:0}
+form.error>input,form.error>textarea{border-color:#EE5F5B;background:#FDDFDE}
 #twitter-signin{padding:10px 0 0 0}

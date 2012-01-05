@@ -49,7 +49,7 @@
 <div id="register">
     <div id="signup">
         <h3>New Here? Join Today!</h3>
-        <form class="form-stacked fade-when-loading error" action="@Url.Content("~/api/register")" method="POST">
+        <form class="form-stacked fade-when-loading" action="@Url.Content("~/api/register")" method="POST">
 			<span class="error-summary"></span>
 			<div class="clearfix">
     			<input class="input-medium" name="displayName" type="text" placeholder="Full Name" />
@@ -63,9 +63,10 @@
                 <input class="input-medium" name="password" type="password" placeholder="Password" />
                 <span class="help-inline"></span>
 			</div>
-
-			<button class="btn" type="submit">Sign up</button><b data-ajax="loading"></b>
-            or <a href="#" data-cmd="signIn">sign in</a>
+			<div class="actions">
+			    <button class="btn" type="submit">Sign up</button><b data-ajax="loading"></b>
+                or <a href="#" data-cmd="signIn">sign in</a>
+			</div>
         </form> 
     </div>
     <div id="register-login">
@@ -73,18 +74,19 @@
         <p>   
             You can now sign in:
         </p>
-        <form class="form-stacked" action="@Url.Content("~/api/auth/credentials")">
+        <form class="form-stacked fade-when-loading" action="@Url.Content("~/api/auth/credentials")">
 			<div class="clearfix">
-                <input class="input-large" name="userName" type="text" placeholder="Username" />
+                <input class="input-medium" name="userName" type="text" placeholder="Username" />
                 <span class="help-inline"></span>
 			</div>
 			<div class="clearfix">
-                <input class="input-large" name="password" type="password" placeholder="Password" />
+                <input class="input-medium" name="password" type="password" placeholder="Password" />
                 <span class="help-inline"></span>
 			</div>
-
-			<button class="btn" type="submit">Sign in</button>
-            or <a href="#" data-cmd="unregistered">register</a>
+			<div class="actions">
+			    <button class="btn" type="submit">Sign in</button>
+                or <a href="#" data-cmd="unregistered">register</a>
+			</div>
         </form>
     </div>
 </div>
