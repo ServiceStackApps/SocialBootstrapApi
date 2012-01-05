@@ -142,7 +142,6 @@
       <LastGenOutput>default.css</LastGenOutput>
       <Generator>LessGenerator</Generator>
     </None>
-    <Content Include="App_Data\followers.html" />
     <Content Include="App_Data\UserAuth.mdf" />
     <Content Include="App_Data\UserAuth_log.ldf">
       <DependentUpon>UserAuth.mdf</DependentUpon>
