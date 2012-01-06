@@ -10,7 +10,7 @@
 		UnAuthorized: 401,
 		initialize: function ()
 		{
-			_.bindAll(this, "error", "trigger");
+			_.bindAll(this, "error", "trigger");  
 			this.handleClicks();
 		},
 		handleClicks: function ()
