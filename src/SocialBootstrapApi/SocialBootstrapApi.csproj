@@ -67,15 +67,13 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\ServiceStack.OrmLite.dll</HintPath>
     </Reference>
-    <Reference Include="ServiceStack.OrmLite.SqlServer, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="ServiceStack.OrmLite.SqlServer">
       <HintPath>..\..\lib\ServiceStack.OrmLite.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="ServiceStack.RazorEngine">
       <HintPath>..\..\lib\ServiceStack.RazorEngine.dll</HintPath>
     </Reference>
-    <Reference Include="ServiceStack.Redis, Version=3.0.0.4439, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="ServiceStack.Redis">
       <HintPath>..\..\lib\ServiceStack.Redis.dll</HintPath>
     </Reference>
     <Reference Include="ServiceStack.ServiceInterface, Version=1.0.4340.22386, Culture=neutral, processorArchitecture=MSIL">
