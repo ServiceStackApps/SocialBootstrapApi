@@ -72,6 +72,8 @@ html, body {
 }
 #signed-out,
 #signed-in,
+.signed-out,
+.signed-in,
 #signup,
 #register-login,
 #register-signed-in,

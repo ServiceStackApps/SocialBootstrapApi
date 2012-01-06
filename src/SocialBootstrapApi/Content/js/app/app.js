@@ -2,6 +2,7 @@
 /// <reference path="login.js" />
 /// <reference path="register.js" />
 /// <reference path="userprofile.js" />
+/// <reference path="twitter.js" />
 (function (root)
 {
 	var app = root.App;
@@ -54,11 +55,14 @@
 
 	var login = new app.Login();
 	var userProfile = new app.UserProfile({ login: login });
-	console.log(login.attributes, userProfile.attributes);
+    var twitter = new app.Twitter({ profile: userProfile });
+
+    console.log(login.attributes, userProfile.attributes, twitter.attributes);
 
 	app.models = {
 		login: login,
-		userProfile: userProfile
+		userProfile: userProfile,
+		twitter: twitter
 	};
 
 	app.views = {
@@ -73,9 +77,14 @@
 		userProfile: new app.UserProfileView({
 			el: "#user-profile",
 			model: userProfile
+		}),
+        twitter: new app.TwitterView({
+            el: "#twitter",
+            model: twitter
 		})
 	};
 
 	app.initialize();
+    $(".tabs").tabs();
 
 })(window);

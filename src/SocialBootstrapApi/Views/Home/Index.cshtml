@@ -5,11 +5,6 @@
     CustomUserSession session = ViewBag.UserSession;
 }
 
-<h2>@ViewBag.Message</h2>
-<p>
-    To learn more about the MVC PowerPack visit <a href="http://www.servicestack.net/mvc-powerpack/" title="ServiceStack MVC PowerPack Website">servicestack.net/mvc-powerpack</a>.
-</p>
-
 <script type="text/template" id="template-userprofile">
 <% if (email) { %>    
     <div id="credential-info">
@@ -42,7 +37,54 @@
         </dl>
     </div>
 <% } %>
-</script>
+</script> 
+
+<script type="text/template" id="template-tweets">
+<% _.each(tweets, function(tweet){ %>    
+
+    <img src="<%= tweet.user.profile_image_url %>" style="float:left;clear:left;padding:5px;" />
+    <dl style="padding:5px">
+        <dd data-cmd="twitterProfileChange:<%= tweet.user.screen_name %>">@@<%= tweet.user.screen_name %></dd>
+        <dd><%= tweet.user.description %></dd>
+    </dl>
+
+<% }); %>
+</script> 
+<script type="text/template" id="template-users">
+<% _.each(users, function(user){ %>    
+
+    <img src="<%= tweet.user.profile_image_url %>" style="float:left;clear:left;padding:5px;" />
+    <dl style="padding:5px">
+        <dd data-cmd="twitterProfileChange:<%= tweet.user.screen_name %>"><%= tweet.user.screen_name %></dd>
+        <dd><%= tweet.user.description %></dd>
+    </dl>
+
+<% }); %>
+</script> 
+
+
+<h2>@ViewBag.Message</h2>
+<p>
+    To learn more about the MVC PowerPack visit <a href="http://www.servicestack.net/mvc-powerpack/" title="ServiceStack MVC PowerPack Website">servicestack.net/mvc-powerpack</a>.
+</p>
+
+<div id="twitter">
+	
+	<div class="signed-out">
+		<a href="@Url.Content("~/api/auth/twitter")"><img src="@Url.Content("~/Content/img/sign-in-with-twitter-l.png")" alt="Sign-in with Twitter" /></a>
+	</div>
+    
+	<div class="signed-in">
+		<h3 class="current-user"></h3>
+		<ul class="tabs">
+			<li class="active"><a href="#tweets" data-cmd="twitterTab:tweets">Tweets</a></li>
+			<li><a href="#friends" data-cmd="twitterTab:friends">Friends</a></li>
+			<li><a href="#followers" data-cmd="twitterTab:followers">Followers</a></li>
+		</ul>
+        <div class="tab-content"></div>
+	</div>
+
+</div>
 
 @section SideBar {
 

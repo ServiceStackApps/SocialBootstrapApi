@@ -130,10 +130,11 @@ namespace SocialBootstrapApi.App_Start
 				.Add<UserProfile>("/profile")
 
 				//Twitter related services
-				.Add<TwitterFriends>("/twitter/friends/id/{UserId}")
-				.Add<TwitterFriends>("/twitter/friends/{ScreenName}")
-				.Add<TwitterFollowers>("/twitter/followers/id/{UserId}")
-				.Add<TwitterFollowers>("/twitter/followers/{ScreenName}")
+				.Add<TwitterTweets>("/twitter/{ScreenName}/tweets")
+				.Add<TwitterFriends>("/twitter/id/{UserId}/friends")
+				.Add<TwitterFriends>("/twitter/{ScreenName}/friends")
+				.Add<TwitterFollowers>("/twitter/id/{UserId}/followers")
+				.Add<TwitterFollowers>("/twitter/{ScreenName}/followers")
 				.Add<TwitterUsers>("/twitter/ids/{UserIds}") //userIds serparated by ','
 				.Add<TwitterUsers>("/twitter/{ScreenNames}") //screenNames serparated by ','
 			;
@@ -145,7 +146,7 @@ namespace SocialBootstrapApi.App_Start
 			var appSettings = new ConfigurationResourceManager();
 
 			//Register all Authentication methods you want to enable for this web app.
-			AuthService.Init(this, () => new CustomUserSession(),
+			AuthFeature.Init(this, () => new CustomUserSession(),
 				new AuthConfig[] {
 					new CredentialsAuthConfig(), //HTML Form post of UserName/Password credentials
 					new TwitterAuthConfig(appSettings),  //Sign-in with Twitter
@@ -154,16 +155,10 @@ namespace SocialBootstrapApi.App_Start
 				});
 
 			//Provide service for new users to register so they can login with supplied credentials.
-			RegistrationService.Init(this);
+			RegistrationFeature.Init(this);
 
 			//override the default registration validation
 			container.RegisterAs<CustomRegistrationValidator, IValidator<Registration>>();
-
-			//Add custom logic executed at runtime for the above services
-			//AuthService.ValidateFn = (service, httpMethod, requestDto) => {
-			//    //Add your own validation/logic/implementation/logging during authentication.                     	
-			//    return null; //returning any non-null will stop further execution and return the response dto
-			//};
 
 			//Store User Data into the referenced SqlServer database
 			container.Register<IUserAuthRepository>(c =>

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ChaweetApi.ServiceModel;
@@ -18,6 +19,7 @@ namespace SocialBootstrapApi.Logic
 		List<TwitterUser> GetFriends(string screenName);
 		List<TwitterUser> GetFollowers(ulong userId);
 		List<TwitterUser> GetFollowers(string screenName);
+		List<Tweet> GetTweets(string screenName, string sinceId = null, int? take = null);
 	}
 
 	public class TwitterGateway : ITwitterGateway
@@ -26,6 +28,7 @@ namespace SocialBootstrapApi.Logic
 		public const string UserUrl      = "http://api.twitter.com/1/users/lookup.json";
 		public const string FollowersUrl = "http://api.twitter.com/1/followers/ids.json";
 		public const string FriendsUrl   = "http://api.twitter.com/1/friends/ids.json";
+		public const string TweetsUrl    = "http://api.twitter.com/1/statuses/following_timeline.json?include_entities=1&screen_name={0}";
 		
 		public IEnumerable<TwitterUser> DownloadTwitterUsersByIds(IEnumerable<string> userIds)
 		{
@@ -79,6 +82,23 @@ namespace SocialBootstrapApi.Logic
 		{
 			var json = FollowersUrl.AddQueryParam("screen_name", screenName).DownloadJsonFromUrl();
 			return DownloadTwitterUsersByNames(json.FromJson<List<string>>()).ToList();
+		}
+
+		public List<Tweet> GetTweets(string screenName, string sinceId = null, int? take=null)
+		{
+			if (screenName == null)
+				throw new ArgumentNullException("screenName");
+
+			var url =  TweetsUrl.Fmt(screenName);
+			if (!string.IsNullOrEmpty(sinceId))
+				url = url.AddQueryParam("max_id", sinceId);
+			if (take.HasValue)
+				url = url.AddQueryParam("count", take.Value.ToString());
+
+			var json = url.DownloadJsonFromUrl();
+			var tweets = json.FromJson<List<Tweet>>();
+
+			return tweets;
 		}
 	}
 }

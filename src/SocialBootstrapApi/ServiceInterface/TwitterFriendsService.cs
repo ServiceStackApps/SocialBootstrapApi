@@ -47,8 +47,10 @@ namespace SocialBootstrapApi.ServiceInterface
 			var hasId = !request.UserId.IsNullOrEmpty();
 
 			//Create a unique cache key for this request
-			var cacheKey = "urn:User:" + (hasId ? "Id" : "Name") + ":friends";
-
+			var cacheKey = "cache:User:"
+				+ (hasId ? "Id:" + request.UserId : "Name:" + request.ScreenName)
+				+ ":friends";
+	
 			//This caches and returns the most optimal result the browser can handle, e.g.
 			//If the browser requests json and accepts deflate - it returns a deflated json payload from cache
 			return base.RequestContext.ToOptimizedResultUsingCache(Cache, cacheKey, () =>

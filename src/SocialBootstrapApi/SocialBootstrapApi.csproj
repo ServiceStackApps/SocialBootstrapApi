@@ -118,6 +118,7 @@
     <Compile Include="CassetteConfiguration.cs" />
     <Compile Include="Logic\TwitterGateway.cs" />
     <Compile Include="Models\TwitterDtos.cs" />
+    <Compile Include="ServiceInterface\TwitterTweetsService.cs" />
     <Compile Include="ServiceInterface\TwitterFriendsService.cs" />
     <Compile Include="ServiceInterface\TwitterFollowersService.cs" />
     <Compile Include="ServiceInterface\TwitterUsersService.cs" />
@@ -160,6 +161,7 @@
     <Content Include="Content\img\sign-in-with-facebook.png" />
     <Content Include="Content\img\sign-in-with-twitter-l.png" />
     <Content Include="Content\js\app\base.js" />
+    <Content Include="Content\js\app\twitter.js" />
     <Content Include="Content\js\app\ss-validation.js" />
     <Content Include="Content\js\app\login.js" />
     <Content Include="Content\js\app\_blank.js" />
@@ -258,7 +260,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>False</AutoAssignPort>
           <DevelopmentServerPort>1337</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
