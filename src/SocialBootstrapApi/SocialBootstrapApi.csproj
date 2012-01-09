@@ -146,6 +146,14 @@
       <DependentUpon>UserAuth.mdf</DependentUpon>
     </Content>
     <Content Include="Content\css\bootstrap.css" />
+    <Content Include="Content\css\variables.css">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>variables.less</DependentUpon>
+    </Content>
+    <Content Include="Content\css\variables.min.css">
+      <DependentUpon>variables.less</DependentUpon>
+    </Content>
     <Content Include="Content\default.min.css">
       <DependentUpon>default.less</DependentUpon>
     </Content>

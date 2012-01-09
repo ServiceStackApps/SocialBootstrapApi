@@ -40,50 +40,96 @@
 </script> 
 <script type="text/template" id="template-tweets">
 <% _.each(tweets, function(tweet){ 
-        var user = tweet.user; %>    
-
-    <dl class="twitter-tweet">
-        <dd><img src="<%= user.profile_image_url %>" /></dd>
-        <dd>
-            <a href="#" data-cmd="twitterProfileChange:<%= user.screen_name %>">
-                @@<%= user.screen_name %>
-            </a>
-            - <i><%= user.friends_count + ' / ' + user.followers_count %></i>
-        </dd>
-        <dd><%= tweet.text %></dd>
-    </dl>
+    var user = tweet.user; %>    
+        
+    <div class="row tw-item tw-tweets">
+        <div class="span1">
+            <ul class="media-grid">
+                <li>
+                    <a href="#" data-cmd="twitterProfileChange:<%= user.screen_name %>">
+                        <img class="thumbnail" src="<%= user.profile_image_url %>" alt="">
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="span9">
+            <div class="row">
+                <a class="span7" href="#" data-cmd="twitterProfileChange:<%= user.screen_name %>">
+                    @@<%= user.screen_name %>
+                </a>
+            </div>
+            <div>
+                <%= tweet.text %>
+            </div>
+        </div>
+    </div>
 
 <% }); %>
+</script> 
+<script type="text/template" id="template-current-user">
+<div class="row tw-current">
+    <div class="span1">
+        <ul class="media-grid">
+            <li>
+                <img class="thumbnail" src="<%= profile_image_url %>" alt="">
+            </li>
+        </ul>
+    </div>
+    <div class="span9">
+        @@<%= screen_name %> from <%= location %>. <%= statuses_count %> Tweets -
+        <i>Following <%= friends_count + ' / Followers ' + followers_count %></i>
+        <p>
+            <%= description %>
+        </p>
+    </div>
+</div>
 </script> 
 <script type="text/template" id="template-users">
 <% _.each(users, function(user){ %>    
 
-    <dl class="twitter-user">
-        <dd><img src="<%= user.profile_image_url %>" /></dd>
-        <dd data-cmd="twitterProfileChange:<%= user.screen_name %>">
-            @@<%= user.screen_name %> -
-            <i><%= user.friends_count + ' / ' + user.followers_count %></i>
-        </dd>
-        <dd><%= user.description %></dd>
-    </dl>
+    <div class="row tw-item tw-users">
+        <div class="span1">
+            <ul class="media-grid">
+                <li>
+                    <a href="#" data-cmd="twitterProfileChange:<%= user.screen_name %>">
+                        <img class="thumbnail" src="<%= user.profile_image_url %>" alt="">
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="span9">
+            <div class="row">
+                <a class="span7" href="#" data-cmd="twitterProfileChange:<%= user.screen_name %>">
+                    @@<%= user.screen_name %>
+                </a>
+                <i class="span2"><%= user.friends_count + ' / ' + user.followers_count %></i>
+            </div>
+            <div>
+                <%= user.description %>
+            </div>
+        </div>
+    </div>
 
 <% }); %>
 </script> 
 
 
-<h2>@ViewBag.Message</h2>
 <p>
-    To learn more about the MVC PowerPack visit <a href="http://www.servicestack.net/mvc-powerpack/" title="ServiceStack MVC PowerPack Website">servicestack.net/mvc-powerpack</a>.
+	Single Page App template including Twitters Bootstrap + MVC3 + ServiceStack + Backbone.js <br/>
+	<a href="http://www.servicestack.net/mvc-powerpack/" title="ServiceStack MVC PowerPack Website">
+		An optimized REST-API enabled MVC starter kit
+	</a> 
+    optimized for creating instantaneous and responsive websites. <br/>
 </p>
 
-<div id="twitter">
+<div id="twitter" class="span11">
 	
 	<div class="signed-out">
 		<a href="@Url.Content("~/api/auth/twitter")"><img src="@Url.Content("~/Content/img/sign-in-with-twitter-l.png")" alt="Sign-in with Twitter" /></a>
 	</div>
     
 	<div class="signed-in">
-		<h3 class="current-user"></h3>
+		<div class="current-user"></div>
 		<ul class="tabs">
 			<li class="active"><a href="#tweets" data-cmd="twitterTab:tweets">Tweets</a></li>
 			<li><a href="#friends" data-cmd="twitterTab:friends">Friends</a></li>

@@ -19,7 +19,7 @@ body {
 
 }
 .container {
-  width: 1000px;
+  width: 960px;
   /* downsize our container to make the content feel a bit tighter and more cohesive. NOTE: this removes two full columns from the grid, meaning you only go to 14 columns and not 16. */
 
 }
@@ -58,7 +58,7 @@ body {
 }
 #by-link {
   color: #999;
-  position: absolute;
+  position: fixed;
   bottom: 5px;
   right: 5px;
   font-size: 11px;
@@ -120,13 +120,32 @@ form.error > input, form.error > textarea {
 #twitter-signin {
   padding: 10px 0 0 0;
 }
+/*
 .twitter-user, .twitter-tweet {
-  clear: left;
+	clear: left;
 }
-.twitter-user IMG, .twitter-tweet IMG {
-  float: left;
-  clear: left;
+*/
+.tw-item IMG, .tw-current IMG {
   width: 58px;
   height: 58px;
-  padding: 0 5px 5px 5px;
+}
+DIV.tw-item, DIV.tw-item > DIV {
+  display: block;
+}
+.tw-item .span9 {
+  padding-left: 20px;
+}
+.tw-item .span2 {
+  text-align: right;
+}
+.tw-current {
+  border-top: solid 1px #ddd;
+  margin-top: 20px;
+  padding: 20px 0 20px 10px;
+}
+.tw-current .span1 {
+  padding-left: 15px;
+}
+.tw-current .span9 {
+  margin: 0 0 0 10px;
 }

@@ -1,6 +1,6 @@
 (function (root) {
     var app = root.App;
-   
+
     app.Twitter = app.BaseModel.extend({
         defaults: {
             screenName: null,
@@ -21,25 +21,39 @@
         },
         onChange: function () {
             console.log("twitter.onChange:" + this.get('tab'));
-            if (this.get('screenName')) 
+            if (this.get('screenName'))
                 this.load(this.get('tab'));
-            else 
-                this.clear({silent:true});            
+            else
+                this.clear({ silent: true });
         },
-        load: function(tab) {
+        load: function (tab) {
+            tab = tab || this.defaults.tab;
             var self = this, o = {};
             _.get("api/twitter/" + this.get('screenName') + "/" + tab, function (r) {
                 o[tab] = r.results;
                 self.set(o);
             });
         },
-        twitterProfileChange: function (screenName) {
-            console.log("twitter.twitterProfileChange: " + this.get('tab'));
-            this.set(_.defaults({ screenName: screenName }, this.defaults));
+        twitterProfileChange: function (screenName, tab) {
+            tab = tab || this.get('tab');
+            console.log("twitter.twitterProfileChange: " + tab);
+
+            if (!screenName) 
+                return this.twitterTab(tab);
+
+            var self = this;
+            _.get("api/twitter/" + screenName, function (r) {
+                var o = _.defaults({ screenName: screenName }, self.defaults);
+                _.extend(o, r.results[0]);
+                o.tab = tab;
+                self.set(o);
+            });
         },
         twitterTab: function (tab) {
             console.log("twitterTab:" + tab);
             this.set({ tab: tab });
+            $(".tabs [href=#" + tab + "]").click();
+            this.sendCmd("navigate", [tab]);
         }
     });
 
@@ -53,6 +67,7 @@
             this.$signedInBody = this.$el.find(".signed-in .tab-content");
             this.tweetsTemplate = _.template($("#template-tweets").html());
             this.usersTemplate = _.template($("#template-users").html());
+            this.currentUserTemplate = _.template($("#template-current-user").html());
         },
         render: function () {
 
@@ -64,7 +79,7 @@
 
             this.$signedOut.toggle(!signedIn);
             this.$signedIn.toggle(signedIn);
-            
+
             if (screenName) {
                 var tab = this.model.get('tab');
                 html = tab === "friends"
@@ -72,6 +87,13 @@
                     : tab == "followers"
                         ? this.usersTemplate({ users: this.model.get('followers') })
                         : this.tweetsTemplate({ tweets: this.model.get('tweets') });
+
+                this.$(".current-user").html(this.currentUserTemplate(this.model.toJSON()));
+                var bgImg = this.model.get('profile_background_image_url'),
+                    bgColor = this.model.get('profile_background_color') || '',
+                    bgRepeat = this.model.get('profile_background_tile') === "true" ? '' : 'no-repeat';
+                var bgCss = bgImg ? '#' + bgColor + ' url(' + bgImg + ') ' + bgRepeat + ' top left' : '';
+                $("BODY").css({ background: bgCss, 'background-attachment': 'fixed' });
             }
 
             this.$signedInBody.html(html);
