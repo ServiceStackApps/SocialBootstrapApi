@@ -120,3 +120,13 @@ form.error > input, form.error > textarea {
 #twitter-signin {
   padding: 10px 0 0 0;
 }
+.twitter-user, .twitter-tweet {
+  clear: left;
+}
+.twitter-user IMG, .twitter-tweet IMG {
+  float: left;
+  clear: left;
+  width: 58px;
+  height: 58px;
+  padding: 0 5px 5px 5px;
+}

@@ -20,3 +20,5 @@ html,body{color:#555}
 .form-stacked div.clearfix.error{padding-top:0;padding-bottom:0}
 form.error>input,form.error>textarea{border-color:#EE5F5B;background:#FDDFDE}
 #twitter-signin{padding:10px 0 0 0}
+.twitter-user,.twitter-tweet{clear:left}
+.twitter-user IMG,.twitter-tweet IMG{float:left;clear:left;width:58px;height:58px;padding:0 5px 5px 5px}

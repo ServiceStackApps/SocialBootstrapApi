@@ -41,7 +41,7 @@ namespace SocialBootstrapApi.ServiceInterface
 
 			var results = new List<TwitterUser>();
 			if (userIds.Count > 0)
-				results.AddRange(TwitterGateway.DownloadTwitterUsersByIds(userIds));
+				results.AddRange(TwitterGateway.DownloadUsersByIds(userIds));
 			if (userNames.Count > 0)
 				results.AddRange(TwitterGateway.DownloadTwitterUsersByNames(userNames));
 

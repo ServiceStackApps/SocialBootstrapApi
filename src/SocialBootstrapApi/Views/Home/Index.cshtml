@@ -38,14 +38,19 @@
     </div>
 <% } %>
 </script> 
-
 <script type="text/template" id="template-tweets">
-<% _.each(tweets, function(tweet){ %>    
+<% _.each(tweets, function(tweet){ 
+        var user = tweet.user; %>    
 
-    <img src="<%= tweet.user.profile_image_url %>" style="float:left;clear:left;padding:5px;" />
-    <dl style="padding:5px">
-        <dd data-cmd="twitterProfileChange:<%= tweet.user.screen_name %>">@@<%= tweet.user.screen_name %></dd>
-        <dd><%= tweet.user.description %></dd>
+    <dl class="twitter-tweet">
+        <dd><img src="<%= user.profile_image_url %>" /></dd>
+        <dd>
+            <a href="#" data-cmd="twitterProfileChange:<%= user.screen_name %>">
+                @@<%= user.screen_name %>
+            </a>
+            - <i><%= user.friends_count + ' / ' + user.followers_count %></i>
+        </dd>
+        <dd><%= tweet.text %></dd>
     </dl>
 
 <% }); %>
@@ -53,10 +58,13 @@
 <script type="text/template" id="template-users">
 <% _.each(users, function(user){ %>    
 
-    <img src="<%= tweet.user.profile_image_url %>" style="float:left;clear:left;padding:5px;" />
-    <dl style="padding:5px">
-        <dd data-cmd="twitterProfileChange:<%= tweet.user.screen_name %>"><%= tweet.user.screen_name %></dd>
-        <dd><%= tweet.user.description %></dd>
+    <dl class="twitter-user">
+        <dd><img src="<%= user.profile_image_url %>" /></dd>
+        <dd data-cmd="twitterProfileChange:<%= user.screen_name %>">
+            @@<%= user.screen_name %> -
+            <i><%= user.friends_count + ' / ' + user.followers_count %></i>
+        </dd>
+        <dd><%= user.description %></dd>
     </dl>
 
 <% }); %>

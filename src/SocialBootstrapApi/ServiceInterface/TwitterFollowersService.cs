@@ -15,6 +15,7 @@ namespace SocialBootstrapApi.ServiceInterface
 	{
 		public string UserId { get; set; }
 		public string ScreenName { get; set; }
+		public int Skip { get; set; }
 	}
 
 	//Response DTO
@@ -49,6 +50,7 @@ namespace SocialBootstrapApi.ServiceInterface
 			//Create a unique cache key for this request
 			var cacheKey = "cache:User:" 
 				+ (hasId ? "Id:" + request.UserId : "Name:" + request.ScreenName) 
+				+ ":skip:" + request.Skip
 				+ ":followers";
 
 			//This caches and returns the most optimal result the browser can handle, e.g.
@@ -56,8 +58,8 @@ namespace SocialBootstrapApi.ServiceInterface
 			return base.RequestContext.ToOptimizedResultUsingCache(Cache, cacheKey, () =>
 				new TwitterFollowersResponse {
 					Results = hasId
-						? TwitterGateway.GetFollowers(ulong.Parse(request.UserId))
-						: TwitterGateway.GetFollowers(request.ScreenName)
+						? TwitterGateway.GetFollowers(ulong.Parse(request.UserId), request.Skip)
+						: TwitterGateway.GetFollowers(request.ScreenName, request.Skip)
 				});
 		}
 	}
