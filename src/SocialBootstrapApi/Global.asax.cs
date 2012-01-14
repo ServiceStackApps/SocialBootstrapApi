@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
+using ServiceStack.MiniProfiler;
 
 namespace SocialBootstrapApi
 {
@@ -41,11 +42,15 @@ namespace SocialBootstrapApi
 		protected void Application_BeginRequest(object sender, EventArgs e)
 		{
 			Console.WriteLine("Application_BeginRequest");
+			
+			if (Request.IsLocal)
+				Profiler.Start();
 		}
 
 		protected void Application_EndRequest(object sender, EventArgs e)
 		{
 			Console.WriteLine("Application_EndRequest");
+			Profiler.Stop();
 		}
 	}
 }
