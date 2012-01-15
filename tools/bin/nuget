@@ -1,0 +1,3 @@
+#!/bin/sh -e
+exec /usr/bin/mono-sgen --runtime=v4.0 $(dirname $0)/../lib/nuget/NuGet.exe "$@"
+
