@@ -16,15 +16,11 @@ namespace SocialBootstrapApi.App_Start
 		public ISessionFactory SessionFactory { get; set; }
 
 		private ISession session;
-		public ISession Session
+		public new ISession Session
 		{
 			get
 			{
-				return session ?? (session =
-					SessionFactory.GetOrCreateSession(
-						new ServiceStack.WebHost.Endpoints.Extensions.HttpRequestWrapper(null, System.Web.HttpContext.Current.Request),
-						new ServiceStack.WebHost.Endpoints.Extensions.HttpResponseWrapper(System.Web.HttpContext.Current.Response)
-					));
+				return session ?? (session = SessionFactory.GetOrCreateSession());
 			}
 		}
 
@@ -32,22 +28,24 @@ namespace SocialBootstrapApi.App_Start
 		{
 			get
 			{
-				var cookie = base.Request.Cookies.Get(SessionFeature.PermanentSessionId);
-				return cookie == null ? null : AuthService.GetSessionKey(cookie.Value);
+				var sessionId = SessionFeature.GetSessionId();
+				return sessionId == null ? null : SessionFeature.GetSessionKey(sessionId);
 			}
 		}
 
-		private CustomUserSession authUserSession;
-		protected CustomUserSession AuthUserSession
+		private CustomUserSession userSession;
+		protected CustomUserSession UserSession
 		{
 			get
 			{
-				if (authUserSession != null) return authUserSession;
+				if (userSession != null) return userSession;
 				if (SessionKey != null)
-					authUserSession = this.Cache.Get<CustomUserSession>(SessionKey);
+					userSession = this.Cache.Get<CustomUserSession>(SessionKey);
+				else
+					SessionFeature.CreateSessionIds();
 
 				var unAuthorizedSession = new CustomUserSession();
-				return authUserSession ?? (authUserSession = unAuthorizedSession);
+				return userSession ?? (userSession = unAuthorizedSession);
 			}
 		}
 		

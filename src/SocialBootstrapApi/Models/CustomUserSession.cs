@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Text;
 using ServiceStack.Common;
@@ -15,42 +16,39 @@ namespace SocialBootstrapApi.Models
 	/// </summary>
 	public class CustomUserSession : AuthUserSession
 	{
-		public bool IsAuthenticated
-		{
-			get { return base.IsAnyAuthorized(); }
-		}
-
 		public string CustomId { get; set; }
 
-		public override void OnSaveUserAuth(IServiceBase oAuthService, string userAuthId)
+		public override void OnAuthenticated(IServiceBase authService, IAuthSession session, IOAuthTokens tokens, Dictionary<string, string> authInfo)
 		{
+			base.OnAuthenticated(authService, session, tokens, authInfo);
+
 			//Populate all matching fields from this session to your own custom User table
-			var user = this.TranslateTo<User>();
-			user.Id = int.Parse(this.UserAuthId);
-			user.GravatarImageUrl64 = !this.Email.IsNullOrEmpty()
-				? CreateGravatarUrl(this.Email, 64)
+			var user = session.TranslateTo<User>();
+			user.Id = int.Parse(session.UserAuthId);
+			user.GravatarImageUrl64 = !session.Email.IsNullOrEmpty()
+				? CreateGravatarUrl(session.Email, 64)
 				: null;
 
-			foreach (var authToken in ProviderOAuthAccess)
+			foreach (var authToken in session.ProviderOAuthAccess)
 			{
-				if (authToken.Provider == FacebookAuthConfig.Name)
+				if (authToken.Provider == FacebookAuthProvider.Name)
 				{
 					user.FacebookName = authToken.DisplayName;
 					user.FacebookFirstName = authToken.FirstName;
 					user.FacebookLastName = authToken.LastName;
 					user.FacebookEmail = authToken.Email;
 				}
-				else if (authToken.Provider == TwitterAuthConfig.Name)
+				else if (authToken.Provider == TwitterAuthProvider.Name)
 				{
 					user.TwitterName = authToken.DisplayName;
 				}
 			}
 
 			//Resolve the DbFactory from the IOC and persist the user info
-			oAuthService.TryResolve<IDbConnectionFactory>().Exec(dbCmd => dbCmd.Save(user));
+			authService.TryResolve<IDbConnectionFactory>().Exec(dbCmd => dbCmd.Save(user));
 		}
 
-		private static string CreateGravatarUrl(string email, int size=64)
+		private static string CreateGravatarUrl(string email, int size = 64)
 		{
 			var md5 = MD5.Create();
 			var md5HadhBytes = md5.ComputeHash(email.ToUtf8Bytes());
@@ -61,6 +59,6 @@ namespace SocialBootstrapApi.Models
 
 			string gravatarUrl = "http://www.gravatar.com/avatar/{0}?d=mm&s={1}".Fmt(sb, size);
 			return gravatarUrl;
-		}
+		}		
 	}
 }

@@ -147,11 +147,11 @@ namespace SocialBootstrapApi.App_Start
 
 			//Register all Authentication methods you want to enable for this web app.
 			AuthFeature.Init(this, () => new CustomUserSession(),
-				new AuthConfig[] {
-					new CredentialsAuthConfig(), //HTML Form post of UserName/Password credentials
-					new TwitterAuthConfig(appSettings),  //Sign-in with Twitter
-					new FacebookAuthConfig(appSettings), //Sign-in with Facebook
-					new BasicAuthConfig(), //Sign-in with Basic Auth
+				new IAuthProvider[] {
+					new CredentialsAuthProvider(), //HTML Form post of UserName/Password credentials
+					new TwitterAuthProvider(appSettings),  //Sign-in with Twitter
+					new FacebookAuthProvider(appSettings), //Sign-in with Facebook
+					new BasicAuthProvider(), //Sign-in with Basic Auth
 				});
 
 			//Provide service for new users to register so they can login with supplied credentials.

@@ -163,7 +163,7 @@
             and parsing member names and enum values in a case-insensitive manner.
             </summary>
         </member>
-        <member name="F:ServiceStack.Text.JsConfig`1.SerializeFn">
+        <member name="F:ServiceStack.Text.JsConfig`1.serializeFn">
             <summary>
             Define custom serialization fn for BCL Structs
             </summary>

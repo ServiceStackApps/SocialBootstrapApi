@@ -1017,6 +1017,12 @@
             <param name="httpRes"></param>
             <returns></returns>
         </member>
+        <member name="M:ServiceStack.CacheAccess.ISessionFactory.GetOrCreateSession">
+            <summary>
+            Gets the session for this request, creates one if it doesn't exist.
+            Only for ASP.NET apps. Uses the HttpContext.Current singleton.
+            </summary>
+        </member>
         <member name="T:ServiceStack.ServiceHost.IHasResponseFilter">
             <summary>
             This interface can be implemented by an attribute
