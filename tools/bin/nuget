@@ -1,0 +1,4 @@
+#!/bin/sh -e
+MONO=$(which mono-sgen)
+exec $MONO --runtime=v4.0 $(dirname $0)/../lib/nuget/NuGet.exe "$@"
+
