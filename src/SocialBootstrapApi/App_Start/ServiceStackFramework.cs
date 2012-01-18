@@ -73,11 +73,6 @@ namespace SocialBootstrapApi.App_Start
 
 			//Register all your dependencies: 
 
-			//Create a DB Factory configured to access the UserAuth SQL Server DB
-			container.Register<IDbConnectionFactory>(
-				new OrmLiteConnectionFactory(ConfigUtils.GetConnectionString("UserAuth"),
-					SqlServerOrmLiteDialectProvider.Instance));
-
 			//Register a external dependency-free 
 			container.Register<ICacheClient>(new MemoryCacheClient());
 			//Configure an alt. distributed peristed cache that survives AppDomain restarts. e.g Redis
@@ -91,8 +86,8 @@ namespace SocialBootstrapApi.App_Start
 			container.Register(new TodoRepository());
 			container.Register<ITwitterGateway>(new TwitterGateway());
 
-			//Define the Auth modes you support and where to store it
-			ConfigureAuthAndRegistrationServices(container);
+			//Enable Authentication an Registration
+			ConfigureAuth(container);
 
 			//Configure Custom User Defined REST Paths for your services
 			ConfigureServiceRoutes();
@@ -111,12 +106,6 @@ namespace SocialBootstrapApi.App_Start
 		private void ConfigureServiceRoutes()
 		{
 			Routes
-
-				//Using ServiceStack's built-in Auth and Registration services
-				.Add<Auth>("/auth")
-				.Add<Auth>("/auth/{provider}")
-				.Add<Registration>("/register")
-
 				//Hello World RPC example
 				.Add<Hello>("/hello")
 				.Add<Hello>("/hello/{Name*}")
@@ -140,33 +129,48 @@ namespace SocialBootstrapApi.App_Start
 			;
 		}
 
-		private void ConfigureAuthAndRegistrationServices(Funq.Container container)
+		private void ConfigureAuth(Funq.Container container)
 		{
-			//Enable and register existing services you want this host to make use of.
+			//Hook up routes for ServiceStack's built-in Auth and Registration services
+		    Routes
+		        .Add<Auth>("/auth")
+		        .Add<Auth>("/auth/{provider}") 
+		        .Add<Registration>("/register");
+
+            //Enable and register existing services you want this host to make use of.
+            //Look in Web.config for examples on how to configure your oauth proviers, e.g. oauth.facebook.AppId, etc.
 			var appSettings = new ConfigurationResourceManager();
 
-			//Register all Authentication methods you want to enable for this web app.
-			AuthFeature.Init(this, () => new CustomUserSession(),
+			//Register all Authentication methods you want to enable for this web app.            
+			AuthFeature.Init(this, 
+                () => new CustomUserSession(), //Use your own typed Custom UserSession type
 				new IAuthProvider[] {
-					new CredentialsAuthProvider(), //HTML Form post of UserName/Password credentials
+					new CredentialsAuthProvider(),         //HTML Form post of UserName/Password credentials
 					new TwitterAuthProvider(appSettings),  //Sign-in with Twitter
 					new FacebookAuthProvider(appSettings), //Sign-in with Facebook
-					new BasicAuthProvider(), //Sign-in with Basic Auth
+					new BasicAuthProvider(),               //Sign-in with Basic Auth
 				});
 
 			//Provide service for new users to register so they can login with supplied credentials.
 			RegistrationFeature.Init(this);
 
-			//override the default registration validation
+			//override the default registration validation with your own custom implementation
 			container.RegisterAs<CustomRegistrationValidator, IValidator<Registration>>();
+
+            //Create a DB Factory configured to access the UserAuth SQL Server DB
+            container.Register<IDbConnectionFactory>(
+                new OrmLiteConnectionFactory(ConfigUtils.GetConnectionString("UserAuth"), //ConnectionString in Web.Config
+                    SqlServerOrmLiteDialectProvider.Instance));
 
 			//Store User Data into the referenced SqlServer database
 			container.Register<IUserAuthRepository>(c =>
-				new OrmLiteAuthRepository(c.Resolve<IDbConnectionFactory>()));
+				new OrmLiteAuthRepository(c.Resolve<IDbConnectionFactory>())); //Use OrmLite DB Connection to persist the UserAuth and AuthProvider info
 
-			var authRepo = (OrmLiteAuthRepository)container.Resolve<IUserAuthRepository>();
-			authRepo.DropAndReCreateTables(); //Drop and re-create all Auth and registration tables
-			//authRepo.CreateMissingTables(); //Create only the missing tables
+			var authRepo = (OrmLiteAuthRepository)container.Resolve<IUserAuthRepository>(); //If using and RDBMS to persist UserAuth, we must create required tables
+            if (appSettings.Get("RecreateTables", false))
+			    authRepo.DropAndReCreateTables(); //Drop and re-create all Auth and registration tables
+            else
+                authRepo.CreateMissingTables();   //Create only the missing tables
 		}
 
 		public static void Start()
