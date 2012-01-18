@@ -59,75 +59,75 @@ namespace SocialBootstrapApi.App_Start
 	public class AppHost : AppHostBase
 	{
 		public AppHost() //Tell ServiceStack the name and where to find your web services  
-			: base("StarterTemplate ASP.NET Host", typeof(HelloService).Assembly) { }
+	        : base("StarterTemplate ASP.NET Host", typeof(HelloService).Assembly) { }
 
-		public override void Configure(Funq.Container container)
-		{
-			App.Host = this;
+        public override void Configure(Funq.Container container)
+        {
+	        App.Host = this;
 
-			//Set JSON web services to return idiomatic JSON camelCase properties
-			ServiceStack.Text.JsConfig.EmitCamelCaseNames = true;
+	        //Set JSON web services to return idiomatic JSON camelCase properties
+	        ServiceStack.Text.JsConfig.EmitCamelCaseNames = true;
 
-			//Register Typed Config some services might need to access
-			container.Register(App.Config);
+	        //Register Typed Config some services might need to access
+	        container.Register(App.Config);
 
-			//Register all your dependencies: 
+	        //Register all your dependencies: 
 
-			//Register a external dependency-free 
-			container.Register<ICacheClient>(new MemoryCacheClient());
-			//Configure an alt. distributed peristed cache that survives AppDomain restarts. e.g Redis
-			//container.Register<IRedisClientsManager>(c => new PooledRedisClientManager("localhost:6379"));
+	        //Register a external dependency-free 
+	        container.Register<ICacheClient>(new MemoryCacheClient());
+	        //Configure an alt. distributed peristed cache that survives AppDomain restarts. e.g Redis
+	        //container.Register<IRedisClientsManager>(c => new PooledRedisClientManager("localhost:6379"));
 
-			//Create you're own custom User table
-			var dbFactory = container.Resolve<IDbConnectionFactory>();
-			dbFactory.Exec(dbCmd => dbCmd.CreateTable<User>(overwrite: true));
+            //Enable Authentication an Registration
+            ConfigureAuth(container);
 
-			//Register application services
-			container.Register(new TodoRepository());
-			container.Register<ITwitterGateway>(new TwitterGateway());
+	        //Create you're own custom User table
+	        var dbFactory = container.Resolve<IDbConnectionFactory>();
+	        dbFactory.Exec(dbCmd => dbCmd.CreateTable<User>(overwrite: true));
 
-			//Enable Authentication an Registration
-			ConfigureAuth(container);
+	        //Register application services
+	        container.Register(new TodoRepository());
+	        container.Register<ITwitterGateway>(new TwitterGateway());
 
-			//Configure Custom User Defined REST Paths for your services
-			ConfigureServiceRoutes();
+	        //Configure Custom User Defined REST Paths for your services
+	        ConfigureServiceRoutes();
 
-			//Change the default ServiceStack configuration
-			//const Feature disableFeatures = Feature.Jsv | Feature.Soap;
-			SetConfig(new EndpointHostConfig {
-				//EnableFeatures = Feature.All.Remove(disableFeatures),
-				DebugMode = true, //Show StackTraces in service responses during development
-			});
+	        //Change the default ServiceStack configuration
+	        //const Feature disableFeatures = Feature.Jsv | Feature.Soap;
+	        SetConfig(new EndpointHostConfig {
+		        //EnableFeatures = Feature.All.Remove(disableFeatures),
+		        DebugMode = true, //Show StackTraces in service responses during development
+	        });
 
-			//Set MVC to use the same Funq IOC as ServiceStack
-			ControllerBuilder.Current.SetControllerFactory(new FunqControllerFactory(container));
-		}
+	        //Set MVC to use the same Funq IOC as ServiceStack
+	        ControllerBuilder.Current.SetControllerFactory(new FunqControllerFactory(container));
+        }
 
-		private void ConfigureServiceRoutes()
-		{
-			Routes
-				//Hello World RPC example
-				.Add<Hello>("/hello")
-				.Add<Hello>("/hello/{Name*}")
+        private void ConfigureServiceRoutes()
+        {
+	        Routes
+		        //Hello World RPC example
+		        .Add<Hello>("/hello")
+		        .Add<Hello>("/hello/{Name*}")
 
-				//Simple REST TODO example
-				.Add<Todo>("/todos")
-				.Add<Todo>("/todos/{Id}")
+		        //Simple REST TODO example
+		        .Add<Todo>("/todos")
+		        .Add<Todo>("/todos/{Id}")
 
-				//Custom services for this application
-				.Add<Users>("/users/{UserIds}")
-				.Add<UserProfile>("/profile")
+		        //Custom services for this application
+		        .Add<Users>("/users/{UserIds}")
+		        .Add<UserProfile>("/profile")
 
-				//Twitter related services
-				.Add<TwitterTweets>("/twitter/{ScreenName}/tweets")
-				.Add<TwitterFriends>("/twitter/id/{UserId}/friends")
-				.Add<TwitterFriends>("/twitter/{ScreenName}/friends")
-				.Add<TwitterFollowers>("/twitter/id/{UserId}/followers")
-				.Add<TwitterFollowers>("/twitter/{ScreenName}/followers")
-				.Add<TwitterUsers>("/twitter/ids/{UserIds}") //userIds serparated by ','
-				.Add<TwitterUsers>("/twitter/{ScreenNames}") //screenNames serparated by ','
-			;
-		}
+		        //Twitter related services
+		        .Add<TwitterTweets>("/twitter/{ScreenName}/tweets")
+		        .Add<TwitterFriends>("/twitter/id/{UserId}/friends")
+		        .Add<TwitterFriends>("/twitter/{ScreenName}/friends")
+		        .Add<TwitterFollowers>("/twitter/id/{UserId}/followers")
+		        .Add<TwitterFollowers>("/twitter/{ScreenName}/followers")
+		        .Add<TwitterUsers>("/twitter/ids/{UserIds}") //userIds serparated by ','
+		        .Add<TwitterUsers>("/twitter/{ScreenNames}") //screenNames serparated by ','
+	        ;
+        }
 
         private void ConfigureAuth(Funq.Container container)
         {
