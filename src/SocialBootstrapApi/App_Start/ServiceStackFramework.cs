@@ -129,8 +129,8 @@ namespace SocialBootstrapApi.App_Start
 			;
 		}
 
-		private void ConfigureAuth(Funq.Container container)
-		{
+        private void ConfigureAuth(Funq.Container container)
+        {
             //Hook up routes for ServiceStack's built-in Auth and Registration services
             Routes
                 .Add<Auth>("/auth")
@@ -171,7 +171,7 @@ namespace SocialBootstrapApi.App_Start
 	            authRepo.DropAndReCreateTables(); //Drop and re-create all Auth and registration tables
             else
                 authRepo.CreateMissingTables();   //Create only the missing tables
-		}
+        }
 
 		public static void Start()
 		{
