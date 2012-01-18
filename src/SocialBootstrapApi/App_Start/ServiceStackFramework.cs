@@ -131,44 +131,44 @@ namespace SocialBootstrapApi.App_Start
 
 		private void ConfigureAuth(Funq.Container container)
 		{
-			//Hook up routes for ServiceStack's built-in Auth and Registration services
-		    Routes
-		        .Add<Auth>("/auth")
-		        .Add<Auth>("/auth/{provider}") 
-		        .Add<Registration>("/register");
+            //Hook up routes for ServiceStack's built-in Auth and Registration services
+            Routes
+                .Add<Auth>("/auth")
+                .Add<Auth>("/auth/{provider}") 
+                .Add<Registration>("/register");
 
             //Enable and register existing services you want this host to make use of.
             //Look in Web.config for examples on how to configure your oauth proviers, e.g. oauth.facebook.AppId, etc.
-			var appSettings = new ConfigurationResourceManager();
+            var appSettings = new ConfigurationResourceManager();
 
-			//Register all Authentication methods you want to enable for this web app.            
-			AuthFeature.Init(this, 
+            //Register all Authentication methods you want to enable for this web app.            
+            AuthFeature.Init(this, 
                 () => new CustomUserSession(), //Use your own typed Custom UserSession type
-				new IAuthProvider[] {
-					new CredentialsAuthProvider(),         //HTML Form post of UserName/Password credentials
-					new TwitterAuthProvider(appSettings),  //Sign-in with Twitter
-					new FacebookAuthProvider(appSettings), //Sign-in with Facebook
-					new BasicAuthProvider(),               //Sign-in with Basic Auth
-				});
+                new IAuthProvider[] {
+                    new CredentialsAuthProvider(),         //HTML Form post of UserName/Password credentials
+                    new TwitterAuthProvider(appSettings),  //Sign-in with Twitter
+                    new FacebookAuthProvider(appSettings), //Sign-in with Facebook
+                    new BasicAuthProvider(),               //Sign-in with Basic Auth
+                });
 
-			//Provide service for new users to register so they can login with supplied credentials.
-			RegistrationFeature.Init(this);
+            //Provide service for new users to register so they can login with supplied credentials.
+            RegistrationFeature.Init(this);
 
-			//override the default registration validation with your own custom implementation
-			container.RegisterAs<CustomRegistrationValidator, IValidator<Registration>>();
+            //override the default registration validation with your own custom implementation
+            container.RegisterAs<CustomRegistrationValidator, IValidator<Registration>>();
 
             //Create a DB Factory configured to access the UserAuth SQL Server DB
             container.Register<IDbConnectionFactory>(
                 new OrmLiteConnectionFactory(ConfigUtils.GetConnectionString("UserAuth"), //ConnectionString in Web.Config
                     SqlServerOrmLiteDialectProvider.Instance));
 
-			//Store User Data into the referenced SqlServer database
-			container.Register<IUserAuthRepository>(c =>
-				new OrmLiteAuthRepository(c.Resolve<IDbConnectionFactory>())); //Use OrmLite DB Connection to persist the UserAuth and AuthProvider info
+            //Store User Data into the referenced SqlServer database
+            container.Register<IUserAuthRepository>(c =>
+                new OrmLiteAuthRepository(c.Resolve<IDbConnectionFactory>())); //Use OrmLite DB Connection to persist the UserAuth and AuthProvider info
 
-			var authRepo = (OrmLiteAuthRepository)container.Resolve<IUserAuthRepository>(); //If using and RDBMS to persist UserAuth, we must create required tables
+            var authRepo = (OrmLiteAuthRepository)container.Resolve<IUserAuthRepository>(); //If using and RDBMS to persist UserAuth, we must create required tables
             if (appSettings.Get("RecreateTables", false))
-			    authRepo.DropAndReCreateTables(); //Drop and re-create all Auth and registration tables
+	            authRepo.DropAndReCreateTables(); //Drop and re-create all Auth and registration tables
             else
                 authRepo.CreateMissingTables();   //Create only the missing tables
 		}
