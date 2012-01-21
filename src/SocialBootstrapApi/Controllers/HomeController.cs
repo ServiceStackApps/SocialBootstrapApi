@@ -1,13 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using ServiceStack.ServiceInterface;
-using ServiceStack.ServiceInterface.Auth;
-using SocialBootstrapApi.App_Start;
-using SocialBootstrapApi.Models;
-using ControllerBase = SocialBootstrapApi.App_Start.ControllerBase;
+﻿using System.Web.Mvc;
 
 namespace SocialBootstrapApi.Controllers
 {

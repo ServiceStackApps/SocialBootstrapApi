@@ -29,76 +29,78 @@
     <link rel="apple-touch-icon" sizes="114x114" href="@Url.Content("~/Content/img/bootstrap-apple-114x114.png")">
   </head> 
 
-  <body>
-<div id="fb-root"></div>
-<div id="fb-root"></div>
+	<body>
+		
+		@ServiceStack.Mvc.MiniProfiler.MiniProfiler.RenderIncludes()
 
-    <div class="topbar">
-      <div class="fill">
-        <div class="container">
-          <a class="brand" href="https://github.com/ServiceStack/SocialBootstrapApi">Bootstrap Stack</a>
-			<ul class="nav">
-				<li class="active"><a href="@Url.Action("Index", "Home")">Home</a></li>
-				<li><a href="@Url.Action("Features", "Home")">Features</a></li>
-				<li><a href="@Url.Action("About", "Home")">About</a></li>
-			</ul>
+		<div id="fb-root"></div>
+
+		<div class="topbar">
+			<div class="fill">
+				<div class="container">
+					<a class="brand" href="https://github.com/ServiceStack/SocialBootstrapApi">Bootstrap Stack</a>
+					<ul class="nav">
+						<li class="active"><a href="@Url.Action("Index", "Home")">Home</a></li>
+						<li><a href="@Url.Action("Features", "Home")">Features</a></li>
+						<li><a href="@Url.Action("About", "Home")">About</a></li>
+					</ul>
             
-			<div id="login">
-			    <div id="signed-out">
-				    <form action="@Url.Content("~/api/auth/credentials")" class="pull-right">
-					    <input class="input-small" name="userName" type="text" placeholder="Username">
-					    <input class="input-small" name="password" type="password" placeholder="Password">
-					    <button class="btn" type="submit">Sign in</button>
-				    </form>
-			    </div>
+					<div id="login">
+						<div id="signed-out">
+							<form action="@Url.Content("~/api/auth/credentials")" class="pull-right">
+								<input class="input-small" name="userName" type="text" placeholder="Username">
+								<input class="input-small" name="password" type="password" placeholder="Password">
+								<button class="btn" type="submit">Sign in</button>
+							</form>
+						</div>
 
-			    <ul id="signed-in" class="nav secondary-nav" data-dropdown="dropdown">				
-				    <li class="dropdown" data-dropdown="dropdown">
-					    <a href="#" class="dropdown-toggle"></a>
-					    <ul class="dropdown-menu">					
-						    <li class="divider"></li>
-						    <li><a href="#" data-cmd="signOut">Sign out</a></li>
-					    </ul>
-				    </li>				
-			    </ul>
+						<ul id="signed-in" class="nav secondary-nav" data-dropdown="dropdown">				
+							<li class="dropdown" data-dropdown="dropdown">
+								<a href="#" class="dropdown-toggle"></a>
+								<ul class="dropdown-menu">					
+									<li class="divider"></li>
+									<li><a href="#" data-cmd="signOut">Sign out</a></li>
+								</ul>
+							</li>				
+						</ul>
+					</div>
+
+				</div>
+			</div>
+		</div>
+
+		<div class="container">
+
+			<div class="content">
+				<div class="page-header">
+					@if (this.IsSectionDefined("Title"))
+					{
+						@RenderSection( "Title", required:false);
+					}
+					else
+					{
+						<h1>Bootstrap ServiceStack MVC Backbone.js<small> with Twitter and Facebook auth built-in</small></h1>
+					}
+				</div>
+				<div class="row"> 
+					<div class="span11">
+						@RenderBody()
+					</div>
+					<div class="span5">
+						@RenderSection("SideBar", required:false)
+					</div>
+				</div>
 			</div>
 
-		</div>
-      </div>
-    </div>
+			<footer>
+				<p>&copy; Company 2011</p>
+			</footer>
 
-    <div class="container">
+		</div> <!-- /container -->
 
-      <div class="content">
-        <div class="page-header">
-            @if (this.IsSectionDefined("Title"))
-			{
-				@RenderSection( "Title", required:false);
-			}
-            else
-			{
-				<h1>Bootstrap ServiceStack MVC Backbone.js<small> with Twitter and Facebook auth built-in</small></h1>
-			}
-        </div>
-        <div class="row"> 
-          <div class="span11">
-            @RenderBody()
-          </div>
-          <div class="span5">
-				@RenderSection("SideBar", required:false)
-          </div>
-        </div>
-      </div>
+		<a id="by-link" href="https://github.com/ServiceStack/SocialBootstrapApi">Social Bootstrap Api</a>
 
-      <footer>
-        <p>&copy; Company 2011</p>
-      </footer>
-
-    </div> <!-- /container -->
-
-    <a id="by-link" href="https://github.com/ServiceStack/SocialBootstrapApi">Social Bootstrap Api</a>
-
-    @Assets.Scripts.Render()
-	@RenderSection("JavaScript", required:false)
-  </body>
+		@Assets.Scripts.Render()
+		@RenderSection("JavaScript", required:false)
+	</body>
 </html>
