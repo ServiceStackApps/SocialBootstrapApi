@@ -11,7 +11,6 @@
 		UnAuthorized: 401,
 		initialize: function ()
 		{
-			_.bindAll(this, "error", "trigger");  
 			this.handleClicks();
 		},
 		handleClicks: function ()
@@ -27,6 +26,9 @@
 
 				app.sendCmd(evt, args);
 			});
+		},
+		navigate: function(path) {
+		    this.routes.navigate(path);
 		},
 		route: function (evt) {
 		    var args = _.rest(arguments);
@@ -60,7 +62,7 @@
 		}
 	});
 	_.extend(app, Backbone.Events);
-    app.sendCmd = _.bind(app.sendCmd, app);
+	_.bindAll(app, "error", "trigger", "navigate", "sendCmd");  
     
 	var login = new app.Login();
 	var userProfile = new app.UserProfile({ login: login });
@@ -108,6 +110,7 @@
 	};
     _.each(app.models, function(model) {
         model.sendCmd = app.sendCmd;
+        model.navigate = app.navigate;
     })
 
 	app.views = {
@@ -133,7 +136,7 @@
     $(".tabs").tabs();
 
 
-    Backbone.history.start(); //{ pushState: true }
+    Backbone.history.start({ pushState: true }); //{ pushState: true }
     $(function () {
     });
 

@@ -53,7 +53,7 @@
             console.log("twitterTab:" + tab);
             this.set({ tab: tab });
             $(".tabs [href=#" + tab + "]").click();
-            this.sendCmd("navigate", [tab]);
+            this.navigate(tab);
         }
     });
 

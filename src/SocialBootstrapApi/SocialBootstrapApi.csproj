@@ -126,7 +126,7 @@
     <Compile Include="ServiceInterface\TwitterUsersService.cs" />
     <Compile Include="ServiceInterface\TodoService.cs" />
     <Compile Include="ServiceInterface\HelloService.cs" />
-    <Compile Include="App_Start\ServiceStackFramework.cs" />
+    <Compile Include="App_Start\AppHost.cs" />
     <Compile Include="ServiceInterface\UserAuths.cs" />
     <Compile Include="ServiceInterface\UserProfileService.cs" />
     <Compile Include="ServiceInterface\UsersService.cs" />
