@@ -5,7 +5,7 @@ using SocialBootstrapApi.Models;
 namespace SocialBootstrapApi.Controllers
 {
 	[ProfilingActionFilter]
-	public class ControllerBase : ControllerBase<CustomUserSession>
+	public class ControllerBase : ServiceStackController<CustomUserSession>
 	{
 		 
 	}

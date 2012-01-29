@@ -4,6 +4,22 @@
         <name>ServiceStack.Common</name>
     </assembly>
     <members>
+        <member name="M:ServiceStack.Common.StreamExtensions.Compress(System.String,System.String)">
+            <summary>
+            Compresses the specified text using the default compression method: Deflate
+            </summary>
+            <param name="text">The text.</param>
+            <param name="compressionType">Type of the compression.</param>
+            <returns></returns>
+        </member>
+        <member name="M:ServiceStack.Common.StreamExtensions.Decompress(System.Byte[],System.String)">
+            <summary>
+            Decompresses the specified gz buffer using the default compression method: Inflate
+            </summary>
+            <param name="gzBuffer">The gz buffer.</param>
+            <param name="compressionType">Type of the compression.</param>
+            <returns></returns>
+        </member>
         <member name="T:ServiceStack.Validation.ValidationErrorResult">
             <summary>
             Encapsulates a validation result.
@@ -66,22 +82,6 @@
             <summary>
             Default MaxStringContentLength is 8k, and throws an exception when reached
             </summary>
-        </member>
-        <member name="M:ServiceStack.Common.StreamExtensions.Compress(System.String,System.String)">
-            <summary>
-            Compresses the specified text using the default compression method: Deflate
-            </summary>
-            <param name="text">The text.</param>
-            <param name="compressionType">Type of the compression.</param>
-            <returns></returns>
-        </member>
-        <member name="M:ServiceStack.Common.StreamExtensions.Decompress(System.Byte[],System.String)">
-            <summary>
-            Decompresses the specified gz buffer using the default compression method: Inflate
-            </summary>
-            <param name="gzBuffer">The gz buffer.</param>
-            <param name="compressionType">Type of the compression.</param>
-            <returns></returns>
         </member>
         <member name="M:ServiceStack.Common.Utils.CommandsUtils.ExecuteAsyncCommandExec(System.Collections.Generic.IEnumerable{ServiceStack.DesignPatterns.Command.ICommandExec})">
             <summary>
@@ -267,22 +267,6 @@
             </summary>
             <value>The error code.</value>
         </member>
-        <member name="M:ServiceStack.Common.EnumExtensions.ToDescription(System.Enum)">
-            <summary>
-            Gets the textual description of the enum if it has one. e.g.
-            
-            <code>
-            enum UserColors
-            {
-                [Description("Bright Red")]
-                BrightRed
-            }
-            UserColors.BrightRed.ToDescription();
-            </code>
-            </summary>
-            <param name="enum"></param>
-            <returns></returns>
-        </member>
         <member name="T:ServiceStack.Messaging.Rcon.ProcessingClient">
             <summary>
             Processing client used to interface with ServiceStack and allow a message to be processed.
@@ -416,6 +400,22 @@
             <summary>
             Exception thrown when attempting to send on a non-connected service client.
             </summary>
+        </member>
+        <member name="M:ServiceStack.Common.EnumExtensions.ToDescription(System.Enum)">
+            <summary>
+            Gets the textual description of the enum if it has one. e.g.
+            
+            <code>
+            enum UserColors
+            {
+                [Description("Bright Red")]
+                BrightRed
+            }
+            UserColors.BrightRed.ToDescription();
+            </code>
+            </summary>
+            <param name="enum"></param>
+            <returns></returns>
         </member>
         <member name="T:ServiceStack.Common.Support.InMemoryLogFactory">
             <summary>
