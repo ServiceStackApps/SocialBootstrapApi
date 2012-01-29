@@ -9,6 +9,7 @@ using ServiceStack.OrmLite.SqlServer;
 using ServiceStack.ServiceInterface;
 using ServiceStack.ServiceInterface.Auth;
 using ServiceStack.WebHost.Endpoints;
+using SocialBootstrapApi.Controllers;
 using SocialBootstrapApi.Logic;
 using SocialBootstrapApi.Models;
 using SocialBootstrapApi.ServiceInterface;
@@ -102,6 +103,7 @@ namespace SocialBootstrapApi.App_Start
 
 	        //Set MVC to use the same Funq IOC as ServiceStack
 	        ControllerBuilder.Current.SetControllerFactory(new FunqControllerFactory(container));
+			ServiceStackController.CatchAllController = reqCtx => container.TryResolve<HomeController>();
         }
 
         private void ConfigureServiceRoutes()
