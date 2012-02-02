@@ -14,7 +14,7 @@ using SocialBootstrapApi.Logic;
 using SocialBootstrapApi.Models;
 using SocialBootstrapApi.ServiceInterface;
 
-[assembly: WebActivator.PreApplicationStartMethod(typeof(SocialBootstrapApi.App_Start.AppHost), "Start")]
+[assembly: WebActivator.PreApplicationStartMethod(typeof(SocialBootstrapApi.AppHost), "Start")]
 
 
 /**
@@ -32,46 +32,63 @@ using SocialBootstrapApi.ServiceInterface;
  * Auto-Generated Metadata API page for all services available at: /api/metadata
  */
 
-public static class App
+namespace SocialBootstrapApi
 {
-	public static AppConfig Config = new AppConfig();
-
-	public static IAppHost Host;
-}
-
-//Hold App wide configuration you want to accessible by your services
-public class AppConfig
-{
-}
-
-//Provide extra validation for the registration process
-public class CustomRegistrationValidator : RegistrationValidator
-{
-	public CustomRegistrationValidator()
+	//Hold App wide configuration you want to accessible by your services
+	public class AppConfig
 	{
-		RuleSet(ApplyTo.Post, () => {
-			RuleFor(x => x.DisplayName).NotEmpty();
-		});
-	}
-}
+		public AppConfig(IResourceManager appSettings)
+		{
+			this.Env = appSettings.Get("Env", Env.Local);
+			this.EnableCdn = appSettings.Get("EnableCdn", false);
+			this.CdnPrefix = appSettings.Get("CdnPrefix", "");
+		}
 
-namespace SocialBootstrapApi.App_Start
-{
+		public Env Env { get; set; }
+		public bool EnableCdn { get; set; }
+		public string CdnPrefix { get; set; }
+		public bool DebugScripts
+		{
+			get { return Env.In(Env.Local, Env.Dev); }
+		}
+	}
+
+	public enum Env
+	{
+		Local,
+		Dev,
+		Test,
+		Prod,
+	}
+
+	//Provide extra validation for the registration process
+	public class CustomRegistrationValidator : RegistrationValidator
+	{
+		public CustomRegistrationValidator()
+		{
+			RuleSet(ApplyTo.Post, () => {
+				RuleFor(x => x.DisplayName).NotEmpty();
+			});
+		}
+	}
+	
 	//The ServiceStack AppHost
 	public class AppHost : AppHostBase
 	{
 		public AppHost() //Tell ServiceStack the name and where to find your web services  
 	        : base("StarterTemplate ASP.NET Host", typeof(HelloService).Assembly) { }
 
+		public static AppConfig Config;
+
         public override void Configure(Funq.Container container)
         {
-	        App.Host = this;
-
 	        //Set JSON web services to return idiomatic JSON camelCase properties
 	        ServiceStack.Text.JsConfig.EmitCamelCaseNames = true;
 
 	        //Register Typed Config some services might need to access
-	        container.Register(App.Config);
+        	var appSettings = new AppSettings();
+			Config = new AppConfig(appSettings);
+			container.Register(Config);
 
 	        //Register all your dependencies: 
 
@@ -170,7 +187,7 @@ namespace SocialBootstrapApi.App_Start
                 new OrmLiteAuthRepository(c.Resolve<IDbConnectionFactory>())); //Use OrmLite DB Connection to persist the UserAuth and AuthProvider info
 
             var authRepo = (OrmLiteAuthRepository)container.Resolve<IUserAuthRepository>(); //If using and RDBMS to persist UserAuth, we must create required tables
-            if (appSettings.Get("RecreateTables", false))
+            if (appSettings.Get("RecreateAuthTables", false))
 	            authRepo.DropAndReCreateTables(); //Drop and re-create all Auth and registration tables
             else
                 authRepo.CreateMissingTables();   //Create only the missing tables

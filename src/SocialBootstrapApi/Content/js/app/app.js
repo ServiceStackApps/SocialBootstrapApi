@@ -1,13 +1,14 @@
 /// <reference path="base.js" />
 /// <reference path="login.js" />
-/// <reference path="register.js" />
+/// <reference path="register.js" /> 
 /// <reference path="userprofile.js" />
 /// <reference path="twitter.js" />
-(function (root)
+(function (root) 
 {
 	var app = root.App;
 
 	_.extend(app, {
+	    baseUrl: window.BASE_URL,
 		UnAuthorized: 401,
 		initialize: function ()
 		{

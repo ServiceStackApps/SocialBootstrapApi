@@ -3,7 +3,6 @@ using ServiceStack.Common;
 using ServiceStack.OrmLite;
 using ServiceStack.ServiceInterface;
 using ServiceStack.ServiceInterface.ServiceModel;
-using SocialBootstrapApi.App_Start;
 using SocialBootstrapApi.Models;
 
 namespace SocialBootstrapApi.ServiceInterface

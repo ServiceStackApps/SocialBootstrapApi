@@ -1,12 +1,4 @@
-﻿@{
-	Assets.Stylesheets.Reference("~/Content/css/bootstrap.css");
-	Assets.Stylesheets.Reference("~/Content/default.css");
-    Assets.Scripts.Reference("~/Content/js/jquery-1.7.js");
-    Assets.Scripts.Reference("~/Content/js/bootstrap-dropdown.js");
-    Assets.Scripts.Reference("~/Content/js/bootstrap-tabs.js");
-    Assets.Scripts.Reference("~/Content/js/app/app.js");
-}
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="utf-8">
@@ -20,7 +12,8 @@
     <![endif]-->
 
     <!-- Le styles -->
-    @Assets.Stylesheets.Render()
+    @Html.Css("~/Content/css/bootstrap.css")
+    @Html.Css("~/Content/default.css")
 
     <!-- Le fav and touch icons -->
     <link rel="shortcut icon" href="@Url.Content("~/favicon.ico")">
@@ -30,8 +23,6 @@
   </head> 
 
 	<body>
-		
-		@ServiceStack.Mvc.MiniProfiler.MiniProfiler.RenderIncludes()
 
 		<div id="fb-root"></div>
 
@@ -73,21 +64,21 @@
 
 			<div class="content">
 				<div class="page-header">
-					@if (this.IsSectionDefined("Title"))
-					{
-						@RenderSection( "Title", required:false);
-					}
-					else
-					{
-						<h1>Bootstrap ServiceStack MVC Backbone.js<small> with Twitter and Facebook auth built-in</small></h1>
-					}
+	 @if (this.IsSectionDefined("Title"))
+     {
+		@RenderSection("Title", required: false);
+     }
+     else
+     {
+		<h1>Bootstrap ServiceStack MVC Backbone.js<small> with Twitter and Facebook auth built-in</small></h1>
+     }
 				</div>
 				<div class="row"> 
 					<div class="span11">
 						@RenderBody()
 					</div>
 					<div class="span5">
-						@RenderSection("SideBar", required:false)
+						@RenderSection("SideBar", required: false)
 					</div>
 				</div>
 			</div>
@@ -99,8 +90,16 @@
 		</div> <!-- /container -->
 
 		<a id="by-link" href="https://github.com/ServiceStack/SocialBootstrapApi">Social Bootstrap Api</a>
+        
+		<script type="text/javascript">
+		    window.BASE_URL = '@Url.Content("~")';
+		</script>
 
-		@Assets.Scripts.Render()
-		@RenderSection("JavaScript", required:false)
+		@ServiceStack.Mvc.MiniProfiler.MiniProfiler.RenderIncludes()
+        
+        @Html.Js("~/Content/js/jquery-1.7.js", "http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js", AppHost.Config.DebugScripts)
+		@Html.RenderJsBundle("~/Content/js/app.bundle.txt", AppHost.Config.DebugScripts)
+
+		@RenderSection("JavaScript", required: false)
 	</body>
 </html>

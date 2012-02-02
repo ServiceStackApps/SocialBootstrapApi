@@ -267,6 +267,11 @@
             </summary>
             <value>The error code.</value>
         </member>
+        <member name="P:ServiceStack.ServiceClient.Web.WcfServiceClient.StoreCookies">
+            <summary>
+            Specifies if cookies should be stored
+            </summary>
+        </member>
         <member name="T:ServiceStack.Messaging.Rcon.ProcessingClient">
             <summary>
             Processing client used to interface with ServiceStack and allow a message to be processed.
@@ -477,6 +482,59 @@
             </summary>
             <param name="action">The action.</param>
             <returns></returns>
+        </member>
+        <member name="T:ServiceStack.ServiceClient.Web.CookieManagerEndpointBehavior">
+            <summary>
+            Adds the singleton instance of <see cref="T:ServiceStack.ServiceClient.Web.CookieManagerMessageInspector"/> to an endpoint on the client.
+            </summary>
+            <remarks>
+            Based on http://megakemp.wordpress.com/2009/02/06/managing-shared-cookies-in-wcf/
+            </remarks>
+        </member>
+        <member name="M:ServiceStack.ServiceClient.Web.CookieManagerEndpointBehavior.ApplyClientBehavior(System.ServiceModel.Description.ServiceEndpoint,System.ServiceModel.Dispatcher.ClientRuntime)">
+            <summary>
+            Adds the singleton of the <see cref="!:ClientIdentityMessageInspector"/> class to the client endpoint's message inspectors.
+            </summary>
+            <param name="endpoint">The endpoint that is to be customized.</param>
+            <param name="clientRuntime">The client runtime to be customized.</param>
+        </member>
+        <member name="T:ServiceStack.ServiceClient.Web.CookieManagerMessageInspector">
+            <summary>
+            Maintains a copy of the cookies contained in the incoming HTTP response received from any service
+            and appends it to all outgoing HTTP requests.
+            </summary>
+            <remarks>
+            This class effectively allows to send any received HTTP cookies to different services,
+            reproducing the same functionality available in ASMX Web Services proxies with the <see cref="T:System.Net.CookieContainer"/> class.
+            Based on http://megakemp.wordpress.com/2009/02/06/managing-shared-cookies-in-wcf/
+            </remarks>
+        </member>
+        <member name="M:ServiceStack.ServiceClient.Web.CookieManagerMessageInspector.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="!:ClientIdentityMessageInspector"/> class.
+            </summary>
+        </member>
+        <member name="M:ServiceStack.ServiceClient.Web.CookieManagerMessageInspector.AfterReceiveReply(System.ServiceModel.Channels.Message@,System.Object)">
+            <summary>
+            Inspects a message after a reply message is received but prior to passing it back to the client application.
+            </summary>
+            <param name="reply">The message to be transformed into types and handed back to the client application.</param>
+            <param name="correlationState">Correlation state data.</param>
+        </member>
+        <member name="M:ServiceStack.ServiceClient.Web.CookieManagerMessageInspector.BeforeSendRequest(System.ServiceModel.Channels.Message@,System.ServiceModel.IClientChannel)">
+            <summary>
+            Inspects a message before a request message is sent to a service.
+            </summary>
+            <param name="request">The message to be sent to the service.</param>
+            <param name="channel">The client object channel.</param>
+            <returns>
+            <strong>Null</strong> since no message correlation is used.
+            </returns>
+        </member>
+        <member name="P:ServiceStack.ServiceClient.Web.CookieManagerMessageInspector.Instance">
+            <summary>
+            Gets the singleton <see cref="!:ClientIdentityMessageInspector"/> instance.
+            </summary>
         </member>
         <member name="M:ServiceStack.Common.Utils.PathUtils.MapProjectPath(System.String)">
             <summary>

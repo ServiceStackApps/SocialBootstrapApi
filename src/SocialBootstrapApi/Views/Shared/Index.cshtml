@@ -1,5 +1,4 @@
-﻿@using SocialBootstrapApi.App_Start
-@using SocialBootstrapApi.Models
+﻿@using SocialBootstrapApi.Models
 @{
     ViewBag.Title = "Home";
     CustomUserSession session = ViewBag.UserSession;
@@ -202,7 +201,6 @@
 
 @section JavaScript {    
 <script type="text/javascript">
-    App.baseUrl = "@(Request.Url.Scheme + "://" + Request.Url.Authority + Url.Content("~"))";    
-    App.models.login.set({ isAuthenticated: @session.IsAuthenticated.ToString().ToLower() });
+    App.models.login.set({ isAuthenticated: @session.IsAuthenticated.ToJsBool() });
 </script>
 }

@@ -51,6 +51,9 @@
 		},
         ajax: function (opt)
 		{
+            if (root.BASE_URL && opt.url.indexOf("://") === -1 && opt.url.charAt(0) !== "/")
+                opt.url = root.BASE_URL + opt.url;
+                
             var o = _.defaults(opt, {
                type: 'POST',
                loading: function() {
@@ -85,7 +88,7 @@
 				    } catch(e){}
 					(o.error || (app.error || emptyFn)).apply(null, arguments);
 				},
-				dataType: o.dataType
+				dataType: o.dataType || "json"
 			});
 		}
 	});

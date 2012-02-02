@@ -2,11 +2,11 @@
 
 namespace SocialBootstrapApi.Controllers
 {
-	public class HomeController : ControllerBase
+	public partial class HomeController : ControllerBase
 	{
 		public AppConfig Config { get; set; }
 
-		public ActionResult Index()
+		public virtual ActionResult Index()
 		{
 			ViewBag.Message = "MVC + ServiceStack PowerPack!";
 			ViewBag.UserSession = base.UserSession;
@@ -15,12 +15,12 @@ namespace SocialBootstrapApi.Controllers
 			return View();
 		}
 
-		public ActionResult About()
+		public virtual ActionResult About()
 		{
 			return View();
 		}
 
-		public ActionResult Features()
+		public virtual ActionResult Features()
 		{
 			return View();
 		}
