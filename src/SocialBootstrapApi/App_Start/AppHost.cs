@@ -47,9 +47,9 @@ namespace SocialBootstrapApi
 		public Env Env { get; set; }
 		public bool EnableCdn { get; set; }
 		public string CdnPrefix { get; set; }
-		public bool DebugScripts
+		public BundleOptions BundleOptions
 		{
-			get { return Env.In(Env.Local, Env.Dev); }
+			get { return Env.In(Env.Local, Env.Dev) ? BundleOptions.Normal : BundleOptions.MinifiedAndCombined; }
 		}
 	}
 

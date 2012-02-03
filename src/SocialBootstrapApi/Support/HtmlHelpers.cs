@@ -13,6 +13,14 @@ using ServiceStack.Common;
 
 namespace SocialBootstrapApi
 {
+	public enum BundleOptions
+	{
+		Normal,
+		Minified,
+		Combined,
+		MinifiedAndCombined
+	}
+
 	public static class HelperExtensions
 	{
 		public static bool In(this Env env, params Env[] inAnyEnvs)
@@ -85,6 +93,13 @@ namespace SocialBootstrapApi
 				: html.Link("stylesheet", href);
 		}
 
+		public static T If<T>(this HtmlHelper html, bool predicate, T whenTrue, T whenFalse)
+		{
+			return predicate
+			       ? whenTrue
+			       : whenFalse;
+		}
+
 		public static MvcHtmlString Js(this HtmlHelper html, string src)
 		{
 			if (src.IsNullOrEmpty())
@@ -101,13 +116,6 @@ namespace SocialBootstrapApi
 			}
 			tag.MergeAttribute("src", src.ToCdn(html.ViewContext.HttpContext.Request));
 			return tag.ToString(TagRenderMode.Normal).ToMvcHtmlString();
-		}
-
-		public static MvcHtmlString Js(this HtmlHelper html, string src, string releaseSrc, bool debug = true)
-		{
-			return debug
-				? html.Js(src)
-				: html.Js(releaseSrc);
 		}
 
 		private static readonly Regex CdnRegEx = new Regex(@"^\/content\/", RegexOptions.Compiled | RegexOptions.IgnoreCase);
@@ -165,7 +173,7 @@ namespace SocialBootstrapApi
 		}
 
 		static readonly ConcurrentDictionary<string, MvcHtmlString> BundleCache = new ConcurrentDictionary<string, MvcHtmlString>();
-		public static MvcHtmlString RenderJsBundle(this HtmlHelper html, string bundlePath, bool debug = true)
+		public static MvcHtmlString RenderJsBundle(this HtmlHelper html, string bundlePath, BundleOptions options)
 		{
 			if (bundlePath.IsNullOrEmpty())
 				return MvcHtmlString.Empty;
@@ -174,14 +182,21 @@ namespace SocialBootstrapApi
 				var filePath = HttpContext.Current.Server.MapPath(bundlePath);
 
 				var baseUrl = VirtualPathUtility.GetDirectory(bundlePath);
+
+				if (options == BundleOptions.Combined)
+					return html.Js(bundlePath.Replace(".bundle", ""));
+				if (options == BundleOptions.MinifiedAndCombined)
+					return html.Js(bundlePath.Replace(".js.bundle", ".min.js"));
+				
 				var jsFiles = File.ReadAllLines(filePath);
 
 				var scripts = new StringBuilder();
-				foreach (var jsFile in jsFiles)
+				foreach (var file in jsFiles)
 				{
+					var jsFile = file.Replace(".coffee", ".js");
 					var jsSrc = baseUrl.CombineWith(jsFile);
-					if (!debug && !jsSrc.EndsWith(".min.js"))
-						jsSrc += ".min.js";
+					if (options == BundleOptions.Minified && !jsSrc.EndsWith(".min.js"))
+						jsSrc = jsSrc.Replace(".js", ".min.js");
 
 					scripts.AppendLine(
 						html.Js(jsSrc).ToString()
