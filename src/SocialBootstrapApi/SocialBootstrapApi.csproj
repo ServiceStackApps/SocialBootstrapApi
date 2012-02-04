@@ -125,11 +125,13 @@
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Support\Async.cs" />
+    <Compile Include="Support\Bundler.cs" />
     <Compile Include="Support\HtmlHelpers.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="build\build.cmd" />
-    <None Include="build\uglifyjs" />
+    <None Include="bundler\bundler.cmd" />
+    <None Include="bundler\uglifyjs" />
+    <None Include="Content\app.css.bundle" />
     <None Include="Content\default.less">
       <LastGenOutput>default.css</LastGenOutput>
       <Generator>LessGenerator</Generator>
@@ -138,12 +140,8 @@
     <Content Include="App_Data\UserAuth_log.ldf">
       <DependentUpon>UserAuth.mdf</DependentUpon>
     </Content>
-    <Content Include="build\build.js" />
-    <Content Include="build\node.exe" />
-    <Content Include="build\node_modules\lib\parse-js.js" />
-    <Content Include="build\node_modules\lib\process.js" />
-    <Content Include="build\node_modules\lib\squeeze-more.js" />
-    <Content Include="build\node_modules\uglify-js.js" />
+    <Content Include="bundler\bundler.js" />
+    <Content Include="bundler\node.exe" />
     <Content Include="Content\css\bootstrap.css" />
     <Content Include="Content\css\variables.css">
       <AutoGen>True</AutoGen>
@@ -210,11 +208,9 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Views\Home\Features.cshtml" />
-    <None Include="Content\js\app.js.bundle" />
+    <None Include="Content\app.js.bundle" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="build\node_libraries\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="packages.config" />
   </ItemGroup>

@@ -12,10 +12,9 @@
     <![endif]-->
 
     <!-- Le styles -->
-    @Html.Css("~/Content/css/bootstrap.css")
-    @Html.Css("~/Content/default.css")
+	@Html.RenderCssBundle("~/Content/app.css.bundle", BundleOptions.MinifiedAndCombined)
 
-    <!-- Le fav and touch icons -->
+	<!-- Le fav and touch icons -->
     <link rel="shortcut icon" href="@Url.Content("~/favicon.ico")">
     <link rel="apple-touch-icon" href="@Url.Content("~/Content/img/bootstrap-apple-57x57.png")">
     <link rel="apple-touch-icon" sizes="72x72" href="@Url.Content("~/Content/img/bootstrap-apple-72x72.png")">
@@ -98,7 +97,7 @@
 		@ServiceStack.Mvc.MiniProfiler.MiniProfiler.RenderIncludes()
         
         @(false ? Html.Js("~/Content/js/jquery-1.7.js") : Html.Js("http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"))
-		@Html.RenderJsBundle("~/Content/js/app.js.bundle", BundleOptions.Combined)
+		@Html.RenderJsBundle("~/Content/app.js.bundle", BundleOptions.MinifiedAndCombined)
          
 		@RenderSection("JavaScript", required: false)
 	</body>
