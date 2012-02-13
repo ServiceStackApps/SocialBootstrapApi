@@ -1843,13 +1843,13 @@
         </member>
         <member name="M:ServiceStack.ServiceHost.RequestContextExtensions.ToOptimizedResultUsingCache``1(ServiceStack.ServiceHost.IRequestContext,ServiceStack.CacheAccess.ICacheClient,System.String,System.Func{``0})">
             <summary>
-            Overload for the <see cref="M:ServiceStack.CacheAccess.Providers.ContentCacheManager.Resolve``1(System.Func{``0},ServiceStack.ServiceHost.IRequestContext,ServiceStack.CacheAccess.ICacheClient,System.String,System.Nullable{System.TimeSpan})"/> method returning the most
+            Overload for the <see cref="!:ContentCacheManager.Resolve"/> method returning the most
             optimized result based on the MimeType and CompressionType from the IRequestContext.
             </summary>
         </member>
         <member name="M:ServiceStack.ServiceHost.RequestContextExtensions.ToOptimizedResultUsingCache``1(ServiceStack.ServiceHost.IRequestContext,ServiceStack.CacheAccess.ICacheClient,System.String,System.Nullable{System.TimeSpan},System.Func{``0})">
             <summary>
-            Overload for the <see cref="M:ServiceStack.CacheAccess.Providers.ContentCacheManager.Resolve``1(System.Func{``0},ServiceStack.ServiceHost.IRequestContext,ServiceStack.CacheAccess.ICacheClient,System.String,System.Nullable{System.TimeSpan})"/> method returning the most
+            Overload for the <see cref="!:ContentCacheManager.Resolve"/> method returning the most
             optimized result based on the MimeType and CompressionType from the IRequestContext.
             <param name="expireCacheIn">How long to cache for, null is no expiration</param>
             </summary>
@@ -2342,53 +2342,6 @@
             <summary>
             More familiar name for the new crowd.
             </summary>
-        </member>
-        <member name="T:ServiceStack.CacheAccess.Providers.ContentCacheManager">
-            <summary>
-            Provides static helper methods to serialize and compress results
-            </summary>
-        </member>
-        <member name="M:ServiceStack.CacheAccess.Providers.ContentCacheManager.Resolve``1(System.Func{``0},ServiceStack.ServiceHost.IRequestContext,ServiceStack.CacheAccess.ICacheClient,System.String,System.Nullable{System.TimeSpan})">
-            <summary>
-            Returns a serialized dto based on the mime-type, created using the factoryFn().
-            If the correct mimeType is found, it will return the cached result.
-            If a compressionType is set it will return a compressed version of the result.
-            If no result is found, the dto is created by the factoryFn()
-            The dto is set on the cacheClient[cacheKey] =&gt; factoryFn()
-            e.g. urn:user:1 =&gt; dto
-            The serialized dto is set on the cacheClient[cacheKey.mimeType] =&gt; serialized(factoryFn())
-            e.g. urn:user:1.xml =&gt; xmlDto
-            Finally, if a compressionType is specified, the compressed dto is set on the
-            cacheClient[cacheKey.mimeType.compressionType] =&gt; compressed(serialized(factoryFn()))
-            e.g. urn:user:1.xml.gzip =&gt; compressedXmlDto
-            </summary>
-            <typeparam name="TResult">The type of the result.</typeparam>
-            <param name="factoryFn">The factory fn.</param>
-            <param name="serializationContext">The serialization context.</param>
-            <param name="compressionType">Type of the compression. -optional null means no compression</param>
-            <param name="cacheClient">The cache client</param>
-            <param name="cacheKey">The base cache key</param>
-            <param name="expireCacheIn">How long to cache for, default is no expiration</param>
-            <returns></returns>
-        </member>
-        <member name="M:ServiceStack.CacheAccess.Providers.ContentCacheManager.Clear(ServiceStack.CacheAccess.ICacheClient,System.String[])">
-            <summary>
-            Clears all the serialized and compressed caches set 
-            by the 'Resolve' method for the cacheKey provided
-            </summary>
-            <param name="cacheClient">The cache client.</param>
-            <param name="cacheKeys">The cache keys.</param>
-        </member>
-        <member name="M:ServiceStack.CacheAccess.Providers.ContentCacheManager.ResolveFromCache``1(ServiceStack.CacheAccess.Providers.ContentSerializer{``0},ServiceStack.CacheAccess.ICacheClient,System.String)">
-            <summary>
-            Helper method on ContentSerializer to 'Resolve' the serialized/compressed
-            result using the cacheClient and cacheKey provided
-            </summary>
-            <typeparam name="T"></typeparam>
-            <param name="contentSerializer">The content serializer.</param>
-            <param name="cacheClient">The cache client.</param>
-            <param name="cacheKey">The cache key.</param>
-            <returns></returns>
         </member>
         <member name="T:ServiceStack.WebHost.Endpoints.Ext.AllFilesHandler">
             <summary>
@@ -3408,12 +3361,6 @@
         <member name="M:ServiceStack.MiniProfiler.Helpers.ExtensionMethods.ToJson(System.Object)">
             <summary>
             Serializes <paramref name="o"/> to a json string.
-            </summary>
-        </member>
-        <member name="T:ServiceStack.CacheAccess.Providers.ContentSerializer`1">
-            <summary>
-            Encapsulates the behaviour of serving compressed or uncompressed 
-            serialized results for a particular MimeType and CompressionType.
             </summary>
         </member>
         <member name="M:Funq.AutoWireHelpers.GenerateAutoWireFn``1">

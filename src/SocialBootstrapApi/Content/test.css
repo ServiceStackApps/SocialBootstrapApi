@@ -1,0 +1,14 @@
+body a {
+  color: #fff;}
+
+body {
+  color: #ff0000;}
+
+a {
+  color: #fff;}
+a:hover {
+  color: #000;}
+a.active {
+  background: #888;}
+a.active:hover {
+  color: #fff  ;}

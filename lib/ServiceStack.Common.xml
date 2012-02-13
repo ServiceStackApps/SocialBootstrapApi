@@ -110,6 +110,11 @@
             Sets the username and the password for basic authentication.
             </summary>
         </member>
+        <member name="F:ServiceStack.ServiceClient.Web.ServiceClientBase.storeCookies">
+            <summary>
+            Specifies if cookies should be stored
+            </summary>
+        </member>
         <member name="P:ServiceStack.ServiceClient.Web.ServiceClientBase.HttpWebRequestFilter">
             <summary>
             The request filter is called before any request.
@@ -137,11 +142,6 @@
             <summary>
             Determines if the basic auth header should be sent with every request.
             By default, the basic auth header is only sent when "401 Unauthorized" is returned.
-            </summary>
-        </member>
-        <member name="P:ServiceStack.ServiceClient.Web.ServiceClientBase.StoreCookies">
-            <summary>
-            Specifies if cookies should be stored
             </summary>
         </member>
         <member name="P:ServiceStack.ServiceClient.Web.ServiceClientBase.LocalHttpWebRequestFilter">

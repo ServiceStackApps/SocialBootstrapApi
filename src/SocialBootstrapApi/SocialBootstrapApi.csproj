@@ -76,6 +76,7 @@
       <HintPath>..\..\lib\ServiceStack.Text.dll</HintPath>
     </Reference>
     <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Web.WebPages, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Web.Helpers, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
@@ -107,6 +108,8 @@
     <Compile Include="Models\User.cs" />
     <Compile Include="Logic\TwitterGateway.cs" />
     <Compile Include="Models\TwitterDtos.cs" />
+    <Compile Include="Mvc.Bundler.cs" />
+    <Compile Include="ServiceInterface\AuthorService.cs" />
     <Compile Include="ServiceInterface\TwitterTweetsService.cs" />
     <Compile Include="ServiceInterface\TwitterFriendsService.cs" />
     <Compile Include="ServiceInterface\TwitterFollowersService.cs" />
@@ -125,13 +128,245 @@
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Support\Async.cs" />
-    <Compile Include="Support\Bundler.cs" />
     <Compile Include="Support\HtmlHelpers.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="bundler\bundler.cmd" />
-    <None Include="bundler\uglifyjs" />
+    <None Include="bundler\coffee.cmd" />
+    <None Include="bundler\node_modules\clean-css\History.md" />
+    <None Include="bundler\node_modules\clean-css\node_modules\optimist\package.json" />
+    <None Include="bundler\node_modules\clean-css\node_modules\optimist\README.markdown" />
+    <None Include="bundler\node_modules\clean-css\package.json" />
+    <None Include="bundler\node_modules\clean-css\README.md" />
+    <None Include="bundler\node_modules\coffee-script\extras\jsl.conf" />
+    <None Include="bundler\node_modules\coffee-script\package.json" />
+    <None Include="bundler\node_modules\less\benchmark\benchmark.less" />
+    <None Include="bundler\node_modules\less\package.json" />
+    <None Include="bundler\node_modules\less\README.md" />
+    <None Include="bundler\node_modules\less\test\html\lib.less" />
+    <None Include="bundler\node_modules\less\test\html\styles.less" />
+    <None Include="bundler\node_modules\less\test\less\colors.less" />
+    <None Include="bundler\node_modules\less\test\less\comments.less" />
+    <None Include="bundler\node_modules\less\test\less\css-3.less" />
+    <None Include="bundler\node_modules\less\test\less\css-escapes.less" />
+    <None Include="bundler\node_modules\less\test\less\css.less" />
+    <None Include="bundler\node_modules\less\test\less\functions.less" />
+    <None Include="bundler\node_modules\less\test\less\ie-filters.less" />
+    <None Include="bundler\node_modules\less\test\less\import.less" />
+    <None Include="bundler\node_modules\less\test\less\import\import-test-a.less" />
+    <None Include="bundler\node_modules\less\test\less\import\import-test-b.less" />
+    <None Include="bundler\node_modules\less\test\less\import\import-test-c.less" />
+    <None Include="bundler\node_modules\less\test\less\import\import-test-e.less" />
+    <None Include="bundler\node_modules\less\test\less\javascript.less" />
+    <None Include="bundler\node_modules\less\test\less\lazy-eval.less" />
+    <None Include="bundler\node_modules\less\test\less\media.less" />
+    <None Include="bundler\node_modules\less\test\less\mixins-args.less" />
+    <None Include="bundler\node_modules\less\test\less\mixins-closure.less" />
+    <None Include="bundler\node_modules\less\test\less\mixins-guards.less" />
+    <None Include="bundler\node_modules\less\test\less\mixins-important.less" />
+    <None Include="bundler\node_modules\less\test\less\mixins-nested.less" />
+    <None Include="bundler\node_modules\less\test\less\mixins-pattern.less" />
+    <None Include="bundler\node_modules\less\test\less\mixins.less" />
+    <None Include="bundler\node_modules\less\test\less\operations.less" />
+    <None Include="bundler\node_modules\less\test\less\parens.less" />
+    <None Include="bundler\node_modules\less\test\less\rulesets.less" />
+    <None Include="bundler\node_modules\less\test\less\scope.less" />
+    <None Include="bundler\node_modules\less\test\less\selectors.less" />
+    <None Include="bundler\node_modules\less\test\less\strings.less" />
+    <None Include="bundler\node_modules\less\test\less\variables.less" />
+    <None Include="bundler\node_modules\less\test\less\whitespace.less" />
+    <None Include="bundler\node_modules\less\x.less" />
+    <None Include="bundler\node_modules\sass\History.md" />
+    <None Include="bundler\node_modules\sass\package.json" />
+    <None Include="bundler\node_modules\sass\Readme.md" />
+    <None Include="bundler\node_modules\step\package.json" />
+    <None Include="bundler\node_modules\step\README.markdown" />
     <None Include="Content\app.css.bundle" />
+    <Content Include="bundler\bundler.js" />
+    <Content Include="bundler\node.exe" />
+    <Content Include="bundler\node_modules\clean-css\index.js" />
+    <Content Include="bundler\node_modules\clean-css\lib\clean.js" />
+    <Content Include="bundler\node_modules\clean-css\node_modules\optimist\examples\bool.js" />
+    <Content Include="bundler\node_modules\clean-css\node_modules\optimist\examples\boolean_double.js" />
+    <Content Include="bundler\node_modules\clean-css\node_modules\optimist\examples\boolean_single.js" />
+    <Content Include="bundler\node_modules\clean-css\node_modules\optimist\examples\default_hash.js" />
+    <Content Include="bundler\node_modules\clean-css\node_modules\optimist\examples\default_singles.js" />
+    <Content Include="bundler\node_modules\clean-css\node_modules\optimist\examples\divide.js" />
+    <Content Include="bundler\node_modules\clean-css\node_modules\optimist\examples\nonopt.js" />
+    <Content Include="bundler\node_modules\clean-css\node_modules\optimist\examples\reflect.js" />
+    <Content Include="bundler\node_modules\clean-css\node_modules\optimist\examples\short.js" />
+    <Content Include="bundler\node_modules\clean-css\node_modules\optimist\examples\string.js" />
+    <Content Include="bundler\node_modules\clean-css\node_modules\optimist\examples\xup.js" />
+    <Content Include="bundler\node_modules\clean-css\node_modules\optimist\index.js" />
+    <Content Include="bundler\node_modules\clean-css\node_modules\optimist\test\coffee.js" />
+    <Content Include="bundler\node_modules\clean-css\node_modules\optimist\test\parse.js" />
+    <Content Include="bundler\node_modules\clean-css\node_modules\optimist\test\usage.js" />
+    <Content Include="bundler\node_modules\clean-css\node_modules\optimist\test\_.js" />
+    <Content Include="bundler\node_modules\clean-css\node_modules\optimist\test\_\argv.js" />
+    <Content Include="bundler\node_modules\clean-css\node_modules\optimist\test\_\bin.js" />
+    <Content Include="bundler\node_modules\clean-css\test\batch-test.js" />
+    <Content Include="bundler\node_modules\clean-css\test\data\960-min.css" />
+    <Content Include="bundler\node_modules\clean-css\test\data\960.css" />
+    <Content Include="bundler\node_modules\clean-css\test\data\blueprint-min.css" />
+    <Content Include="bundler\node_modules\clean-css\test\data\blueprint.css" />
+    <Content Include="bundler\node_modules\clean-css\test\data\reset-min.css" />
+    <Content Include="bundler\node_modules\clean-css\test\data\reset.css" />
+    <Content Include="bundler\node_modules\clean-css\test\unit-test.js" />
+    <Content Include="bundler\node_modules\coffee-script\lib\coffee-script\browser.js" />
+    <Content Include="bundler\node_modules\coffee-script\lib\coffee-script\cake.js" />
+    <Content Include="bundler\node_modules\coffee-script\lib\coffee-script\coffee-script.js" />
+    <Content Include="bundler\node_modules\coffee-script\lib\coffee-script\command.js" />
+    <Content Include="bundler\node_modules\coffee-script\lib\coffee-script\grammar.js" />
+    <Content Include="bundler\node_modules\coffee-script\lib\coffee-script\helpers.js" />
+    <Content Include="bundler\node_modules\coffee-script\lib\coffee-script\index.js" />
+    <Content Include="bundler\node_modules\coffee-script\lib\coffee-script\lexer.js" />
+    <Content Include="bundler\node_modules\coffee-script\lib\coffee-script\nodes.js" />
+    <Content Include="bundler\node_modules\coffee-script\lib\coffee-script\optparse.js" />
+    <Content Include="bundler\node_modules\coffee-script\lib\coffee-script\parser.js" />
+    <Content Include="bundler\node_modules\coffee-script\lib\coffee-script\repl.js" />
+    <Content Include="bundler\node_modules\coffee-script\lib\coffee-script\rewriter.js" />
+    <Content Include="bundler\node_modules\coffee-script\lib\coffee-script\scope.js" />
+    <Content Include="bundler\node_modules\less\benchmark\less-benchmark.js" />
+    <Content Include="bundler\node_modules\less\dist\less-1.1.0.js" />
+    <Content Include="bundler\node_modules\less\dist\less-1.1.0.min.js" />
+    <Content Include="bundler\node_modules\less\dist\less-1.1.1.js" />
+    <Content Include="bundler\node_modules\less\dist\less-1.1.1.min.js" />
+    <Content Include="bundler\node_modules\less\dist\less-1.1.2.js" />
+    <Content Include="bundler\node_modules\less\dist\less-1.1.2.min.js" />
+    <Content Include="bundler\node_modules\less\dist\less-1.1.3.js" />
+    <Content Include="bundler\node_modules\less\dist\less-1.1.3.min.js" />
+    <Content Include="bundler\node_modules\less\dist\less-1.1.4.js" />
+    <Content Include="bundler\node_modules\less\dist\less-1.1.4.min.js" />
+    <Content Include="bundler\node_modules\less\dist\less-1.1.5.js" />
+    <Content Include="bundler\node_modules\less\dist\less-1.1.5.min.js" />
+    <Content Include="bundler\node_modules\less\dist\less-1.1.6.js" />
+    <Content Include="bundler\node_modules\less\dist\less-1.1.6.min.js" />
+    <Content Include="bundler\node_modules\less\dist\less-1.2.0.js" />
+    <Content Include="bundler\node_modules\less\dist\less-1.2.0.min.js" />
+    <Content Include="bundler\node_modules\less\dist\less-1.2.1.js" />
+    <Content Include="bundler\node_modules\less\dist\less-1.2.1.min.js" />
+    <Content Include="bundler\node_modules\less\dist\less-rhino-1.1.3.js" />
+    <Content Include="bundler\node_modules\less\dist\less-rhino-1.1.5.js" />
+    <Content Include="bundler\node_modules\less\lib\less\browser.js" />
+    <Content Include="bundler\node_modules\less\lib\less\colors.js" />
+    <Content Include="bundler\node_modules\less\lib\less\cssmin.js" />
+    <Content Include="bundler\node_modules\less\lib\less\functions.js" />
+    <Content Include="bundler\node_modules\less\lib\less\index.js" />
+    <Content Include="bundler\node_modules\less\lib\less\parser.js" />
+    <Content Include="bundler\node_modules\less\lib\less\rhino.js" />
+    <Content Include="bundler\node_modules\less\lib\less\tree.js" />
+    <Content Include="bundler\node_modules\less\lib\less\tree\alpha.js" />
+    <Content Include="bundler\node_modules\less\lib\less\tree\anonymous.js" />
+    <Content Include="bundler\node_modules\less\lib\less\tree\assignment.js" />
+    <Content Include="bundler\node_modules\less\lib\less\tree\call.js" />
+    <Content Include="bundler\node_modules\less\lib\less\tree\color.js" />
+    <Content Include="bundler\node_modules\less\lib\less\tree\comment.js" />
+    <Content Include="bundler\node_modules\less\lib\less\tree\condition.js" />
+    <Content Include="bundler\node_modules\less\lib\less\tree\dimension.js" />
+    <Content Include="bundler\node_modules\less\lib\less\tree\directive.js" />
+    <Content Include="bundler\node_modules\less\lib\less\tree\element.js" />
+    <Content Include="bundler\node_modules\less\lib\less\tree\expression.js" />
+    <Content Include="bundler\node_modules\less\lib\less\tree\import.js" />
+    <Content Include="bundler\node_modules\less\lib\less\tree\javascript.js" />
+    <Content Include="bundler\node_modules\less\lib\less\tree\keyword.js" />
+    <Content Include="bundler\node_modules\less\lib\less\tree\mixin.js" />
+    <Content Include="bundler\node_modules\less\lib\less\tree\operation.js" />
+    <Content Include="bundler\node_modules\less\lib\less\tree\paren.js" />
+    <Content Include="bundler\node_modules\less\lib\less\tree\quoted.js" />
+    <Content Include="bundler\node_modules\less\lib\less\tree\rule.js" />
+    <Content Include="bundler\node_modules\less\lib\less\tree\ruleset.js" />
+    <Content Include="bundler\node_modules\less\lib\less\tree\selector.js" />
+    <Content Include="bundler\node_modules\less\lib\less\tree\url.js" />
+    <Content Include="bundler\node_modules\less\lib\less\tree\value.js" />
+    <Content Include="bundler\node_modules\less\lib\less\tree\variable.js" />
+    <Content Include="bundler\node_modules\less\test\css\colors.css" />
+    <Content Include="bundler\node_modules\less\test\css\comments.css" />
+    <Content Include="bundler\node_modules\less\test\css\css-3.css" />
+    <Content Include="bundler\node_modules\less\test\css\css-escapes.css" />
+    <Content Include="bundler\node_modules\less\test\css\css.css" />
+    <Content Include="bundler\node_modules\less\test\css\functions.css" />
+    <Content Include="bundler\node_modules\less\test\css\ie-filters.css" />
+    <Content Include="bundler\node_modules\less\test\css\import.css" />
+    <Content Include="bundler\node_modules\less\test\css\javascript.css" />
+    <Content Include="bundler\node_modules\less\test\css\lazy-eval.css" />
+    <Content Include="bundler\node_modules\less\test\css\media.css" />
+    <Content Include="bundler\node_modules\less\test\css\mixins-args.css" />
+    <Content Include="bundler\node_modules\less\test\css\mixins-closure.css" />
+    <Content Include="bundler\node_modules\less\test\css\mixins-guards.css" />
+    <Content Include="bundler\node_modules\less\test\css\mixins-important.css" />
+    <Content Include="bundler\node_modules\less\test\css\mixins-nested.css" />
+    <Content Include="bundler\node_modules\less\test\css\mixins-pattern.css" />
+    <Content Include="bundler\node_modules\less\test\css\mixins.css" />
+    <Content Include="bundler\node_modules\less\test\css\operations.css" />
+    <Content Include="bundler\node_modules\less\test\css\parens.css" />
+    <Content Include="bundler\node_modules\less\test\css\rulesets.css" />
+    <Content Include="bundler\node_modules\less\test\css\scope.css" />
+    <Content Include="bundler\node_modules\less\test\css\selectors.css" />
+    <Content Include="bundler\node_modules\less\test\css\strings.css" />
+    <Content Include="bundler\node_modules\less\test\css\variables.css" />
+    <Content Include="bundler\node_modules\less\test\css\whitespace.css" />
+    <Content Include="bundler\node_modules\less\test\html\index.html" />
+    <Content Include="bundler\node_modules\less\test\less-test.js" />
+    <Content Include="bundler\node_modules\less\test\less\import\import-test-d.css" />
+    <Content Include="bundler\node_modules\lib\parse-js.js" />
+    <Content Include="bundler\node_modules\lib\process.js" />
+    <Content Include="bundler\node_modules\lib\squeeze-more.js" />
+    <Content Include="bundler\node_modules\sass\lib\sass.js" />
+    <Content Include="bundler\node_modules\sass\spec\fixtures\collect.sass" />
+    <Content Include="bundler\node_modules\sass\spec\fixtures\comment.css" />
+    <Content Include="bundler\node_modules\sass\spec\fixtures\comment.sass" />
+    <Content Include="bundler\node_modules\sass\spec\fixtures\continuation.css" />
+    <Content Include="bundler\node_modules\sass\spec\fixtures\continuation.sass" />
+    <Content Include="bundler\node_modules\sass\spec\fixtures\literal.css" />
+    <Content Include="bundler\node_modules\sass\spec\fixtures\literal.sass" />
+    <Content Include="bundler\node_modules\sass\spec\fixtures\mixin.css" />
+    <Content Include="bundler\node_modules\sass\spec\fixtures\mixin.multiple.css" />
+    <Content Include="bundler\node_modules\sass\spec\fixtures\mixin.multiple.sass" />
+    <Content Include="bundler\node_modules\sass\spec\fixtures\mixin.sass" />
+    <Content Include="bundler\node_modules\sass\spec\fixtures\mixin.undefined.sass" />
+    <Content Include="bundler\node_modules\sass\spec\fixtures\properties.css" />
+    <Content Include="bundler\node_modules\sass\spec\fixtures\properties.expand.css" />
+    <Content Include="bundler\node_modules\sass\spec\fixtures\properties.expand.sass" />
+    <Content Include="bundler\node_modules\sass\spec\fixtures\properties.invalid.sass" />
+    <Content Include="bundler\node_modules\sass\spec\fixtures\properties.nested.css" />
+    <Content Include="bundler\node_modules\sass\spec\fixtures\properties.nested.invalid.sass" />
+    <Content Include="bundler\node_modules\sass\spec\fixtures\properties.nested.sass" />
+    <Content Include="bundler\node_modules\sass\spec\fixtures\properties.sass" />
+    <Content Include="bundler\node_modules\sass\spec\fixtures\selectors.css" />
+    <Content Include="bundler\node_modules\sass\spec\fixtures\selectors.sass" />
+    <Content Include="bundler\node_modules\sass\spec\fixtures\variables.alternate.css" />
+    <Content Include="bundler\node_modules\sass\spec\fixtures\variables.alternate.sass" />
+    <Content Include="bundler\node_modules\sass\spec\fixtures\variables.css" />
+    <Content Include="bundler\node_modules\sass\spec\fixtures\variables.dependent.css" />
+    <Content Include="bundler\node_modules\sass\spec\fixtures\variables.dependent.sass" />
+    <Content Include="bundler\node_modules\sass\spec\fixtures\variables.regular.css" />
+    <Content Include="bundler\node_modules\sass\spec\fixtures\variables.regular.sass" />
+    <Content Include="bundler\node_modules\sass\spec\fixtures\variables.sass" />
+    <Content Include="bundler\node_modules\sass\spec\lib\images\bg.png" />
+    <Content Include="bundler\node_modules\sass\spec\lib\images\hr.png" />
+    <Content Include="bundler\node_modules\sass\spec\lib\images\loading.gif" />
+    <Content Include="bundler\node_modules\sass\spec\lib\images\sprites.bg.png" />
+    <Content Include="bundler\node_modules\sass\spec\lib\images\sprites.png" />
+    <Content Include="bundler\node_modules\sass\spec\lib\images\vr.png" />
+    <Content Include="bundler\node_modules\sass\spec\lib\jspec.css" />
+    <Content Include="bundler\node_modules\sass\spec\lib\jspec.growl.js" />
+    <Content Include="bundler\node_modules\sass\spec\lib\jspec.jquery.js" />
+    <Content Include="bundler\node_modules\sass\spec\lib\jspec.js" />
+    <Content Include="bundler\node_modules\sass\spec\lib\jspec.nodejs.js" />
+    <Content Include="bundler\node_modules\sass\spec\lib\jspec.shell.js" />
+    <Content Include="bundler\node_modules\sass\spec\lib\jspec.timers.js" />
+    <Content Include="bundler\node_modules\sass\spec\lib\jspec.xhr.js" />
+    <Content Include="bundler\node_modules\sass\spec\node.js" />
+    <Content Include="bundler\node_modules\sass\spec\spec.core.js" />
+    <Content Include="bundler\node_modules\step\lib\step.js" />
+    <Content Include="bundler\node_modules\step\test\callbackTest.js" />
+    <Content Include="bundler\node_modules\step\test\errorTest.js" />
+    <Content Include="bundler\node_modules\step\test\fnTest.js" />
+    <Content Include="bundler\node_modules\step\test\groupTest.js" />
+    <Content Include="bundler\node_modules\step\test\helper.js" />
+    <Content Include="bundler\node_modules\step\test\parallelTest.js" />
+    <Content Include="bundler\node_modules\uglify-js.js" />
+    <Content Include="Content\test.sass" />
     <None Include="Content\default.less">
       <LastGenOutput>default.css</LastGenOutput>
       <Generator>LessGenerator</Generator>
@@ -140,8 +375,6 @@
     <Content Include="App_Data\UserAuth_log.ldf">
       <DependentUpon>UserAuth.mdf</DependentUpon>
     </Content>
-    <Content Include="bundler\bundler.js" />
-    <Content Include="bundler\node.exe" />
     <Content Include="Content\css\bootstrap.css" />
     <Content Include="Content\css\variables.css">
       <AutoGen>True</AutoGen>
@@ -166,6 +399,8 @@
     <Content Include="Content\img\sign-in-with-facebook.png" />
     <Content Include="Content\img\sign-in-with-twitter-l.png" />
     <Content Include="Content\js\app\base.js" />
+    <None Include="Content\js\app\small.js.bundle" />
+    <Content Include="Content\js\app\small.js" />
     <Content Include="Content\js\app\test.coffee" />
     <Content Include="Content\js\app\twitter.js" />
     <Content Include="Content\js\app\ss-validation.js" />
@@ -189,6 +424,13 @@
     <Content Include="Content\js\underscore.js" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
+    <Content Include="README.txt" />
+    <Content Include="Scripts\backbone.js" />
+    <Content Include="Scripts\bootstrap-alerts.js" />
+    <Content Include="Scripts\bootstrap-buttons.js" />
+    <None Include="Scripts\scripts.js.bundle" />
+    <Content Include="Scripts\sample.coffee" />
+    <Content Include="Scripts\underscore.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -283,4 +525,12 @@
       </FlavorProperties>
     </VisualStudio>
   </ProjectExtensions>
+  <PropertyGroup>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+  </PropertyGroup>
 </Project>

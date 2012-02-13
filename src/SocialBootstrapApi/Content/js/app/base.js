@@ -1,13 +1,13 @@
-/// <reference path="../jquery-1.7.js" />
-/// <reference path="../underscore.js" />
-/// <reference path="../backbone.js" />
-/// <reference path="ss-validation.js" />
 (function (root)
-{
+{  
     $.ss.validation.overrideMessages = true;
 
 	var app = root.App = root.App || {};
     var emptyFn = function() {};
+    var getUrl = function(url) {
+        var isRelativeUrl = root.BASE_URL && url.indexOf("://") === -1 && url.charAt(0) !== "/";
+        return isRelativeUrl ? root.BASE_URL + url : url;
+    };
     
 	_.mixin({
 		formData: function (form)
@@ -50,10 +50,7 @@
 		    return _.ajax(opt);
 		},
         ajax: function (opt)
-		{
-            if (root.BASE_URL && opt.url.indexOf("://") === -1 && opt.url.charAt(0) !== "/")
-                opt.url = root.BASE_URL + opt.url;
-                
+		{                
             var o = _.defaults(opt, {
                type: 'POST',
                loading: function() {
@@ -67,7 +64,7 @@
 			o.loading();
 			$.ajax({
 				type: o.type,
-				url: o.url,
+				url: getUrl(o.url),
 				data: o.data,
 				success: function()
 				{
@@ -94,10 +91,18 @@
 	});
 
 	app.BaseModel = Backbone.Model.extend({
+	    initialize: function () {
+	        console.log("BaseModel...");
+	    },
 		parse: function (resp, xhr)
 		{
 			if (!resp) return resp;
 			return resp.result || resp.results || resp;
+		},
+		sync: function(method, model, options) {
+		    //console.log(model.url, getUrl(model.url));
+		    model.url = getUrl(model.url);
+		    Backbone.sync(method, model, options);
 		},
 		_super: function (funcName)
 		{

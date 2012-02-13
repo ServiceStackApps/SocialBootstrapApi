@@ -1,4 +1,4 @@
-//     Underscore.js 1.2.1
+;//     Underscore.js 1.2.1
 //     (c) 2011 Jeremy Ashkenas, DocumentCloud Inc.
 //     Underscore is freely distributable under the MIT license.
 //     Portions of Underscore are inspired or borrowed from Prototype,
@@ -956,6 +956,7 @@
   };
 
 })();
+
 ;//     Backbone.js 0.5.3
 //     (c) 2010 Jeremy Ashkenas, DocumentCloud Inc.
 //     Backbone may be freely distributed under the MIT license.
@@ -2114,6 +2115,7 @@
   };
 
 }).call(this);
+
 ;/* ============================================================
  * bootstrap-dropdown.js v1.4.0
  * http://twitter.github.com/bootstrap/javascript.html#dropdown
@@ -2169,6 +2171,7 @@
   })
 
 }( window.jQuery || window.ender );
+
 ;/* ========================================================
  * bootstrap-tabs.js v1.4.0
  * http://twitter.github.com/bootstrap/javascript.html#tabs
@@ -2249,6 +2252,7 @@
   })
 
 }( window.jQuery || window.ender );
+
 ;(function ($) {
 
     if (!$.ss) $.ss = {};
@@ -2328,12 +2332,9 @@
     };
 
 })(window.jQuery);
-;/// <reference path="../jquery-1.7.js" />
-/// <reference path="../underscore.js" />
-/// <reference path="../backbone.js" />
-/// <reference path="ss-validation.js" />
-(function (root)
-{
+
+;(function (root)
+{  
     $.ss.validation.overrideMessages = true;
 
 	var app = root.App = root.App || {};
@@ -2447,6 +2448,7 @@
 	});
 
 })(window);
+
 ;/// <reference path="base.js" />
 (function (root)
 {
@@ -2531,6 +2533,7 @@
 	);
 
 })(window);
+
 ;/// <reference path="base.js" />
 (function (root)
 {
@@ -2602,6 +2605,7 @@
 	);
 
 })(window);
+
 ;/// <reference path="base.js" />
 /// <reference path="login.js" />
 (function (root)
@@ -2674,6 +2678,7 @@
 		});
 
 })(window);
+
 ;(function (root) {
     var app = root.App;
 
@@ -2777,8 +2782,9 @@
     });
 
 })(window);
+
 ;(function() {
-  var KoffeeKlazz, coffeeTest, coffeeTest2;
+  var KoffeeKlazz, KoffeeKlazz111, coffeeTest, coffeeTest2;
 
   coffeeTest = function(x) {
     return x * x * x;
@@ -2802,7 +2808,22 @@
 
   })();
 
+  KoffeeKlazz111 = (function() {
+
+    function KoffeeKlazz111(name) {
+      this.name = name;
+    }
+
+    KoffeeKlazz111.prototype.move = function(meters) {
+      return alert(this.name + (" moved " + meters + "m."));
+    };
+
+    return KoffeeKlazz111;
+
+  })();
+
 }).call(this);
+
 ;/// <reference path="base.js" />
 /// <reference path="login.js" />
 /// <reference path="register.js" /> 
@@ -2947,4 +2968,4 @@
     });
 
 })(window);
-;
+

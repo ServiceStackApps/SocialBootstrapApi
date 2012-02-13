@@ -1432,5 +1432,15 @@
             </summary>
             <param name="message">The message.</param>
         </member>
+        <member name="T:ServiceStack.ServiceHost.IRequiresRequestStream">
+            <summary>
+            Implement on Request DTOs that need access to the raw Request Stream
+            </summary>
+        </member>
+        <member name="P:ServiceStack.ServiceHost.IRequiresRequestStream.RequestStream">
+            <summary>
+            The raw Http Request Input Stream
+            </summary>
+        </member>
     </members>
 </doc>

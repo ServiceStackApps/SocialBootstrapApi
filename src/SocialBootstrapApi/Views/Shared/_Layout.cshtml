@@ -97,7 +97,7 @@
 		@ServiceStack.Mvc.MiniProfiler.MiniProfiler.RenderIncludes()
         
         @(false ? Html.Js("~/Content/js/jquery-1.7.js") : Html.Js("http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"))
-		@Html.RenderJsBundle("~/Content/app.js.bundle", BundleOptions.MinifiedAndCombined)
+		@Html.RenderJsBundle("~/Content/app.js.bundle", BundleOptions.Normal)
          
 		@RenderSection("JavaScript", required: false)
 	</body>

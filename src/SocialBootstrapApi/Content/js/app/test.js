@@ -1,5 +1,5 @@
 (function() {
-  var KoffeeKlazz, coffeeTest, coffeeTest2;
+  var KoffeeKlazz, KoffeeKlazz111, coffeeTest, coffeeTest2;
 
   coffeeTest = function(x) {
     return x * x * x;
@@ -20,6 +20,20 @@
     };
 
     return KoffeeKlazz;
+
+  })();
+
+  KoffeeKlazz111 = (function() {
+
+    function KoffeeKlazz111(name) {
+      this.name = name;
+    }
+
+    KoffeeKlazz111.prototype.move = function(meters) {
+      return alert(this.name + (" moved " + meters + "m."));
+    };
+
+    return KoffeeKlazz111;
 
   })();
 

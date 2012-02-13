@@ -2,7 +2,12 @@
 coffeeTest = (x) -> x * x * x
 coffeeTest2 = (x) -> x * x * x
 
-class KoffeeKlazz
+class KoffeeKlazz 
 	constructor: (@name) ->
 	move: (meters) ->
 		alert @name + " moved #{meters}m."
+		  
+class KoffeeKlazz111
+	constructor: (@name) ->
+	move: (meters) ->
+		alert @name + " moved #{meters}m."   
