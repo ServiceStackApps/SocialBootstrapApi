@@ -44,7 +44,7 @@ namespace ServiceStack.Mvc
 				if (HostingEnvironment.IsHosted)
 				{
 					var filePath = HostingEnvironment.MapPath(virtualPath);
-					return Convert.ToString((File.GetLastWriteTimeUtc(filePath).Ticks - centuryBegin.Ticks) / Environment.TickCount, 16);
+					return Convert.ToString((File.GetLastWriteTimeUtc(filePath).Ticks - centuryBegin.Ticks) / 1000000000, 16);
 				}
 			}
 			catch { } //ignore

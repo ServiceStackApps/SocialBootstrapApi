@@ -1,8 +1,3 @@
-/// <reference path="base.js" />
-/// <reference path="login.js" />
-/// <reference path="register.js" /> 
-/// <reference path="userprofile.js" />
-/// <reference path="twitter.js" />
 (function (root) 
 {
 	var app = root.App;

@@ -4,7 +4,7 @@
 
 	var app = root.App = root.App || {};
     var emptyFn = function() {};
-    var getUrl = function(url) {
+    var relativeUrl = function(url) {
         var isRelativeUrl = root.BASE_URL && url.indexOf("://") === -1 && url.charAt(0) !== "/";
         return isRelativeUrl ? root.BASE_URL + url : url;
     };
@@ -15,6 +15,11 @@
 			var ret = {};
 			$(form).find("INPUT,TEXTAREA").each(function() {
 				if (this.type == "button" || this.type == "submit") return;
+				if (this.type == "checkbox") {
+				    if (!this.checked) return;
+				    ret[this.name] = this.value === "on" ? true : this.value;
+			        return;
+			    }
 				ret[this.name] = $(this).val();
 			});
 			return ret;
@@ -64,7 +69,7 @@
 			o.loading();
 			$.ajax({
 				type: o.type,
-				url: getUrl(o.url),
+				url: relativeUrl(o.url),
 				data: o.data,
 				success: function()
 				{
@@ -101,7 +106,7 @@
 		},
 		sync: function(method, model, options) {
 		    //console.log(model.url, getUrl(model.url));
-		    model.url = getUrl(model.url);
+		    model.url = relativeUrl(model.url);
 		    Backbone.sync(method, model, options);
 		},
 		_super: function (funcName)

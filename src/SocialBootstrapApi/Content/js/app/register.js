@@ -40,7 +40,7 @@
 			},
 			registerSuccess: function (r)
 			{
-				this.model.set({ hasRegistered: true, userId: r.userId });
+			    this.model.set({ hasRegistered: true, userId: r.userId, isAuthenticated: !!r.sessionId });
 			},
 			login: function (e)
 			{

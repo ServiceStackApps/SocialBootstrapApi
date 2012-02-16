@@ -38,8 +38,10 @@
             tab = tab || this.get('tab');
             console.log("twitter.twitterProfileChange: " + tab);
 
-            if (!screenName) 
-                return this.twitterTab(tab);
+            if (!screenName) {
+                this.set({ screenName: this.profile.get("twitterScreenName") });
+                return;
+            }
 
             var self = this;
             _.get("api/twitter/" + screenName, function (r) {
@@ -47,13 +49,21 @@
                 _.extend(o, r.results[0]);
                 o.tab = tab;
                 self.set(o);
+                self.navigate(self.navUrl());
             });
         },
+        viewingSelf: function() {
+            return this.profile.get("twitterScreenName") === this.get("screenName");
+        },
+        navUrl: function() {
+            return (this.viewingSelf() ? "" : this.get("screenName") + "/") + this.get("tab");
+        },
         twitterTab: function (tab) {
+            tab = tab || this.defaults.tab;            
             console.log("twitterTab:" + tab);
             this.set({ tab: tab });
             $(".tabs [href=#" + tab + "]").click();
-            this.navigate(tab);
+            this.navigate(this.navUrl());
         }
     });
 
@@ -94,6 +104,9 @@
                     bgRepeat = this.model.get('profile_background_tile') === "true" ? '' : 'no-repeat';
                 var bgCss = bgImg ? '#' + bgColor + ' url(' + bgImg + ') ' + bgRepeat + ' top left' : '';
                 $("BODY").css({ background: bgCss, 'background-attachment': 'fixed' });
+            }
+            else {
+                //$("BODY").css({ 'background-color': '' });
             }
 
             this.$signedInBody.html(html);

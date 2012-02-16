@@ -366,7 +366,6 @@
     <Content Include="bundler\node_modules\step\test\helper.js" />
     <Content Include="bundler\node_modules\step\test\parallelTest.js" />
     <Content Include="bundler\node_modules\uglify-js.js" />
-    <Content Include="Content\test.sass" />
     <None Include="Content\default.less">
       <LastGenOutput>default.css</LastGenOutput>
       <Generator>LessGenerator</Generator>
@@ -399,9 +398,6 @@
     <Content Include="Content\img\sign-in-with-facebook.png" />
     <Content Include="Content\img\sign-in-with-twitter-l.png" />
     <Content Include="Content\js\app\base.js" />
-    <None Include="Content\js\app\small.js.bundle" />
-    <Content Include="Content\js\app\small.js" />
-    <Content Include="Content\js\app\test.coffee" />
     <Content Include="Content\js\app\twitter.js" />
     <Content Include="Content\js\app\ss-validation.js" />
     <Content Include="Content\js\app\login.js" />

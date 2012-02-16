@@ -203,6 +203,11 @@
             Provide a catch-all handler that doesn't match any routes
             </summary>
         </member>
+        <member name="P:ServiceStack.WebHost.Endpoints.IAppHost.RequestBinders">
+            <summary>
+            Provide a custom model minder for a specific Request DTO
+            </summary>
+        </member>
         <member name="P:ServiceStack.WebHost.Endpoints.IAppHost.Config">
             <summary>
             The AppHost config

@@ -1055,6 +1055,16 @@
             <param name="res">The http response wrapper</param>
             <param name="requestDto">The response DTO</param>
         </member>
+        <member name="T:ServiceStack.ServiceHost.IRequiresRequestStream">
+            <summary>
+            Implement on Request DTOs that need access to the raw Request Stream
+            </summary>
+        </member>
+        <member name="P:ServiceStack.ServiceHost.IRequiresRequestStream.RequestStream">
+            <summary>
+            The raw Http Request Input Stream
+            </summary>
+        </member>
         <member name="T:ServiceStack.CacheAccess.ICacheClient">
             <summary>
             A common interface implementation that is implemeneted by most cache providers
@@ -1431,16 +1441,6 @@
             Logs the specified message.
             </summary>
             <param name="message">The message.</param>
-        </member>
-        <member name="T:ServiceStack.ServiceHost.IRequiresRequestStream">
-            <summary>
-            Implement on Request DTOs that need access to the raw Request Stream
-            </summary>
-        </member>
-        <member name="P:ServiceStack.ServiceHost.IRequiresRequestStream.RequestStream">
-            <summary>
-            The raw Http Request Input Stream
-            </summary>
         </member>
     </members>
 </doc>
