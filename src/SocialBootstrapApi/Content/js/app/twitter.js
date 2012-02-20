@@ -20,9 +20,9 @@
             this.bind("change", this.onChange);
         },
         onChange: function () {
-            console.log("twitter.onChange:" + this.get('tab'));
+            console.log("twitter.onChange:" + this.tab());
             if (this.get('screenName'))
-                this.load(this.get('tab'));
+                this.load(this.tab());
             else
                 this.clear({ silent: true });
         },
@@ -35,7 +35,7 @@
             });
         },
         twitterProfileChange: function (screenName, tab) {
-            tab = tab || this.get('tab');
+            tab = tab || this.tab();
             console.log("twitter.twitterProfileChange: " + tab);
 
             if (!screenName) {
@@ -58,8 +58,11 @@
         navUrl: function() {
             return (this.viewingSelf() ? "" : this.get("screenName") + "/") + this.get("tab");
         },
+        tab: function () {
+            return this.get('tab') || this.defaults.tab;
+        },
         twitterTab: function (tab) {
-            tab = tab || this.defaults.tab;            
+            tab = tab || this.tab();
             console.log("twitterTab:" + tab);
             this.set({ tab: tab });
             $(".tabs [href=#" + tab + "]").click();
