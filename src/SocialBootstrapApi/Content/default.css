@@ -76,8 +76,42 @@ html, body {
 #register-login,
 #register-signed-in,
 #facebook-signin,
-#twitter-signin {
+#twitter-signin,
+#page-loading {
   display: none;
+}
+.content {
+  min-height: 800px;
+}
+#page-loading {
+  position: absolute;
+  margin: 220px 0 0 200px;
+  text-align: center;
+  background-color: #ffffcc;
+  border: 2px solid #666;
+  -moz-border-radius: 15px;
+  -webkit-border-radius: 15px;
+  border-radius: 15px;
+  -moz-box-shadow: 0px 0px 20px #000000;
+  -webkit-box-shadow: 0px 0px 20px #000000;
+  box-shadow: 0px 0px 10px #000000;
+  -moz-background-clip: padding;
+  -webkit-background-clip: padding-box;
+  background-clip: padding-box;
+  opacity: 0.9;
+}
+#page-loading b {
+  background: url(img/ajax-loader.gif) no-repeat 60px 50%;
+  font: normal 20px arial;
+  color: #444;
+  padding: 15px 80px;
+  display: block;
+}
+#gravatar {
+  cursor: pointer;
+}
+.loading #page-loading {
+  display: block;
 }
 #login.error INPUT {
   background-color: darkred;

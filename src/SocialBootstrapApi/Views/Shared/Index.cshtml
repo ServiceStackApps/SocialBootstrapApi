@@ -8,7 +8,7 @@
 <% if (email) { %>    
     <div id="credential-info">
         <h4>Credential Info</h4>
-        <img id="gravatar" src="<%= gravatarImageUrl64 %>" />
+        <img id="gravatar" src="<%= gravatarImageUrl64 %>" data-cmd="twitterProfileChange:<%= twitterScreenName %>" />
         <dl>
             <dt>Display Name</dt><dd><%= displayName %></dd>
             <dt>Email</dt><dd><%= email %></dd>
@@ -18,7 +18,7 @@
     <div id="twitter-info">
         <h4>Twitter Info</h4>
         <dl>
-            <dt>Screen Name</dt><dd><%= twitterScreenName %></dd>
+            <dt>Screen Name</dt><dd><a href="#" data-cmd="twitterProfileChange:<%= twitterScreenName %>"><%= twitterScreenName %></a></dd>
             <dt>Name</dt><dd><%= twitterName %></dd>
             <dt>User Id</dt><dd><%= twitterUserId %></dd>
         </dl>
@@ -122,12 +122,14 @@
 </p>
 
 <div id="twitter" class="span11">
-	
+
 	<div class="signed-out">
 		<a href="@Url.Content("~/api/auth/twitter")"><img src="@Url.Content("~/Content/img/sign-in-with-twitter-l.png")" alt="Sign-in with Twitter" /></a>
 	</div>
     
 	<div class="signed-in">
+		<div id="page-loading"><b>loading...</b></div>
+
 		<div class="current-user"></div>
 		<ul class="tabs">
 			<li class="active"><a href="#tweets" data-cmd="twitterTab:tweets">Tweets</a></li>

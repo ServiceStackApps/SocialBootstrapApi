@@ -13,6 +13,7 @@
 		{
 			$(document.body).click(function (e)
 			{
+			    console.log("handleClicks", e);
 				var dataCmd = $(e.srcElement).data('cmd');
 				if (!dataCmd) return;
 

@@ -2339,6 +2339,10 @@
 
 	var app = root.App = root.App || {};
     var emptyFn = function() {};
+    var relativeUrl = function(url) {
+        var isRelativeUrl = root.BASE_URL && url.indexOf("://") === -1 && url.charAt(0) !== "/";
+        return isRelativeUrl ? root.BASE_URL + url : url;
+    };
     
 	_.mixin({
 		formData: function (form)
@@ -2346,6 +2350,11 @@
 			var ret = {};
 			$(form).find("INPUT,TEXTAREA").each(function() {
 				if (this.type == "button" || this.type == "submit") return;
+				if (this.type == "checkbox") {
+				    if (!this.checked) return;
+				    ret[this.name] = this.value === "on" ? true : this.value;
+			        return;
+			    }
 				ret[this.name] = $(this).val();
 			});
 			return ret;
@@ -2381,10 +2390,7 @@
 		    return _.ajax(opt);
 		},
         ajax: function (opt)
-		{
-            if (root.BASE_URL && opt.url.indexOf("://") === -1 && opt.url.charAt(0) !== "/")
-                opt.url = root.BASE_URL + opt.url;
-                
+		{                
             var o = _.defaults(opt, {
                type: 'POST',
                loading: function() {
@@ -2398,7 +2404,7 @@
 			o.loading();
 			$.ajax({
 				type: o.type,
-				url: o.url,
+				url: relativeUrl(o.url),
 				data: o.data,
 				success: function()
 				{
@@ -2425,10 +2431,18 @@
 	});
 
 	app.BaseModel = Backbone.Model.extend({
+	    initialize: function () {
+	        console.log("BaseModel...");
+	    },
 		parse: function (resp, xhr)
 		{
 			if (!resp) return resp;
 			return resp.result || resp.results || resp;
+		},
+		sync: function(method, model, options) {
+		    //console.log(model.url, getUrl(model.url));
+		    model.url = relativeUrl(model.url);
+		    Backbone.sync(method, model, options);
 		},
 		_super: function (funcName)
 		{
@@ -2576,7 +2590,7 @@
 			},
 			registerSuccess: function (r)
 			{
-				this.model.set({ hasRegistered: true, userId: r.userId });
+			    this.model.set({ hasRegistered: true, userId: r.userId, isAuthenticated: !!r.sessionId });
 			},
 			login: function (e)
 			{
@@ -2719,8 +2733,10 @@
             tab = tab || this.get('tab');
             console.log("twitter.twitterProfileChange: " + tab);
 
-            if (!screenName) 
-                return this.twitterTab(tab);
+            if (!screenName) {
+                this.set({ screenName: this.profile.get("twitterScreenName") });
+                return;
+            }
 
             var self = this;
             _.get("api/twitter/" + screenName, function (r) {
@@ -2728,13 +2744,21 @@
                 _.extend(o, r.results[0]);
                 o.tab = tab;
                 self.set(o);
+                self.navigate(self.navUrl());
             });
         },
+        viewingSelf: function() {
+            return this.profile.get("twitterScreenName") === this.get("screenName");
+        },
+        navUrl: function() {
+            return (this.viewingSelf() ? "" : this.get("screenName") + "/") + this.get("tab");
+        },
         twitterTab: function (tab) {
+            tab = tab || this.defaults.tab;            
             console.log("twitterTab:" + tab);
             this.set({ tab: tab });
             $(".tabs [href=#" + tab + "]").click();
-            this.navigate(tab);
+            this.navigate(this.navUrl());
         }
     });
 
@@ -2776,6 +2800,9 @@
                 var bgCss = bgImg ? '#' + bgColor + ' url(' + bgImg + ') ' + bgRepeat + ' top left' : '';
                 $("BODY").css({ background: bgCss, 'background-attachment': 'fixed' });
             }
+            else {
+                //$("BODY").css({ 'background-color': '' });
+            }
 
             this.$signedInBody.html(html);
         }
@@ -2783,53 +2810,7 @@
 
 })(window);
 
-;(function() {
-  var KoffeeKlazz, KoffeeKlazz111, coffeeTest, coffeeTest2;
-
-  coffeeTest = function(x) {
-    return x * x * x;
-  };
-
-  coffeeTest2 = function(x) {
-    return x * x * x;
-  };
-
-  KoffeeKlazz = (function() {
-
-    function KoffeeKlazz(name) {
-      this.name = name;
-    }
-
-    KoffeeKlazz.prototype.move = function(meters) {
-      return alert(this.name + (" moved " + meters + "m."));
-    };
-
-    return KoffeeKlazz;
-
-  })();
-
-  KoffeeKlazz111 = (function() {
-
-    function KoffeeKlazz111(name) {
-      this.name = name;
-    }
-
-    KoffeeKlazz111.prototype.move = function(meters) {
-      return alert(this.name + (" moved " + meters + "m."));
-    };
-
-    return KoffeeKlazz111;
-
-  })();
-
-}).call(this);
-
-;/// <reference path="base.js" />
-/// <reference path="login.js" />
-/// <reference path="register.js" /> 
-/// <reference path="userprofile.js" />
-/// <reference path="twitter.js" />
-(function (root) 
+;(function (root) 
 {
 	var app = root.App;
 
@@ -2844,6 +2825,7 @@
 		{
 			$(document.body).click(function (e)
 			{
+			    console.log("handleClicks", e);
 				var dataCmd = $(e.srcElement).data('cmd');
 				if (!dataCmd) return;
 
