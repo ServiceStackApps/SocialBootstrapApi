@@ -153,28 +153,22 @@ namespace SocialBootstrapApi
 
 		private void ConfigureAuth(Funq.Container container)
 		{
-			//Hook up routes for ServiceStack's built-in Auth and Registration services
-			Routes
-				.Add<Auth>("/auth")
-				.Add<Auth>("/auth/{provider}")
-				.Add<Registration>("/register");
-
 			//Enable and register existing services you want this host to make use of.
 			//Look in Web.config for examples on how to configure your oauth proviers, e.g. oauth.facebook.AppId, etc.
 			var appSettings = new ConfigurationResourceManager();
 
 			//Register all Authentication methods you want to enable for this web app.            
-			AuthFeature.Init(this,
+			Plugins.Add(new AuthFeature(
 				() => new CustomUserSession(), //Use your own typed Custom UserSession type
 				new IAuthProvider[] {
                     new CredentialsAuthProvider(),         //HTML Form post of UserName/Password credentials
                     new TwitterAuthProvider(appSettings),  //Sign-in with Twitter
                     new FacebookAuthProvider(appSettings), //Sign-in with Facebook
                     new BasicAuthProvider(),               //Sign-in with Basic Auth
-                });
+                }));
 
 			//Provide service for new users to register so they can login with supplied credentials.
-			RegistrationFeature.Init(this);
+			Plugins.Add(new RegistrationFeature());
 
 			//override the default registration validation with your own custom implementation
 			container.RegisterAs<CustomRegistrationValidator, IValidator<Registration>>();
