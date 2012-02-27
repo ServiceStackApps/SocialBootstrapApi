@@ -1,15 +1,21 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using ServiceStack.ServiceInterface;
 
 namespace SocialBootstrapApi.ServiceInterface
 {
 	//REST Resource DTO
+	[DataContract]
 	public class Todo
 	{
+		[DataMember(Order = 1)]
 		public long Id { get; set; }
+		[DataMember(Order = 2)]
 		public string Content { get; set; }
+		[DataMember(Order = 3)]
 		public int Order { get; set; }
+		[DataMember(Order = 4)]
 		public bool Done { get; set; }
 	}
 
