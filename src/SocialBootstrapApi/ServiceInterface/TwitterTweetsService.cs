@@ -30,13 +30,9 @@ namespace SocialBootstrapApi.ServiceInterface
 		public ResponseStatus ResponseStatus { get; set; }
 	}
 
-	public class TwitterTweetsService : RestServiceBase<TwitterTweets>
+	public class TwitterTweetsService : AppServiceBase<TwitterTweets>
 	{
-		public ITwitterGateway TwitterGateway { get; set; } //Injected in IOC as defined in AppHost
-
-		public ICacheClient Cache { get; set; } //Injected in IOC as defined in AppHost
-
-		public override object OnGet(TwitterTweets request)
+		protected override object Run(TwitterTweets request)
 		{
 			var cacheKey = "cache:Tweet:" + request.ScreenName + ":tweets"
 				+ (request.Take.HasValue ? ":take:" + request.Take : "")
@@ -46,7 +42,7 @@ namespace SocialBootstrapApi.ServiceInterface
 			//If the browser requests json and accepts deflate - it returns a deflated json payload from cache
 			return base.RequestContext.ToOptimizedResultUsingCache(Cache, cacheKey, () =>
 				new TwitterTweetsResponse {
-					Results = TwitterGateway.GetTweets(
+					Results = AuthTwitterGateway.GetTweets(
 						request.ScreenName, request.SinceId, request.Take)
 				});
 		}

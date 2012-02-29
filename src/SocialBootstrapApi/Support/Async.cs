@@ -152,11 +152,16 @@ namespace SocialBootstrapApi.Support
 				});
 		}
 
-		public static List<Task<string>> DownloadAllAsync(this IEnumerable<string> urls, string contentType)
+		public static List<Task<string>> DownloadAllAsync(this IEnumerable<string> urls, string contentType, Action<HttpWebRequest, Uri> filter = null)
 		{
 			List<Task<string>> tasks = urls.ToList().Select(url => {
-					var request = (HttpWebRequest)WebRequest.Create(url);
+					var uri = new Uri(url);
+					var request = (HttpWebRequest)WebRequest.Create(uri);
 					request.Accept = ContentType.Json;
+					if (filter != null)
+					{
+						filter(request, uri);
+					}
 					return request.GetAsync()
 						.ContinueWith(t => {
 							try
@@ -171,7 +176,7 @@ namespace SocialBootstrapApi.Support
 							}
 						});
 				})
-					.ToList();
+				.ToList();
 
 			return tasks;
 		}

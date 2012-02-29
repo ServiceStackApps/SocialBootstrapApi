@@ -33,10 +33,8 @@ namespace SocialBootstrapApi.ServiceInterface
 		public ResponseStatus ResponseStatus { get; set; } 
 	}
 
-	public class TwitterFollowersService : ServiceBase<TwitterFollowers>
+	public class AppFollowersServiceBase : AppServiceBase<TwitterFollowers>
 	{
-		public ITwitterGateway TwitterGateway { get; set; } //Injected in IOC as defined in AppHost
-		
 		public ICacheClient Cache { get; set; } //Injected in IOC as defined in AppHost
 
 		//Available on all HTTP Verbs (GET, POST, PUT, DELETE, etc) and endpoints JSON, XMl, JSV, etc

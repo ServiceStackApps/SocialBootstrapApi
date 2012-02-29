@@ -117,9 +117,10 @@
     <Compile Include="Models\TwitterDtos.cs" />
     <Compile Include="Mvc.Bundler.cs" />
     <Compile Include="ServiceInterface\AuthorService.cs" />
+    <Compile Include="ServiceInterface\AppServiceBase.cs" />
     <Compile Include="ServiceInterface\TwitterTweetsService.cs" />
     <Compile Include="ServiceInterface\TwitterFriendsService.cs" />
-    <Compile Include="ServiceInterface\TwitterFollowersService.cs" />
+    <Compile Include="ServiceInterface\AppFollowersServiceBase.cs" />
     <Compile Include="ServiceInterface\TwitterUsersService.cs" />
     <Compile Include="ServiceInterface\TodoService.cs" />
     <Compile Include="ServiceInterface\HelloService.cs" />

@@ -29,10 +29,8 @@ namespace SocialBootstrapApi.ServiceInterface
 		public ResponseStatus ResponseStatus { get; set; }
 	}
 
-	public class TwitterUsersService : ServiceBase<TwitterUsers>
+	public class TwitterUsersService : AppServiceBase<TwitterUsers>
 	{
-		public ITwitterGateway TwitterGateway { get; set; } //Injected in IOC as defined in AppHost
-
 		//Available on all HTTP Verbs (GET,POST,PUT,DELETE,etc) and endpoints JSON,XMl,JSV,etc
 		protected override object Run(TwitterUsers request)
 		{
@@ -41,9 +39,9 @@ namespace SocialBootstrapApi.ServiceInterface
 
 			var results = new List<TwitterUser>();
 			if (userIds.Count > 0)
-				results.AddRange(TwitterGateway.DownloadUsersByIds(userIds));
+				results.AddRange(AuthTwitterGateway.DownloadUsersByIds(userIds));
 			if (userNames.Count > 0)
-				results.AddRange(TwitterGateway.DownloadTwitterUsersByNames(userNames));
+				results.AddRange(AuthTwitterGateway.DownloadTwitterUsersByNames(userNames));
 
 			return new TwitterUsersResponse { Results = results };
 		}
