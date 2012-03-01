@@ -9,34 +9,32 @@ using SocialBootstrapApi.Logic;
 
 namespace SocialBootstrapApi.ServiceInterface
 {
-	public class TwitterTweets
+	public class TwitterDirectMessages
 	{
-		public string ScreenName { get; set; }
-
 		public int? Take { get; set; }
 
 		public string SinceId { get; set; }
-
+		
 		public string MaxId { get; set; }
 	}
 
-	public class TwitterTweetsResponse
+	public class TwitterDirectMessagesResponse
 	{
-		public TwitterTweetsResponse()
+		public TwitterDirectMessagesResponse()
 		{
 			this.ResponseStatus = new ResponseStatus();
 		}
 
-		public List<Tweet> Results { get; set; }
+		public List<DirectMessage> Results { get; set; }
 
 		public ResponseStatus ResponseStatus { get; set; }
 	}
 
-	public class TwitterTweetsService : AppServiceBase<TwitterTweets>
+	public class TwitterDirectMessagesService : AppServiceBase<TwitterDirectMessages>
 	{
-		protected override object Run(TwitterTweets request)
+		protected override object Run(TwitterDirectMessages request)
 		{
-			var cacheKey = "cache:Tweet:" + request.ScreenName + ":tweets"
+			var cacheKey = "cache:DirectMessage:" + base.UserSession.TwitterScreenName + ":dms"
 				+ (request.Take.HasValue ? ":take:" + request.Take : "")
 				+ (!request.SinceId.IsNullOrEmpty() ? ":sinceid:" + request.SinceId : "")
 				+ (!request.MaxId.IsNullOrEmpty() ? ":maxid:" + request.MaxId : "");
@@ -44,9 +42,9 @@ namespace SocialBootstrapApi.ServiceInterface
 			//This caches and returns the most optimal result the browser can handle, e.g.
 			//If the browser requests json and accepts deflate - it returns a deflated json payload from cache
 			return base.RequestContext.ToOptimizedResultUsingCache(Cache, cacheKey, () =>
-				new TwitterTweetsResponse {
-					Results = AuthTwitterGateway.GetTweets(
-						request.ScreenName, request.SinceId, request.MaxId, request.Take)
+				new TwitterDirectMessagesResponse {
+					Results = AuthTwitterGateway.GetDirectMessages(
+						request.SinceId, request.MaxId, request.Take)
 				});
 		}
 	}

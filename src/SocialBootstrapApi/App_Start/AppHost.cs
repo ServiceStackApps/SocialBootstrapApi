@@ -146,6 +146,7 @@ namespace SocialBootstrapApi
 				.Add<TwitterFriends>("/twitter/{ScreenName}/friends")
 				.Add<TwitterFollowers>("/twitter/id/{UserId}/followers")
 				.Add<TwitterFollowers>("/twitter/{ScreenName}/followers")
+				.Add<TwitterDirectMessages>("/twitter/directmessages")
 				.Add<TwitterUsers>("/twitter/ids/{UserIds}") //userIds serparated by ','
 				.Add<TwitterUsers>("/twitter/{ScreenNames}") //screenNames serparated by ','
 			;

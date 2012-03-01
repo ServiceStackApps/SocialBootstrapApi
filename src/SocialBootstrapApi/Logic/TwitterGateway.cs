@@ -24,7 +24,8 @@ namespace SocialBootstrapApi.Logic
 		List<TwitterUser> GetFriends(string screenName, int skip = 0, int? take = null);
 		List<TwitterUser> GetFollowers(ulong userId, int skip = 0, int? take = null);
 		List<TwitterUser> GetFollowers(string screenName, int skip = 0, int? take = null);
-		List<Tweet> GetTweets(string screenName, string sinceId = null, int? take = null);
+		List<Tweet> GetTweets(string screenName, string sinceId = null, string maxId = null, int? take = null);
+		List<DirectMessage> GetDirectMessages(string sinceId = null, string maxId = null, int? take = null);
 	}
 
 	public class TwitterGateway : ITwitterGateway
@@ -35,6 +36,7 @@ namespace SocialBootstrapApi.Logic
 		public const string FollowersUrl = "http://api.twitter.com/1/followers/ids.json";
 		public const string FriendsUrl   = "http://api.twitter.com/1/friends/ids.json";
 		public const string TweetsUrl    = "http://api.twitter.com/1/statuses/following_timeline.json?include_entities=1&screen_name={0}";
+		public const string DirectMessagesUrl = "https://api.twitter.com/1/direct_messages.json";
 
 		public TwitterAuth Auth { get; set; }
 
@@ -116,20 +118,39 @@ namespace SocialBootstrapApi.Logic
 				FollowersUrl.AddQueryParam("screen_name", screenName), skip, take.GetValueOrDefault(DefaultTake));
 		}
 
-		public List<Tweet> GetTweets(string screenName, string sinceId = null, int? take = null)
+		public List<Tweet> GetTweets(string screenName, string sinceId = null, string maxId = null, int? take = null)
 		{
 			if (screenName == null)
 				throw new ArgumentNullException("screenName");
 
 			var url =  TweetsUrl.Fmt(screenName).AddQueryParam("count", take.GetValueOrDefault(DefaultTake));
 			if (!string.IsNullOrEmpty(sinceId))
-				url = url.AddQueryParam("max_id", sinceId);
+				url = url.AddQueryParam("since_id", sinceId);
+			if (!string.IsNullOrEmpty(maxId))
+				url = url.AddQueryParam("max_id", maxId);
 
 			var json = url.DownloadJsonFromUrl(Auth);
 			var tweets = json.FromJson<List<Tweet>>();
 
 			return tweets;
 		}
+
+
+		public List<DirectMessage> GetDirectMessages(string sinceId = null, string maxId = null, int? take = null)
+		{
+			var url =  DirectMessagesUrl.AddQueryParam("count", take.GetValueOrDefault(DefaultTake));
+			if (!string.IsNullOrEmpty(sinceId))
+				url = url.AddQueryParam("since_id", sinceId);
+			if (!string.IsNullOrEmpty(maxId))
+				url = url.AddQueryParam("max_id", maxId);
+
+			var json = url.DownloadJsonFromUrl(Auth);
+			var tweets = json.FromJson<List<DirectMessage>>();
+
+			return tweets;
+		}
+
+
 	}
 
 	public class TwitterAuth

@@ -72,21 +72,34 @@ namespace ChaweetApi.ServiceModel
 
 	public class Tweet
 	{
-        public ulong id { get; set; }
-        public ulong? in_reply_to_status_id { get; set; }
-        public bool retweeted { get; set; }
-        public bool truncated { get; set; }
-        public string created_at { get; set; }
-        public ulong? in_reply_to_user_id { get; set; }
-        public string in_reply_to_screen_name { get; set; }
-        public TweetUser user { get; set; }
-        public TweetEntities entities { get; set; }
-        public bool favorited { get; set; }
-        public string source { get; set; }
-        public string retweet_count { get; set; }
-        public string text { get; set; }
-        public GeoPoint geo { get; set; }
-        public GeoPoint coordinates { get; set; }
+		public ulong id { get; set; }
+		public ulong? in_reply_to_status_id { get; set; }
+		public bool retweeted { get; set; }
+		public bool truncated { get; set; }
+		public string created_at { get; set; }
+		public ulong? in_reply_to_user_id { get; set; }
+		public string in_reply_to_screen_name { get; set; }
+		public TweetUser user { get; set; }
+		public TweetEntities entities { get; set; }
+		public bool favorited { get; set; }
+		public string source { get; set; }
+		public string retweet_count { get; set; }
+		public string text { get; set; }
+		public GeoPoint geo { get; set; }
+		public GeoPoint coordinates { get; set; }
+	}
+
+	public class DirectMessage
+	{
+		public ulong id { get; set; }
+		public string created_at { get; set; }
+		public string sender_screen_name { get; set; }
+		public TweetUser sender { get; set; }
+		public TweetUser recipient { get; set; }
+		public ulong recipient_id { get; set; }
+		public ulong sender_id { get; set; }
+		public string recipient_screen_name { get; set; }
+		public string text { get; set; }
 	}
 	
 	public class TweetUser
