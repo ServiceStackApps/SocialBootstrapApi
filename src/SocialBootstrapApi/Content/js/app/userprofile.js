@@ -1,9 +1,6 @@
-/// <reference path="base.js" />
-/// <reference path="login.js" />
 (function (root)
 {
 	var app = root.App;
-
 	app.UserProfile = app.BaseModel.extend({
 		url: "api/profile",
 		defaults: {
@@ -31,7 +28,7 @@
 				this.fetch();
 			else 
 				this.clear();
-		}
+        }
 	});
 
 	app.UserProfileView = app.BaseView.extend(
@@ -49,24 +46,21 @@
 				var attrs = this.model.attributes;
 				attrs.twitterUserId = attrs.twitterUserId || null;
 				attrs.facebookUserId = attrs.facebookUserId || null;
+
 				console.log(attrs);
+				$("BODY").toggleClass("authenticated-twitter", !!attrs.twitterUserId);
+				$("BODY").toggleClass("authenticated-facebook", !!attrs.facebookUserId);
 
 				var showProfile = attrs.email || attrs.twitterUserId || attrs.facebookUserId;
-				if (showProfile)
-				{
+				if (showProfile) {
 					var html = this.template(attrs);
 					this.$el.html(html);
 					this.$el.fadeIn('fast');
-				} 
-				else
-				{
+				} else {
 					this.$el.html("");
 					this.$el.hide();
 				}
-
-				$("#facebook-signin").toggle(!attrs.facebookUserId);
-				$("#twitter-signin").toggle(!attrs.twitterUserId);
-			}
+}
 		});
 
 })(window);

@@ -92,7 +92,8 @@
             <ul class="media-grid">
                 <li>
                     <a href="#" data-cmd="twitterProfileChange:<%= user.screen_name %>">
-                        <img class="thumbnail" src="<%= user.profile_image_url %>" alt="">
+                        <img class="thumbnail" src="<%= user.profile_image_url %>" alt="" 
+                             data-cmd="twitterProfileChange:<%= user.screen_name %>" />
                     </a>
                 </li>
             </ul>
@@ -112,15 +113,43 @@
 
 <% }); %>
 </script> 
+<script type="text/template" id="template-directmessages">
+<% _.each(tweets, function(tweet){ 
+    var user = tweet.sender; %>    
+        
+    <div class="row tw-item tw-tweets">
+        <div class="span1">
+            <ul class="media-grid">
+                <li>
+                    <a href="#" data-cmd="twitterProfileChange:<%= user.screen_name %>">
+                        <img class="thumbnail" src="<%= user.profile_image_url %>" alt=""
+                             data-cmd="twitterProfileChange:<%= user.screen_name %>" />
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="span9">
+            <div class="row">
+                <a class="span7" href="#" data-cmd="twitterProfileChange:<%= user.screen_name %>">
+                    @@<%= user.screen_name %>
+                </a>
+            </div>
+            <div>
+                <%= tweet.text %>
+            </div>
+        </div>
+    </div>
 
+<% }); %>
+</script> 
 
-<p>
-	Single Page App template including Twitters Bootstrap + MVC3 + ServiceStack + Backbone.js <br/>
+<div id="intro">
+	Single Page App template using Twitters Bootstrap + ServiceStack + MVC3 + Backbone.js <br/>
 	<a href="http://www.servicestack.net/mvc-powerpack/" title="ServiceStack MVC PowerPack Website">
-		An optimized REST-API enabled MVC starter kit
+		A REST-API enabled MVC SPA starter kit
 	</a> 
     optimized for creating fast, responsive websites. <br/>
-</p>
+</div>
 
 <div id="twitter" class="span11">
 
@@ -136,6 +165,7 @@
 			<li class="active"><a href="#tweets" data-cmd="twitterTab:tweets">Tweets</a></li>
 			<li><a href="#friends" data-cmd="twitterTab:friends">Friends</a></li>
 			<li><a href="#followers" data-cmd="twitterTab:followers">Followers</a></li>
+			<li class="directmessages"><a href="#directmessages" data-cmd="twitterTab:directmessages">Direct Messages</a></li>
 		</ul>
         <div class="tab-content"></div>
 	</div>

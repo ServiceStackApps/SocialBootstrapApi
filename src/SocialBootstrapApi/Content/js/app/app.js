@@ -131,10 +131,7 @@
 
 	app.initialize();
     $(".tabs").tabs();
-
-
-    Backbone.history.start({ pushState: true }); //{ pushState: true }
-    $(function () {
-    });
+    
+    Backbone.history.start({ pushState: true });
 
 })(window);

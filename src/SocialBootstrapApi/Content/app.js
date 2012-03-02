@@ -2529,11 +2529,13 @@
 			},
 			render: function ()
 			{
-				var isAuth = this.model.get('isAuthenticated');
+			    $("BODY").toggleClass("authenticated", this.model.get('isAuthenticated'));
+			    $("BODY").toggleClass("registered", this.model.get('hasRegistered'));
+			    $("#signed-in a.dropdown-toggle").html(this.model.get('displayName') || '');
 
-				$("#signed-out").toggle(!isAuth);
-				$("#signed-in").toggle(isAuth);
-				$("#signed-in a.dropdown-toggle").html(this.model.get('displayName') || '');
+//				var isAuth = this.model.get('isAuthenticated');
+//				$("#signed-out").toggle(!isAuth);
+//				$("#signed-in").toggle(isAuth);
 			},
 			signOut: function ()
 			{
@@ -2608,12 +2610,14 @@
 			{
 				this.$errorMsg.html("");
 
-				var auth = this.model.get("isAuthenticated");
-				var registered = this.model.get('hasRegistered');
-				console.log("register.render(): auth=" + auth);
+				$("BODY").toggleClass("registered", this.model.get('hasRegistered'));
 
-				this.$registerLogin.toggle(registered && !auth);
-				this.$signup.toggle(!registered && !auth);
+//				var auth = this.model.get("isAuthenticated");
+//				var registered = this.model.get('hasRegistered');
+//				console.log("register.render(): auth=" + auth);
+
+//				this.$registerLogin.toggle(registered && !auth);
+//				this.$signup.toggle(!registered && !auth);
 			}
 		}
 	);
@@ -2653,7 +2657,11 @@
 				this.fetch();
 			else 
 				this.clear();
-		}
+
+			var attrs = this.attributes;
+			$("BODY").toggleClass("authenticated-twitter", !!attrs.twitterUserId);
+			$("BODY").toggleClass("authenticated-facebook", !!attrs.facebookUserId);		
+        }
 	});
 
 	app.UserProfileView = app.BaseView.extend(
@@ -2674,20 +2682,17 @@
 				console.log(attrs);
 
 				var showProfile = attrs.email || attrs.twitterUserId || attrs.facebookUserId;
-				if (showProfile)
-				{
+				if (showProfile) {
 					var html = this.template(attrs);
 					this.$el.html(html);
 					this.$el.fadeIn('fast');
-				} 
-				else
-				{
+				} else {
 					this.$el.html("");
 					this.$el.hide();
 				}
 
-				$("#facebook-signin").toggle(!attrs.facebookUserId);
-				$("#twitter-signin").toggle(!attrs.twitterUserId);
+//				$("#facebook-signin").toggle(!attrs.facebookUserId);
+//				$("#twitter-signin").toggle(!attrs.twitterUserId);
 			}
 		});
 
@@ -2715,9 +2720,13 @@
             this.bind("change", this.onChange);
         },
         onChange: function () {
-            console.log("twitter.onChange:" + this.get('tab'));
-            if (this.get('screenName'))
-                this.load(this.get('tab'));
+            console.log("twitter.onChange:" + this.tab());
+
+            var hasTwitterAuth = !!this.get('screenName');
+            $("BODY").toggleClass("authenticated-twitter", hasTwitterAuth);
+
+            if (hasTwitterAuth)
+                this.load(this.tab());
             else
                 this.clear({ silent: true });
         },
@@ -2730,11 +2739,12 @@
             });
         },
         twitterProfileChange: function (screenName, tab) {
-            tab = tab || this.get('tab');
+            tab = tab || this.tab();
             console.log("twitter.twitterProfileChange: " + tab);
 
             if (!screenName) {
                 this.set({ screenName: this.profile.get("twitterScreenName") });
+                $("BODY").toggleClass("self", this.viewingSelf());
                 return;
             }
 
@@ -2744,6 +2754,7 @@
                 _.extend(o, r.results[0]);
                 o.tab = tab;
                 self.set(o);
+                $("BODY").toggleClass("self", self.viewingSelf());
                 self.navigate(self.navUrl());
             });
         },
@@ -2751,10 +2762,17 @@
             return this.profile.get("twitterScreenName") === this.get("screenName");
         },
         navUrl: function() {
-            return (this.viewingSelf() ? "" : this.get("screenName") + "/") + this.get("tab");
+            return (
+                this.viewingSelf() || this.get("tab") == "directmessages" 
+                    ? "" 
+                    : this.get("screenName") + "/"
+            ) + this.get("tab");
+        },
+        tab: function () {
+            return this.get('tab') || this.defaults.tab;
         },
         twitterTab: function (tab) {
-            tab = tab || this.defaults.tab;            
+            tab = tab || this.tab();
             console.log("twitterTab:" + tab);
             this.set({ tab: tab });
             $(".tabs [href=#" + tab + "]").click();
@@ -2782,8 +2800,8 @@
 
             console.log("twitter.render:" + screenName);
 
-            this.$signedOut.toggle(!signedIn);
-            this.$signedIn.toggle(signedIn);
+//            this.$signedOut.toggle(!signedIn);
+//            this.$signedIn.toggle(signedIn);
 
             if (screenName) {
                 var tab = this.model.get('tab');
@@ -2943,11 +2961,8 @@
 
 	app.initialize();
     $(".tabs").tabs();
-
-
+    
     Backbone.history.start({ pushState: true }); //{ pushState: true }
-    $(function () {
-    });
 
 })(window);
 

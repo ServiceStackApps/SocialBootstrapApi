@@ -72,13 +72,54 @@ html, body {
 #signed-in,
 .signed-out,
 .signed-in,
-#signup,
 #register-login,
 #register-signed-in,
-#facebook-signin,
-#twitter-signin,
 #page-loading {
   display: none;
+}
+.authenticated #signed-in {
+  display: block;
+}
+.registered #register-login {
+  display: block;
+}
+.authenticated #register-login {
+  display: none;
+}
+.authenticated #intro {
+  display: none;
+}
+.authenticated #signup, .registered #signup {
+  display: none;
+}
+#twitter .signed-out {
+  display: block;
+}
+#twitter .signed-in {
+  display: none;
+}
+.authenticated-twitter #twitter .signed-out {
+  display: none;
+}
+.authenticated-twitter #twitter .signed-in {
+  display: block;
+}
+.authenticated-twitter #twitter-signin {
+  display: none;
+}
+.authenticated-facebook #facebook-signin {
+  display: none;
+}
+.directmessages {
+  display: none;
+}
+.self .directmessages {
+  display: list-item;
+}
+#intro {
+  padding: 0 0 10px 20px;
+  margin: 0 0 20px -20px;
+  border-bottom: solid 1px #ddd;
 }
 .content {
   min-height: 800px;
@@ -171,8 +212,6 @@ DIV.tw-item, DIV.tw-item > DIV {
   text-align: right;
 }
 .tw-current {
-  border-top: solid 1px #ddd;
-  margin-top: 20px;
   padding: 20px 0 20px 10px;
 }
 .tw-current .span1 {

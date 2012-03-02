@@ -1,8 +1,6 @@
-/// <reference path="base.js" />
 (function (root)
 {
 	var app = root.App;
-
 	app.RegisterView = app.BaseView.extend(
 		{
 			className: "view-register",
@@ -57,13 +55,7 @@
             render: function ()
 			{
 				this.$errorMsg.html("");
-
-				var auth = this.model.get("isAuthenticated");
-				var registered = this.model.get('hasRegistered');
-				console.log("register.render(): auth=" + auth);
-
-				this.$registerLogin.toggle(registered && !auth);
-				this.$signup.toggle(!registered && !auth);
+				$("BODY").toggleClass("registered", this.model.get('hasRegistered'));
 			}
 		}
 	);

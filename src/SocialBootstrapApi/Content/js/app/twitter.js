@@ -21,15 +21,21 @@
         },
         onChange: function () {
             console.log("twitter.onChange:" + this.tab());
-            if (this.get('screenName'))
+
+            var hasTwitterAuth = !!this.get('screenName');
+            $("BODY").toggleClass("authenticated-twitter", hasTwitterAuth);
+
+            if (hasTwitterAuth)
                 this.load(this.tab());
             else
                 this.clear({ silent: true });
         },
         load: function (tab) {
             tab = tab || this.defaults.tab;
-            var self = this, o = {};
-            _.get("api/twitter/" + this.get('screenName') + "/" + tab, function (r) {
+            var self = this, o = {}, 
+                url = tab === "directmessages" ? tab : this.get('screenName') + "/" + tab;
+
+            _.get("api/twitter/" + url, function (r) {
                 o[tab] = r.results;
                 self.set(o);
             });
@@ -40,6 +46,7 @@
 
             if (!screenName) {
                 this.set({ screenName: this.profile.get("twitterScreenName") });
+                $("BODY").toggleClass("self", this.viewingSelf());
                 return;
             }
 
@@ -49,6 +56,7 @@
                 _.extend(o, r.results[0]);
                 o.tab = tab;
                 self.set(o);
+                $("BODY").toggleClass("self", self.viewingSelf());
                 self.navigate(self.navUrl());
             });
         },
@@ -75,31 +83,34 @@
             _.bindAll(this, "render");
             this.model.bind("change", this.render);
             this.$el = $(this.el);
-            this.$signedOut = this.$el.find(".signed-out");
-            this.$signedIn = this.$el.find(".signed-in");
             this.$signedInBody = this.$el.find(".signed-in .tab-content");
             this.tweetsTemplate = _.template($("#template-tweets").html());
             this.usersTemplate = _.template($("#template-users").html());
+            this.directMessagesTemplate = _.template($("#template-directmessages").html());
             this.currentUserTemplate = _.template($("#template-current-user").html());
+        },
+        tabHooks: {
+            friends: function () {
+                return this.usersTemplate({ users: this.model.get('friends') });
+            },
+            followers: function () {
+                return this.usersTemplate({ users: this.model.get('followers') });
+            },
+            tweets: function () {
+                return this.tweetsTemplate({ tweets: this.model.get('tweets') });
+            },
+            directmessages: function () {
+                return this.directMessagesTemplate({ tweets: this.model.get('directmessages') });
+            }
         },
         render: function () {
 
-            var screenName = this.model.get('screenName'),
-                signedIn = !!screenName,
+            var screenName = this.model.get('screenName'), 
                 html = "";
-
-            console.log("twitter.render:" + screenName);
-
-            this.$signedOut.toggle(!signedIn);
-            this.$signedIn.toggle(signedIn);
 
             if (screenName) {
                 var tab = this.model.get('tab');
-                html = tab === "friends"
-                    ? this.usersTemplate({ users: this.model.get('friends') })
-                    : tab == "followers"
-                        ? this.usersTemplate({ users: this.model.get('followers') })
-                        : this.tweetsTemplate({ tweets: this.model.get('tweets') });
+                html = this.tabHooks[tab].call(this);
 
                 this.$(".current-user").html(this.currentUserTemplate(this.model.toJSON()));
                 var bgImg = this.model.get('profile_background_image_url'),
@@ -107,9 +118,6 @@
                     bgRepeat = this.model.get('profile_background_tile') === "true" ? '' : 'no-repeat';
                 var bgCss = bgImg ? '#' + bgColor + ' url(' + bgImg + ') ' + bgRepeat + ' top left' : '';
                 $("BODY").css({ background: bgCss, 'background-attachment': 'fixed' });
-            }
-            else {
-                //$("BODY").css({ 'background-color': '' });
             }
 
             this.$signedInBody.html(html);

@@ -1,4 +1,3 @@
-/// <reference path="base.js" />
 (function (root)
 {
 	var app = root.App;
@@ -64,11 +63,9 @@
 			},
 			render: function ()
 			{
-				var isAuth = this.model.get('isAuthenticated');
-
-				$("#signed-out").toggle(!isAuth);
-				$("#signed-in").toggle(isAuth);
-				$("#signed-in a.dropdown-toggle").html(this.model.get('displayName') || '');
+			    $("BODY").toggleClass("authenticated", this.model.get('isAuthenticated'));
+			    $("BODY").toggleClass("registered", this.model.get('hasRegistered'));
+			    $("#signed-in a.dropdown-toggle").html(this.model.get('displayName') || '');
 			},
 			signOut: function ()
 			{
