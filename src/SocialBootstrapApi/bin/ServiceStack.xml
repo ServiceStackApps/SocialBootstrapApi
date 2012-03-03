@@ -178,6 +178,12 @@
             <param name="serviceType"></param>
             <param name="atRestPaths"></param>
         </member>
+        <member name="M:ServiceStack.WebHost.Endpoints.IAppHost.LoadPlugin(ServiceStack.WebHost.Endpoints.IPlugin[])">
+            <summary>
+            Apply plugins to this AppHost
+            </summary>
+            <param name="plugins"></param>
+        </member>
         <member name="P:ServiceStack.WebHost.Endpoints.IAppHost.ContentTypeFilters">
             <summary>
             Register custom ContentType serializers
@@ -2353,7 +2359,7 @@
             Summary description for $codebehindclassname$
             </summary>
         </member>
-        <member name="M:ServiceStack.WebHost.EndPoints.Formats.MarkdownFormat.SerializeToStream(ServiceStack.ServiceHost.IRequestContext,System.Object,System.IO.Stream)">
+        <member name="M:ServiceStack.WebHost.Endpoints.Formats.MarkdownFormat.SerializeToStream(ServiceStack.ServiceHost.IRequestContext,System.Object,System.IO.Stream)">
             <summary>
             Render Markdown for text/markdown and text/plain ContentTypes
             </summary>
