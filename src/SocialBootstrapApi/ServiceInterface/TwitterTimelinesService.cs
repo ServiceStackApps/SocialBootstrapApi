@@ -6,7 +6,7 @@ using ServiceStack.ServiceInterface.ServiceModel;
 
 namespace SocialBootstrapApi.ServiceInterface
 {
-	public class TwitterTweets
+	public class TwitterTimelines
 	{
 		public string ScreenName { get; set; }
 
@@ -17,9 +17,9 @@ namespace SocialBootstrapApi.ServiceInterface
 		public string MaxId { get; set; }
 	}
 
-	public class TwitterTweetsResponse
+	public class TwitterTimelinesResponse
 	{
-		public TwitterTweetsResponse()
+		public TwitterTimelinesResponse()
 		{
 			this.ResponseStatus = new ResponseStatus();
 		}
@@ -29,11 +29,11 @@ namespace SocialBootstrapApi.ServiceInterface
 		public ResponseStatus ResponseStatus { get; set; }
 	}
 
-	public class TwitterTweetsService : AppServiceBase<TwitterTweets>
+	public class TwitterTimelinesService : AppServiceBase<TwitterTimelines>
 	{
-		protected override object Run(TwitterTweets request)
+		protected override object Run(TwitterTimelines request)
 		{
-			var cacheKey = "cache:Tweet:" + request.ScreenName + ":tweets"
+			var cacheKey = "cache:Tweet:" + request.ScreenName + ":timeline"
 				+ (request.Take.HasValue ? ":take:" + request.Take : "")
 				+ (!request.SinceId.IsNullOrEmpty() ? ":sinceid:" + request.SinceId : "")
 				+ (!request.MaxId.IsNullOrEmpty() ? ":maxid:" + request.MaxId : "");
@@ -41,8 +41,8 @@ namespace SocialBootstrapApi.ServiceInterface
 			//This caches and returns the most optimal result the browser can handle, e.g.
 			//If the browser requests json and accepts deflate - it returns a deflated json payload from cache
 			return base.RequestContext.ToOptimizedResultUsingCache(Cache, cacheKey, () =>
-				new TwitterTweetsResponse {
-					Results = AuthTwitterGateway.GetTweets(
+				new TwitterTimelinesResponse {
+					Results = AuthTwitterGateway.GetTimeline(
 						request.ScreenName, request.SinceId, request.MaxId, request.Take)
 				});
 		}

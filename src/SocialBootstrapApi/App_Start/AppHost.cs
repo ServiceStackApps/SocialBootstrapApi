@@ -141,6 +141,7 @@ namespace SocialBootstrapApi
 				.Add<UserProfile>("/profile")
 
 				//Twitter related services
+				.Add<TwitterTimelines>("/twitter/{ScreenName}/timelines")
 				.Add<TwitterTweets>("/twitter/{ScreenName}/tweets")
 				.Add<TwitterFriends>("/twitter/id/{UserId}/friends")
 				.Add<TwitterFriends>("/twitter/{ScreenName}/friends")

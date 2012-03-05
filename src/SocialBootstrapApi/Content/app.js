@@ -2463,8 +2463,7 @@
 
 })(window);
 
-;/// <reference path="base.js" />
-(function (root)
+;(function (root)
 {
 	var app = root.App;
 
@@ -2532,10 +2531,6 @@
 			    $("BODY").toggleClass("authenticated", this.model.get('isAuthenticated'));
 			    $("BODY").toggleClass("registered", this.model.get('hasRegistered'));
 			    $("#signed-in a.dropdown-toggle").html(this.model.get('displayName') || '');
-
-//				var isAuth = this.model.get('isAuthenticated');
-//				$("#signed-out").toggle(!isAuth);
-//				$("#signed-in").toggle(isAuth);
 			},
 			signOut: function ()
 			{
@@ -2550,11 +2545,9 @@
 
 })(window);
 
-;/// <reference path="base.js" />
-(function (root)
+;(function (root)
 {
 	var app = root.App;
-
 	app.RegisterView = app.BaseView.extend(
 		{
 			className: "view-register",
@@ -2609,27 +2602,16 @@
             render: function ()
 			{
 				this.$errorMsg.html("");
-
 				$("BODY").toggleClass("registered", this.model.get('hasRegistered'));
-
-//				var auth = this.model.get("isAuthenticated");
-//				var registered = this.model.get('hasRegistered');
-//				console.log("register.render(): auth=" + auth);
-
-//				this.$registerLogin.toggle(registered && !auth);
-//				this.$signup.toggle(!registered && !auth);
 			}
 		}
 	);
 
 })(window);
 
-;/// <reference path="base.js" />
-/// <reference path="login.js" />
-(function (root)
+;(function (root)
 {
 	var app = root.App;
-
 	app.UserProfile = app.BaseModel.extend({
 		url: "api/profile",
 		defaults: {
@@ -2657,10 +2639,6 @@
 				this.fetch();
 			else 
 				this.clear();
-
-			var attrs = this.attributes;
-			$("BODY").toggleClass("authenticated-twitter", !!attrs.twitterUserId);
-			$("BODY").toggleClass("authenticated-facebook", !!attrs.facebookUserId);		
         }
 	});
 
@@ -2679,7 +2657,10 @@
 				var attrs = this.model.attributes;
 				attrs.twitterUserId = attrs.twitterUserId || null;
 				attrs.facebookUserId = attrs.facebookUserId || null;
+
 				console.log(attrs);
+				$("BODY").toggleClass("authenticated-twitter", !!attrs.twitterUserId);
+				$("BODY").toggleClass("authenticated-facebook", !!attrs.facebookUserId);
 
 				var showProfile = attrs.email || attrs.twitterUserId || attrs.facebookUserId;
 				if (showProfile) {
@@ -2690,10 +2671,7 @@
 					this.$el.html("");
 					this.$el.hide();
 				}
-
-//				$("#facebook-signin").toggle(!attrs.facebookUserId);
-//				$("#twitter-signin").toggle(!attrs.twitterUserId);
-			}
+}
 		});
 
 })(window);
@@ -2704,7 +2682,8 @@
     app.Twitter = app.BaseModel.extend({
         defaults: {
             screenName: null,
-            tab: "tweets",
+            tab: "timelines",
+            timelines: [],
             tweets: [],
             friends: [],
             followers: []
@@ -2732,8 +2711,10 @@
         },
         load: function (tab) {
             tab = tab || this.defaults.tab;
-            var self = this, o = {};
-            _.get("api/twitter/" + this.get('screenName') + "/" + tab, function (r) {
+            var self = this, o = {}, 
+                url = tab === "directmessages" ? tab : this.get('screenName') + "/" + tab;
+
+            _.get("api/twitter/" + url, function (r) {
                 o[tab] = r.results;
                 self.set(o);
             });
@@ -2762,11 +2743,7 @@
             return this.profile.get("twitterScreenName") === this.get("screenName");
         },
         navUrl: function() {
-            return (
-                this.viewingSelf() || this.get("tab") == "directmessages" 
-                    ? "" 
-                    : this.get("screenName") + "/"
-            ) + this.get("tab");
+            return (this.viewingSelf() ? "" : this.get("screenName") + "/") + this.get("tab");
         },
         tab: function () {
             return this.get('tab') || this.defaults.tab;
@@ -2785,31 +2762,37 @@
             _.bindAll(this, "render");
             this.model.bind("change", this.render);
             this.$el = $(this.el);
-            this.$signedOut = this.$el.find(".signed-out");
-            this.$signedIn = this.$el.find(".signed-in");
             this.$signedInBody = this.$el.find(".signed-in .tab-content");
             this.tweetsTemplate = _.template($("#template-tweets").html());
             this.usersTemplate = _.template($("#template-users").html());
+            this.directMessagesTemplate = _.template($("#template-directmessages").html());
             this.currentUserTemplate = _.template($("#template-current-user").html());
+        },
+        tabHooks: {
+            friends: function () {
+                return this.usersTemplate({ users: this.model.get('friends') });
+            },
+            followers: function () {
+                return this.usersTemplate({ users: this.model.get('followers') });
+            },
+            timelines: function () {
+                return this.tweetsTemplate({ tweets: this.model.get('timelines') });
+            },
+            tweets: function () {
+                return this.tweetsTemplate({ tweets: this.model.get('tweets') });
+            },
+            directmessages: function () {
+                return this.directMessagesTemplate({ tweets: this.model.get('directmessages') });
+            }
         },
         render: function () {
 
-            var screenName = this.model.get('screenName'),
-                signedIn = !!screenName,
+            var screenName = this.model.get('screenName'), 
                 html = "";
-
-            console.log("twitter.render:" + screenName);
-
-//            this.$signedOut.toggle(!signedIn);
-//            this.$signedIn.toggle(signedIn);
 
             if (screenName) {
                 var tab = this.model.get('tab');
-                html = tab === "friends"
-                    ? this.usersTemplate({ users: this.model.get('friends') })
-                    : tab == "followers"
-                        ? this.usersTemplate({ users: this.model.get('followers') })
-                        : this.tweetsTemplate({ tweets: this.model.get('tweets') });
+                html = this.tabHooks[tab].call(this);
 
                 this.$(".current-user").html(this.currentUserTemplate(this.model.toJSON()));
                 var bgImg = this.model.get('profile_background_image_url'),
@@ -2817,9 +2800,6 @@
                     bgRepeat = this.model.get('profile_background_tile') === "true" ? '' : 'no-repeat';
                 var bgCss = bgImg ? '#' + bgColor + ' url(' + bgImg + ') ' + bgRepeat + ' top left' : '';
                 $("BODY").css({ background: bgCss, 'background-attachment': 'fixed' });
-            }
-            else {
-                //$("BODY").css({ 'background-color': '' });
             }
 
             this.$signedInBody.html(html);
@@ -2897,15 +2877,20 @@
     
     app.Routes = Backbone.Router.extend({
         routes: {
+            "timelines": "timelines",
             "tweets": "tweets",
             "friends": "friends",
             "followers": "followers",
+            "userTimelines": ":user/timelines",
             "userTweets": ":user/tweets",
             "userFriends": ":user/friends",
             "userFollowers": ":user/followers"
         },
         initialize: function (opt) {
             this.app = opt.app;
+        },
+        timelines: function () {
+            this.app.route("twitterProfileChange", login.get('screenName'), "timelines");
         },
         tweets: function () {
             this.app.route("twitterProfileChange", login.get('screenName'), "tweets");
@@ -2915,6 +2900,9 @@
         },
         followers: function () {
             this.app.route("twitterProfileChange", login.get('screenName'), "followers");
+        },
+        userTimelines: function (user) {
+            this.app.route("twitterProfileChange", user, "timelines");
         },
         userTweets: function (user) {
             this.app.route("twitterProfileChange", user, "tweets");
@@ -2962,7 +2950,7 @@
 	app.initialize();
     $(".tabs").tabs();
     
-    Backbone.history.start({ pushState: true }); //{ pushState: true }
+    Backbone.history.start({ pushState: true });
 
 })(window);
 

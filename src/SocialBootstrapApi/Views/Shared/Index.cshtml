@@ -144,25 +144,123 @@
 </script> 
 
 <div id="intro">
-	Single Page App template using Twitters Bootstrap + ServiceStack + MVC3 + Backbone.js <br/>
-	<a href="http://www.servicestack.net/mvc-powerpack/" title="ServiceStack MVC PowerPack Website">
-		A REST-API enabled MVC SPA starter kit
-	</a> 
-    optimized for creating fast, responsive websites. <br/>
+	<p>
+		Is a Single Page App template using the finest, leanest, cleanest OSS parts $0 money could buy :)
+	</p>
+
+	<ul>
+		<li><a href="http://twitter.github.com/bootstrap/">Twitters Bootstrap</a> - For Website design template, css, widgets</li>
+		<li>
+			<a href="http://www.servicestack.net/">ServiceStack</a> - .NET REST Web Services Framework
+			<ul>
+				<li><a href="http://www.servicestack.net/mvc-powerpack/">MVC PowerPack</a> - Enhance MVC with clean Session, Caching, Logging, IOC &amp; JSON libs</li>
+				<li><a href="https://github.com/ServiceStack/Bundler">Bundler</a> - node.js, CoffeeScript, Less, Sass, JS and website bundling + minification features</li>
+			</ul>
+		</li>
+		<li><a href="http://www.asp.net/mvc/mvc3">ASP.NET MVC3</a> - ASP.NET MVC Web Framework</li>
+		<li><a href="http://documentcloud.github.com/backbone/">Backbone.js</a> - A lightweight MVC structure ideal for building Single Page Apps</li>
+		<li><a href="http://documentcloud.github.com/underscore/">Underscore.js</a> - A functional utility toolbelt required by Backbone</li>
+		<li><a href="http://jquery.com/">jQuery</a> - The ubiquitos JS library for providing a pleasant and smooth API around DOM quirks</li>
+	</ul>
+    
+	<h3>Designed to impress</h3>
+	<p>
+		Single page apps currently provide the best online end-user experiences available where most of the well known 
+		Internet properties from Google, Facebook and Twitter all taking maximum advantage of the capabilities 
+        modern browsers have to offer. 
+	</p>
+	<p>
+		The major differentiator they have over normal websites is maintaining instant response times by avoiding full-page reloads 
+        by only sending delta page updates with JSON services or partial HTML downloads behind a solid caching strategy.
+	</p>
+	<p>
+		As <a href="https://github.com/mythz/ScalingDotNET">Speed is the most important feature</a> in today's websites, this 
+		template includes only the fastest components with best-practices advanced minification and bundling techniques built-in -
+        essential in deliverying the fastest response times to your users.
+	</p>
+
+	<h3>Powered by ServiceStack</h3>
+	<p>
+		No 3rd party .dlls were used in the making of this template :)
+	</p>
+	<p>
+		The <a href="http://www.servicestack.net/">ServiceStack</a> project dlls includes all the necessary 
+        libraries to build high-performance website and web services allowing you to authenticate and register 
+        with Facebook and Twitter as well as your own internally-hosted Registration and Authentication services and repositories,
+		Caching, Session, Logging, InMemory, 
+        <a href="https://github.com/ServiceStack/ServiceStack.Redis/">Redis</a> and 
+		<a href="https://github.com/ServiceStack/ServiceStack.OrmLite/">OrmLite</a> 
+        RDBMS providers - with SqlServer bundled (Sqlite, MySQL and PostgreSQL adapters available)
+        as well as super fast <a href="https://github.com/ServiceStack/ServiceStack.Text/">JSON, JSV and CSV text serializers</a>.
+	</p>
+
+	<h3>Handpicked choice external components inside</h3>
+	<p>
+		Also embedded inside ServiceStack .dlls are best-of-breed, high-performance and easy to use 3rd party parts 
+        surrounded with rich, deep integration in ServiceStack so it works fluidly with existing conventions:
+	</p>
+	<ul>
+		<li><a href="http://funq.codeplex.com/">Funq IOC</a></li>
+		<li><a href="http://code.google.com/p/mvc-mini-profiler/">Mini Profiler</a></li>
+		<li><a href="http://code.google.com/p/dapper-dot-net/">Dapper</a></li>
+		<li><a href="http://fluentvalidation.codeplex.com/">Fluent Validation</a></li>
+		<li><a href="https://github.com/migueldeicaza/TweetStation">TweetStation's OAuth library</a></li>
+	</ul>
+    
+	<h3>Authentication</h3>
+	<p>
+		This template also demonstrates the different Authentication modes in ServiceStack where you can mix
+		and match different Auth Providers that you want to enable for your website as well as different caching
+		and RDBMS persistence back-ends you want to store the User Authenticated data in.
+	</p>
+	<p>
+		Below is a high-level overview of this:
+	</p>
+	<p>
+		<a href="https://github.com/ServiceStack/ServiceStack/wiki/Authentication-and-authorization">
+		    <img src="@Url.Content("~/Content/img/auth-overview.png")" alt="Auth Overview" /></a>
+	</p>
+	<p>
+		For more information see: 
+		<a href="https://github.com/ServiceStack/ServiceStack/wiki/Authentication-and-authorization">
+			Authentication and authorization in ServiceStack
+		</a>
+	</p>
+
+    <h3>Rest web service framework</h3>    
+	<p>
+		The lifeline behind most Single Page Apps is JSON services and ServiceStack provides the ideal platform to
+		build these services with its succinct idiomatic C# typed API that works out-of-the-box that
+        is equipped with the <a href="http://www.servicestack.net/benchmarks/#burningmonk-benchmarks">fastest JSON Serializer</a> available for .NET.
+	</p>
+	<p>
+		As a bonus, it works with no config or code-gen, ServieStack's design allows each of your services to also be available on 
+		XML, JSV, HTML, CSV and SOAP endpoints. The included <a href="https://gist.github.com/1787443">AuthorService</a> provides 
+        a glimpse of the functionality ServiceStack can provide for a single class.
+	</p>
+	<p>
+		Once you've created some web services, the best way to explore your API is via the metadata pages at: 
+		<a href="@Url.Content("~/api/metadata")">/api/metadata</a>
+	</p>
+
+	<h3>The Future and Beyond</h3>    
+	<p>
+		The next hottest thing to conquer once you've mastered your Single Page App is to expand into Mobile and 
+		Rich client apps and ServiceStack has you covered allowing you to re-use your existing services with generic, 
+        typed C# ServiceClients providing an end-to-end typed API for .NET, Silverlight and MonoTouch applications.
+	</p>
+
 </div>
 
 <div id="twitter" class="span11">
 
-	<div class="signed-out">
-		<a href="@Url.Content("~/api/auth/twitter")"><img src="@Url.Content("~/Content/img/sign-in-with-twitter-l.png")" alt="Sign-in with Twitter" /></a>
-	</div>
-    
 	<div class="signed-in">
 		<div id="page-loading"><b>loading...</b></div>
 
 		<div class="current-user"></div>
 		<ul class="tabs">
-			<li class="active"><a href="#tweets" data-cmd="twitterTab:tweets">Tweets</a></li>
+			<li class="active"><a href="#timelines" data-cmd="twitterTab:timelines">Timeline</a></li>
+			<li><a href="#tweets" data-cmd="twitterTab:tweets">Tweets</a></li>
 			<li><a href="#friends" data-cmd="twitterTab:friends">Friends</a></li>
 			<li><a href="#followers" data-cmd="twitterTab:followers">Followers</a></li>
 			<li class="directmessages"><a href="#directmessages" data-cmd="twitterTab:directmessages">Direct Messages</a></li>

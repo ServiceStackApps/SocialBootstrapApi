@@ -2472,6 +2472,9 @@ body {
   /* 40px to make the container go all the way to the bottom of the topbar */
 
 }
+footer {
+  border: none;
+}
 .container > footer p {
   text-align: center;
   /* center align it with the container */
@@ -2551,13 +2554,7 @@ html, body {
 .authenticated #signup, .registered #signup {
   display: none;
 }
-#twitter .signed-out {
-  display: block;
-}
 #twitter .signed-in {
-  display: none;
-}
-.authenticated-twitter #twitter .signed-out {
   display: none;
 }
 .authenticated-twitter #twitter .signed-in {
@@ -2576,9 +2573,8 @@ html, body {
   display: list-item;
 }
 #intro {
-  padding: 0 0 10px 20px;
+  padding: 0 10px 10px 20px;
   margin: 0 0 20px -20px;
-  border-bottom: solid 1px #ddd;
 }
 .content {
   min-height: 800px;

@@ -27,11 +27,10 @@
 		<div class="topbar">
 			<div class="fill">
 				<div class="container">
-					<a class="brand" href="https://github.com/ServiceStack/SocialBootstrapApi">Bootstrap Stack</a>
+					<a class="brand active" href="@Url.Action("Index", "Home")">Bootstrap Stack</a>
 					<ul class="nav">
-						<li class="active"><a href="@Url.Action("Index", "Home")">Home</a></li>
-						<li><a href="@Url.Action("Features", "Home")">Features</a></li>
 						<li><a href="@Url.Action("About", "Home")">About</a></li>
+    					<li><a href="https://github.com/ServiceStack/SocialBootstrapApi">Git Hub</a></li>
 					</ul>
             
 					<div id="login">
@@ -93,8 +92,9 @@
 		    window.BASE_URL = '@Url.Content("~")';
 		</script>
 
-		@ServiceStack.Mvc.MiniProfiler.MiniProfiler.RenderIncludes()
-        
+@*		@ServiceStack.Mvc.MiniProfiler.MiniProfiler.RenderIncludes()
+*@        
+
 		@(false ? Html.Js("~/Content/js/jquery-1.7.js") : Html.Js("http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"))
 		@Html.RenderJsBundle("~/Content/app.js.bundle", BundleOptions.Normal)
          

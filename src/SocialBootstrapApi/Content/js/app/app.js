@@ -67,15 +67,20 @@
     
     app.Routes = Backbone.Router.extend({
         routes: {
+            "timelines": "timelines",
             "tweets": "tweets",
             "friends": "friends",
             "followers": "followers",
+            "userTimelines": ":user/timelines",
             "userTweets": ":user/tweets",
             "userFriends": ":user/friends",
             "userFollowers": ":user/followers"
         },
         initialize: function (opt) {
             this.app = opt.app;
+        },
+        timelines: function () {
+            this.app.route("twitterProfileChange", login.get('screenName'), "timelines");
         },
         tweets: function () {
             this.app.route("twitterProfileChange", login.get('screenName'), "tweets");
@@ -85,6 +90,9 @@
         },
         followers: function () {
             this.app.route("twitterProfileChange", login.get('screenName'), "followers");
+        },
+        userTimelines: function (user) {
+            this.app.route("twitterProfileChange", user, "timelines");
         },
         userTweets: function (user) {
             this.app.route("twitterProfileChange", user, "tweets");

@@ -4,7 +4,8 @@
     app.Twitter = app.BaseModel.extend({
         defaults: {
             screenName: null,
-            tab: "tweets",
+            tab: "timelines",
+            timelines: [],
             tweets: [],
             friends: [],
             followers: []
@@ -95,6 +96,9 @@
             },
             followers: function () {
                 return this.usersTemplate({ users: this.model.get('followers') });
+            },
+            timelines: function () {
+                return this.tweetsTemplate({ tweets: this.model.get('timelines') });
             },
             tweets: function () {
                 return this.tweetsTemplate({ tweets: this.model.get('tweets') });
