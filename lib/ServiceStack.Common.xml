@@ -121,6 +121,14 @@
             This request filter is executed globally.
             </summary>
         </member>
+        <member name="P:ServiceStack.ServiceClient.Web.ServiceClientBase.HttpWebResponseFilter">
+            <summary>
+            The response action is called once the server response is available.
+            It will allow you to access raw response information. 
+            This response action is executed globally.
+            Note that you should NOT consume the response stream as this is handled by ServiceStack
+            </summary>
+        </member>
         <member name="P:ServiceStack.ServiceClient.Web.ServiceClientBase.UserName">
             <summary>
             The user name for basic authentication
@@ -148,6 +156,13 @@
             <summary>
             The request filter is called before any request.
             This request filter only works with the instance where it was set (not global).
+            </summary>
+        </member>
+        <member name="P:ServiceStack.ServiceClient.Web.ServiceClientBase.LocalHttpWebResponseFilter">
+            <summary>
+            The response action is called once the server response is available.
+            It will allow you to access raw response information. 
+            Note that you should NOT consume the response stream as this is handled by ServiceStack
             </summary>
         </member>
         <member name="T:ServiceStack.ServiceClient.Web.GenericProxy`1">
