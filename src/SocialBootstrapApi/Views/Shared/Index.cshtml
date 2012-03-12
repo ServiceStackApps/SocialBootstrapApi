@@ -18,7 +18,7 @@
     <div id="twitter-info">
         <h4>Twitter Info</h4>
         <dl>
-            <dt>Screen Name</dt><dd><a href="#" data-cmd="twitterProfileChange:<%= twitterScreenName %>"><%= twitterScreenName %></a></dd>
+            <dt>Screen Name</dt><dd><a data-cmd="twitterProfileChange:<%= twitterScreenName %>"><%= twitterScreenName %></a></dd>
             <dt>Name</dt><dd><%= twitterName %></dd>
             <dt>User Id</dt><dd><%= twitterUserId %></dd>
         </dl>
@@ -45,7 +45,7 @@
         <div class="span1">
             <ul class="media-grid">
                 <li>
-                    <a href="#" data-cmd="twitterProfileChange:<%= user.screen_name %>">
+                    <a data-cmd="twitterProfileChange:<%= user.screen_name %>">
                         <img class="thumbnail" src="<%= user.profile_image_url %>" alt=""
                          data-cmd="twitterProfileChange:<%= user.screen_name %>">
                     </a>
@@ -54,7 +54,7 @@
         </div>
         <div class="span9">
             <div class="row">
-                <a class="span7" href="#" data-cmd="twitterProfileChange:<%= user.screen_name %>">
+                <a class="span7" data-cmd="twitterProfileChange:<%= user.screen_name %>">
                     @@<%= user.screen_name %>
                 </a>
             </div>
@@ -91,7 +91,7 @@
         <div class="span1">
             <ul class="media-grid">
                 <li>
-                    <a href="#" data-cmd="twitterProfileChange:<%= user.screen_name %>">
+                    <a data-cmd="twitterProfileChange:<%= user.screen_name %>">
                         <img class="thumbnail" src="<%= user.profile_image_url %>" alt="" 
                              data-cmd="twitterProfileChange:<%= user.screen_name %>" />
                     </a>
@@ -100,7 +100,7 @@
         </div>
         <div class="span9">
             <div class="row">
-                <a class="span7" href="#" data-cmd="twitterProfileChange:<%= user.screen_name %>">
+                <a class="span7" data-cmd="twitterProfileChange:<%= user.screen_name %>">
                     @@<%= user.screen_name %>
                 </a>
                 <i class="span2"><%= user.friends_count + ' / ' + user.followers_count %></i>
@@ -121,7 +121,7 @@
         <div class="span1">
             <ul class="media-grid">
                 <li>
-                    <a href="#" data-cmd="twitterProfileChange:<%= user.screen_name %>">
+                    <a data-cmd="twitterProfileChange:<%= user.screen_name %>">
                         <img class="thumbnail" src="<%= user.profile_image_url %>" alt=""
                              data-cmd="twitterProfileChange:<%= user.screen_name %>" />
                     </a>
@@ -130,7 +130,7 @@
         </div>
         <div class="span9">
             <div class="row">
-                <a class="span7" href="#" data-cmd="twitterProfileChange:<%= user.screen_name %>">
+                <a class="span7" data-cmd="twitterProfileChange:<%= user.screen_name %>">
                     @@<%= user.screen_name %>
                 </a>
             </div>
@@ -165,7 +165,7 @@
     
 	<h3>Designed to impress</h3>
 	<p>
-		Single page apps currently provide the best online end-user experiences available where most of the well known 
+		<a href="http://en.wikipedia.org/wiki/Single-page_application">Single page apps</a> currently provide the best online end-user experiences available where most of the well known 
 		Internet properties from Google, Facebook and Twitter all taking maximum advantage of the capabilities 
         modern browsers have to offer. 
 	</p>
@@ -260,8 +260,8 @@
 		<div class="current-user"></div>
 		<ul class="tabs">
 			<li class="active"><a href="#timelines" data-cmd="twitterTab:timelines">Timeline</a></li>
-			<li><a href="#tweets" data-cmd="twitterTab:tweets">Tweets</a></li>
-			<li><a href="#friends" data-cmd="twitterTab:friends">Friends</a></li>
+			<li><a href="#tweets"    data-cmd="twitterTab:tweets">Tweets</a></li>
+			<li><a href="#friends"   data-cmd="twitterTab:friends">Friends</a></li>
 			<li><a href="#followers" data-cmd="twitterTab:followers">Followers</a></li>
 			<li class="directmessages"><a href="#directmessages" data-cmd="twitterTab:directmessages">Direct Messages</a></li>
 		</ul>
@@ -298,7 +298,7 @@
 			</div>
 			<div class="actions">
 			    <button class="btn" type="submit">Sign up</button><b data-ajax="loading"></b>
-                or <a href="#" data-cmd="signIn">sign in</a>
+                or <a data-cmd="signIn">sign in</a>
 			</div>
         </form> 
     </div>
@@ -318,7 +318,7 @@
 			</div>
 			<div class="actions">
 			    <button class="btn" type="submit">Sign in</button>
-                or <a href="#" data-cmd="unregistered">register</a>
+                or <a data-cmd="unregistered">register</a>
 			</div>
         </form>
     </div>
@@ -340,5 +340,6 @@
 @section JavaScript {    
 <script type="text/javascript">
     App.models.login.set({ isAuthenticated: @session.IsAuthenticated.ToJsBool() });
+    App.start();
 </script>
 }

@@ -70,11 +70,11 @@
 						<h1>Bootstrap ServiceStack MVC Backbone.js<small> with Twitter and Facebook auth built-in</small></h1>
 					}
 				</div>
-				<div class="row"> 
+				<div id="page-body" class="row"> 
 					<div class="span11">
 						@RenderBody()
 					</div>
-					<div class="span5">
+					<div id="sidebar" class="span5">
 						@RenderSection("SideBar", required: false)
 					</div>
 				</div>
@@ -83,7 +83,7 @@
 			<footer>
 				<p>&copy; Company 2011</p>
 			</footer>
-
+             
 		</div> <!-- /container -->
 
 		<a id="by-link" href="https://github.com/ServiceStack/SocialBootstrapApi">Social Bootstrap Api</a>
@@ -92,10 +92,7 @@
 		    window.BASE_URL = '@Url.Content("~")';
 		</script>
 
-@*		@ServiceStack.Mvc.MiniProfiler.MiniProfiler.RenderIncludes()
-*@        
-
-		@(false ? Html.Js("~/Content/js/jquery-1.7.js") : Html.Js("http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"))
+		@(true ? Html.Js("~/Content/js/jquery-1.7.js") : Html.Js("http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"))
 		@Html.RenderJsBundle("~/Content/app.js.bundle", BundleOptions.Normal)
          
 		@RenderSection("JavaScript", required: false)

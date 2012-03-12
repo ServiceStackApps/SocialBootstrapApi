@@ -106,7 +106,8 @@
 		},
 		sync: function(method, model, options) {
 		    //console.log(model.url, getUrl(model.url));
-		    model.url = relativeUrl(model.url);
+		    var url = _.isFunction(model.url) ? model.url() : model.url;
+		    model.url = relativeUrl(url);
 		    Backbone.sync(method, model, options);
 		},
 		_super: function (funcName)

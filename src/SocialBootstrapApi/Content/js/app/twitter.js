@@ -8,61 +8,63 @@
             timelines: [],
             tweets: [],
             friends: [],
-            followers: []
+            followers: [],
+            profile_image_url: null,
+            screen_name: null,
+            description: null,
+            statuses_count: null,
+            friends_count: null,
+            followers_count: null
         },
         initialize: function (opt) {
-            _.bindAll(this, "twitterProfileChange", "onChange", "twitterTab");
+            _.bindAll(this, "twitterProfileChange", "twitterTab", "screenNameChanged", "tabChanged");
 
-            var self = this;
-            this.profile = opt.profile;
-            this.profile.bind("change", function (profile) {
-                self.twitterProfileChange(profile.get("twitterScreenName"));
-            });
-            this.bind("change", this.onChange);
+            this.on("change:screenName", this.screenNameChanged);
+            this.on("change:tab", this.tabChanged);
         },
-        onChange: function () {
-            console.log("twitter.onChange:" + this.tab());
+        isLoaded: function() {
+            return !!this.get('screenName');
+        },
+        screenNameChanged: function () {
+            console.log("changeScreenName: " + this.get('screenName'));
+            $("BODY").toggleClass("self", this.viewingSelf());
 
-            var hasTwitterAuth = !!this.get('screenName');
-            $("BODY").toggleClass("authenticated-twitter", hasTwitterAuth);
-
-            if (hasTwitterAuth)
-                this.load(this.tab());
-            else
-                this.clear({ silent: true });
+            var screenName = this.get('screenName');
+            if (!screenName) return;
+            
+            var self = this, profileUrl = "api/twitter/" + screenName;
+            _.get(profileUrl, function (r) {
+                var o = {};
+                _.extend(o, r.results[0]);
+                self.set(o);
+                self.load(self.tab());
+            });
+        },
+        tabChanged: function () {
+            console.log("changeTab: " + this.tab());
+            $(".tabs [href=#" + this.tab() + "]").click();
+            this.load(this.tab());
         },
         load: function (tab) {
+            console.log("load: " + tab);
             tab = tab || this.defaults.tab;
             var self = this, o = {}, 
-                url = tab === "directmessages" ? tab : this.get('screenName') + "/" + tab;
+                tabTweetsUrl = tab === "directmessages" ? tab : this.get('screenName') + "/" + tab;
 
-            _.get("api/twitter/" + url, function (r) {
+            o[tab] = [];
+            self.set(o);
+            _.get("api/twitter/" + tabTweetsUrl, function (r) {
                 o[tab] = r.results;
                 self.set(o);
             });
         },
         twitterProfileChange: function (screenName, tab) {
-            tab = tab || this.tab();
-            console.log("twitter.twitterProfileChange: " + tab);
-
-            if (!screenName) {
-                this.set({ screenName: this.profile.get("twitterScreenName") });
-                $("BODY").toggleClass("self", this.viewingSelf());
-                return;
-            }
-
-            var self = this;
-            _.get("api/twitter/" + screenName, function (r) {
-                var o = _.defaults({ screenName: screenName }, self.defaults);
-                _.extend(o, r.results[0]);
-                o.tab = tab;
-                self.set(o);
-                $("BODY").toggleClass("self", self.viewingSelf());
-                self.navigate(self.navUrl());
-            });
+            console.log("twitter.twitterProfileChange: " + screenName + "/" + tab);
+            this.set({ screenName: screenName || app.twitterScreenName(), tab: tab || this.tab() }, { silent: !app.isAuth() });
+            this.navigate(this.navUrl());
         },
         viewingSelf: function() {
-            return this.profile.get("twitterScreenName") === this.get("screenName");
+            return app.twitterScreenName() === this.get("screenName");
         },
         navUrl: function() {
             return (this.viewingSelf() ? "" : this.get("screenName") + "/") + this.get("tab");
@@ -74,7 +76,6 @@
             tab = tab || this.tab();
             console.log("twitterTab:" + tab);
             this.set({ tab: tab });
-            $(".tabs [href=#" + tab + "]").click();
             this.navigate(this.navUrl());
         }
     });
@@ -82,13 +83,16 @@
     app.TwitterView = app.BaseView.extend({
         initialize: function () {
             _.bindAll(this, "render");
-            this.model.bind("change", this.render);
             this.$el = $(this.el);
             this.$signedInBody = this.$el.find(".signed-in .tab-content");
             this.tweetsTemplate = _.template($("#template-tweets").html());
             this.usersTemplate = _.template($("#template-users").html());
             this.directMessagesTemplate = _.template($("#template-directmessages").html());
             this.currentUserTemplate = _.template($("#template-current-user").html());
+
+            var changeEvents = _.map(_.keys(this.tabHooks), 
+                function (k) { return "change:" + k }).join(" ");
+            this.model.on(changeEvents, this.render);
         },
         tabHooks: {
             friends: function () {
@@ -108,12 +112,13 @@
             }
         },
         render: function () {
+            console.log("twitter.render: ");
 
             var screenName = this.model.get('screenName'), 
                 html = "";
 
             if (screenName) {
-                var tab = this.model.get('tab');
+                var tab = this.model.tab();
                 html = this.tabHooks[tab].call(this);
 
                 this.$(".current-user").html(this.currentUserTemplate(this.model.toJSON()));

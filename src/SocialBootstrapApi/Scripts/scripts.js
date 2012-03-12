@@ -1332,23 +1332,6 @@
   })
 
 }( window.jQuery || window.ender );
-;(function() {
-  var cube, five, square;
-
-  square = function(x) {
-    return x * x;
-  };
-
-  cube = function(x) {
-    return x * x * x;
-  };
-
-  five = function(x) {
-    return square(cube(x));
-  };
-
-}).call(this);
-
 ;//     Underscore.js 1.2.1
 //     (c) 2011 Jeremy Ashkenas, DocumentCloud Inc.
 //     Underscore is freely distributable under the MIT license.

@@ -1,18 +1,20 @@
 (function (root) 
 {
+    if (!$("#twitter")[0]) return;
+    $("#page-body").addClass("app-loading");
+
 	var app = root.App;
 
 	_.extend(app, {
 	    baseUrl: window.BASE_URL,
 		UnAuthorized: 401,
-		initialize: function ()
-		{
-			this.handleClicks();
+	    hasLoaded: false,
+		start: function () {
+		    Backbone.history.start({ pushState: true });
+		    this.handleClicks();
 		},
-		handleClicks: function ()
-		{
-			$(document.body).click(function (e)
-			{
+		handleClicks: function () {
+			$(document.body).click(function (e) {
 			    console.log("handleClicks", e);
 				var dataCmd = $(e.srcElement).data('cmd');
 				if (!dataCmd) return;
@@ -24,6 +26,13 @@
 				app.sendCmd(evt, args);
 			});
 		},
+        finishedLoading: function () {
+	        if (!this.hasLoaded) {
+	            this.hasLoaded = true;
+	            $(".app-loading").removeClass("app-loading");
+	            console.log("app finishedLoading...");
+	        }
+	    },
 		navigate: function(path) {
 		    this.routes.navigate(path);
 		},
@@ -31,6 +40,7 @@
 		    var args = _.rest(arguments);
 		    console.log("route: " + evt, args);
 		    this.sendCmd(evt, args);
+		    this.finishedLoading();
 		},
 		sendCmd: function (evt, args)
 		{
@@ -44,12 +54,10 @@
 				if (_.isFunction(el[evt])) el[evt].apply(el, args);
 			});
 		},
-		error: function (xhr, err, statusText)
-		{
+		error: function (xhr, err, statusText) {
 			console.log("App Error: ", arguments);
 			this.trigger("error", arguments);
-			if (xhr.status == this.UnAuthorized)
-			{
+			if (xhr.status == this.UnAuthorized) {
 				//verify user is no longer authenticated
 				$.getJSON("api/userinfo", function (r) { }, function (xhr) {
 					if (xhr.status == this.UnAuthorized)
@@ -63,48 +71,14 @@
     
 	var login = new app.Login();
 	var userProfile = new app.UserProfile({ login: login });
-    var twitter = new app.Twitter({ profile: userProfile });
-    
-    app.Routes = Backbone.Router.extend({
-        routes: {
-            "timelines": "timelines",
-            "tweets": "tweets",
-            "friends": "friends",
-            "followers": "followers",
-            "userTimelines": ":user/timelines",
-            "userTweets": ":user/tweets",
-            "userFriends": ":user/friends",
-            "userFollowers": ":user/followers"
-        },
-        initialize: function (opt) {
-            this.app = opt.app;
-        },
-        timelines: function () {
-            this.app.route("twitterProfileChange", login.get('screenName'), "timelines");
-        },
-        tweets: function () {
-            this.app.route("twitterProfileChange", login.get('screenName'), "tweets");
-        },
-        friends: function () {
-            this.app.route("twitterProfileChange", login.get('screenName'), "friends");
-        },
-        followers: function () {
-            this.app.route("twitterProfileChange", login.get('screenName'), "followers");
-        },
-        userTimelines: function (user) {
-            this.app.route("twitterProfileChange", user, "timelines");
-        },
-        userTweets: function (user) {
-            this.app.route("twitterProfileChange", user, "tweets");
-        },
-        userFriends: function (user) {
-            this.app.route("twitterProfileChange", user, "friends");
-        },
-        userFollowers: function (user) {
-            this.app.route("twitterProfileChange", user, "followers");
-        }
-    });
-    app.routes = new app.Routes({app:app});
+    var twitter = new app.Twitter();
+
+    app.isAuth = function () {
+        return login.get("isAuthenticated");
+    };
+    app.twitterScreenName = function() {
+        return userProfile.get("twitterScreenName");
+    };
 
     console.log(login.attributes, userProfile.attributes, twitter.attributes);
 
@@ -137,9 +111,6 @@
 		})
 	};
 
-	app.initialize();
     $(".tabs").tabs();
-    
-    Backbone.history.start({ pushState: true });
 
 })(window);

@@ -157,7 +157,7 @@ namespace SocialBootstrapApi
 		{
 			//Enable and register existing services you want this host to make use of.
 			//Look in Web.config for examples on how to configure your oauth proviers, e.g. oauth.facebook.AppId, etc.
-			var appSettings = new ConfigurationResourceManager();
+			var appSettings = new AppSettings();
 
 			//Register all Authentication methods you want to enable for this web app.            
 			Plugins.Add(new AuthFeature(

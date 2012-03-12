@@ -17,7 +17,11 @@ footer {
 .container {
 	width: 960px; /* downsize our container to make the content feel a bit tighter and more cohesive. NOTE: this removes two full columns from the grid, meaning you only go to 14 columns and not 16. */
 }
- 
+a {
+	cursor: pointer;
+} 
+
+
 /* The white background content wrapper */ 
 .container > .content { 
 	background-color: #fff;
@@ -70,7 +74,7 @@ html, body {
 }
       
 #signed-out, #signed-in, .signed-out, .signed-in, 
-#register-login, #register-signed-in, #page-loading
+#register-login, #register-signed-in, #page-loading, .app-loading
 {
     display: none;
 }      
@@ -98,31 +102,24 @@ html, body {
 	margin: 0 0 20px -20px;
 }
 
+#intro, #twitter {
+	min-width: 500px;
+	min-height: 500px;
+}
+
 .content {
-	min-height: 800px;
+	min-height: 950px;
 }
 
 #page-loading
 {
 	position: absolute;
-	margin: 220px 0 0 200px;
+	margin: 160px 0 0 200px;
 	text-align: center;
-
-	background-color: #ffffcc;
-	border: 2px solid #666;
-	-moz-border-radius: 15px;
-	-webkit-border-radius: 15px;
-	border-radius: 15px;
-	-moz-box-shadow: 0px 0px 20px #000000;
-	-webkit-box-shadow: 0px 0px 20px #000000;
-	box-shadow: 0px 0px 10px #000000;
-	-moz-background-clip: padding;
-	-webkit-background-clip: padding-box;
-	background-clip: padding-box;
-	opacity: 0.9;
+	opacity: 0.6;
 }
 #page-loading b {
-	background: url(img/ajax-loader.gif) no-repeat 60px 50%;
+	background: url(img/loader.gif) no-repeat 40px 50%;
 	font: normal 20px arial;
 	color: #444;
 	padding: 15px 80px;

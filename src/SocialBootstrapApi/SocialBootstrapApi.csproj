@@ -431,7 +431,6 @@
     <Content Include="Scripts\bootstrap-alerts.js" />
     <Content Include="Scripts\bootstrap-buttons.js" />
     <None Include="Scripts\scripts.js.bundle" />
-    <Content Include="Scripts\sample.coffee" />
     <Content Include="Scripts\underscore.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>

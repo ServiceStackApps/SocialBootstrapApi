@@ -9,3 +9,4 @@ js/app/register.js
 js/app/userprofile.js
 js/app/twitter.js
 js/app/app.js
+js/app/appcontroller.js
