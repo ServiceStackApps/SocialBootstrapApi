@@ -4,7 +4,7 @@
         defaults: {
             screenName: null,
             tab: "timelines",
-            timelines: [],
+            timelines: [], 
             tweets: [],
             friends: [],
             followers: [],

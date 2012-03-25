@@ -134,12 +134,6 @@
     <Compile Include="Support\HtmlHelpers.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="bundler\bundler.cmd" />
-    <None Include="bundler\coffee.cmd" />
-    <None Include="bundler\node_modules\coffee-script\package.json" />
-    <None Include="bundler\node_modules\less\package.json" />
-    <None Include="bundler\node_modules\sass\package.json" />
-    <None Include="bundler\node_modules\step\package.json" />
     <None Include="Content\app.css.bundle" />
     <None Include="Content\default.less">
       <LastGenOutput>default.css</LastGenOutput>
@@ -149,64 +143,6 @@
     <Content Include="App_Data\UserAuth_log.ldf">
       <DependentUpon>UserAuth.mdf</DependentUpon>
     </Content>
-    <Content Include="bundler\bundler.js" />
-    <Content Include="bundler\node.exe" />
-    <Content Include="bundler\node_modules\clean-css\index.js" />
-    <Content Include="bundler\node_modules\clean-css\lib\clean.js" />
-    <Content Include="bundler\node_modules\clean-css\node_modules\optimist\index.js" />
-    <Content Include="bundler\node_modules\coffee-script\lib\coffee-script\browser.js" />
-    <Content Include="bundler\node_modules\coffee-script\lib\coffee-script\cake.js" />
-    <Content Include="bundler\node_modules\coffee-script\lib\coffee-script\coffee-script.js" />
-    <Content Include="bundler\node_modules\coffee-script\lib\coffee-script\command.js" />
-    <Content Include="bundler\node_modules\coffee-script\lib\coffee-script\grammar.js" />
-    <Content Include="bundler\node_modules\coffee-script\lib\coffee-script\helpers.js" />
-    <Content Include="bundler\node_modules\coffee-script\lib\coffee-script\index.js" />
-    <Content Include="bundler\node_modules\coffee-script\lib\coffee-script\lexer.js" />
-    <Content Include="bundler\node_modules\coffee-script\lib\coffee-script\nodes.js" />
-    <Content Include="bundler\node_modules\coffee-script\lib\coffee-script\optparse.js" />
-    <Content Include="bundler\node_modules\coffee-script\lib\coffee-script\parser.js" />
-    <Content Include="bundler\node_modules\coffee-script\lib\coffee-script\repl.js" />
-    <Content Include="bundler\node_modules\coffee-script\lib\coffee-script\rewriter.js" />
-    <Content Include="bundler\node_modules\coffee-script\lib\coffee-script\scope.js" />
-    <Content Include="bundler\node_modules\less\lib\less\browser.js" />
-    <Content Include="bundler\node_modules\less\lib\less\colors.js" />
-    <Content Include="bundler\node_modules\less\lib\less\cssmin.js" />
-    <Content Include="bundler\node_modules\less\lib\less\functions.js" />
-    <Content Include="bundler\node_modules\less\lib\less\index.js" />
-    <Content Include="bundler\node_modules\less\lib\less\parser.js" />
-    <Content Include="bundler\node_modules\less\lib\less\rhino.js" />
-    <Content Include="bundler\node_modules\less\lib\less\tree.js" />
-    <Content Include="bundler\node_modules\less\lib\less\tree\alpha.js" />
-    <Content Include="bundler\node_modules\less\lib\less\tree\anonymous.js" />
-    <Content Include="bundler\node_modules\less\lib\less\tree\assignment.js" />
-    <Content Include="bundler\node_modules\less\lib\less\tree\call.js" />
-    <Content Include="bundler\node_modules\less\lib\less\tree\color.js" />
-    <Content Include="bundler\node_modules\less\lib\less\tree\comment.js" />
-    <Content Include="bundler\node_modules\less\lib\less\tree\condition.js" />
-    <Content Include="bundler\node_modules\less\lib\less\tree\dimension.js" />
-    <Content Include="bundler\node_modules\less\lib\less\tree\directive.js" />
-    <Content Include="bundler\node_modules\less\lib\less\tree\element.js" />
-    <Content Include="bundler\node_modules\less\lib\less\tree\expression.js" />
-    <Content Include="bundler\node_modules\less\lib\less\tree\import.js" />
-    <Content Include="bundler\node_modules\less\lib\less\tree\javascript.js" />
-    <Content Include="bundler\node_modules\less\lib\less\tree\keyword.js" />
-    <Content Include="bundler\node_modules\less\lib\less\tree\media.js" />
-    <Content Include="bundler\node_modules\less\lib\less\tree\mixin.js" />
-    <Content Include="bundler\node_modules\less\lib\less\tree\operation.js" />
-    <Content Include="bundler\node_modules\less\lib\less\tree\paren.js" />
-    <Content Include="bundler\node_modules\less\lib\less\tree\quoted.js" />
-    <Content Include="bundler\node_modules\less\lib\less\tree\rule.js" />
-    <Content Include="bundler\node_modules\less\lib\less\tree\ruleset.js" />
-    <Content Include="bundler\node_modules\less\lib\less\tree\selector.js" />
-    <Content Include="bundler\node_modules\less\lib\less\tree\url.js" />
-    <Content Include="bundler\node_modules\less\lib\less\tree\value.js" />
-    <Content Include="bundler\node_modules\less\lib\less\tree\variable.js" />
-    <Content Include="bundler\node_modules\lib\parse-js.js" />
-    <Content Include="bundler\node_modules\lib\process.js" />
-    <Content Include="bundler\node_modules\lib\squeeze-more.js" />
-    <Content Include="bundler\node_modules\sass\lib\sass.js" />
-    <Content Include="bundler\node_modules\step\lib\step.js" />
-    <Content Include="bundler\node_modules\uglify-js.js" />
     <Content Include="Content\css\bootstrap.css" />
     <Content Include="Content\default.min.css">
       <DependentUpon>default.less</DependentUpon>
@@ -237,16 +173,13 @@
     <Content Include="Content\js\app\app.js">
       <Generator>JavaScriptGenerator</Generator>
     </Content>
+    <Content Include="Content\js\bootstrap.js" />
     <Content Include="Content\js\jquery-1.7.js" />
     <Content Include="Content\js\underscore.js" />
+    <Content Include="Content\js\localStorage-shim.js" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="README.txt" />
-    <Content Include="Scripts\backbone.js" />
-    <Content Include="Scripts\bootstrap-alerts.js" />
-    <Content Include="Scripts\bootstrap-buttons.js" />
-    <None Include="Scripts\scripts.js.bundle" />
-    <Content Include="Scripts\underscore.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
