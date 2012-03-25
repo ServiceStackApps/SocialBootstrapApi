@@ -20,21 +20,21 @@
 			gravatarImageUrl64: null,
 			showProfile: null
 		},
-		initialize: function (opt) {
+		initialize: function(opt) {
 		},
-		hasTwitterAuth: function () {
+		hasTwitterAuth: function() {
 		    return !!this.get('twitterUserId');
 		}
 	});
 
 	app.UserProfileView = app.BaseView.extend({
-		initialize: function () {
+		initialize: function() {
 			_.bindAll(this, "render");
 			this.model.bind("change", this.render);
 			this.$el = $(this.el);
 			this.template = _.template($("#template-userprofile").html());
 		},
-		render: function () {
+		render: function() {
 			this.$el.hide();
 			var attrs = this.model.attributes;
 			attrs.twitterUserId = attrs.twitterUserId || null;

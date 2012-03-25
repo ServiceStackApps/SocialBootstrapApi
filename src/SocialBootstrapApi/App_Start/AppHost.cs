@@ -1,6 +1,8 @@
+using System.Collections.Generic;
 using System.Web.Mvc;
 using ServiceStack.CacheAccess;
 using ServiceStack.CacheAccess.Providers;
+using ServiceStack.Common.Web;
 using ServiceStack.Configuration;
 using ServiceStack.FluentValidation;
 using ServiceStack.MiniProfiler;
@@ -117,6 +119,7 @@ namespace SocialBootstrapApi
 			//const Feature disableFeatures = Feature.Jsv | Feature.Soap;
 			SetConfig(new EndpointHostConfig {
 				//EnableFeatures = Feature.All.Remove(disableFeatures),
+				AppendUtf8CharsetOnContentTypes = new HashSet<string> { ContentType.Html },
 				DebugMode = true, //Show StackTraces in service responses during development
 			});
 

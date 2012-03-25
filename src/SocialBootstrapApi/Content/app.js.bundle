@@ -1,7 +1,7 @@
 js/underscore.js
 js/backbone.js
-js/bootstrap-dropdown.js
-js/bootstrap-tabs.js
+js/bootstrap.js
+js/localStorage-shim.js
 js/app/ss-validation.js
 js/app/base.js
 js/app/login.js

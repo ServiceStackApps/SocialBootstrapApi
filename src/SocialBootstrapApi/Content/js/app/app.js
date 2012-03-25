@@ -13,7 +13,7 @@
 		    Backbone.history.start({ pushState: true });
 		    this.handleClicks();
 		},
-		handleClicks: function () {
+		handleClicks: function() {
 			$(document.body).click(function (e) {
 			    console.log("handleClicks", e);
 				var dataCmd = $(e.srcElement).data('cmd');
@@ -26,7 +26,7 @@
 				app.sendCmd(evt, args);
 			});
 		},
-        finishedLoading: function () {
+        finishedLoading: function() {
 	        if (!this.hasLoaded) {
 	            this.hasLoaded = true;
 	            $(".app-loading").removeClass("app-loading");
@@ -36,14 +36,13 @@
 		navigate: function(path) {
 		    this.routes.navigate(path);
 		},
-		route: function (evt) {
+		route: function(evt) {
 		    var args = _.rest(arguments);
 		    console.log("route: " + evt, args);
 		    this.sendCmd(evt, args);
 		    this.finishedLoading();
 		},
-		sendCmd: function (evt, args)
-		{
+		sendCmd: function(evt, args) {
 		    if (_.isFunction(this.routes[evt])) 
 		        this.routes[evt].apply(this.routes, args);
 		    
@@ -54,9 +53,9 @@
 				if (_.isFunction(el[evt])) el[evt].apply(el, args);
 			});
 		},
-		error: function (xhr, err, statusText) {
+		error: function(xhr, err, statusText) {
 			console.log("App Error: ", arguments);
-			this.trigger("error", arguments);
+			this.trigger("error", (err || xhr));
 			if (xhr.status == this.UnAuthorized) {
 				//verify user is no longer authenticated
 				$.getJSON("api/userinfo", function (r) { }, function (xhr) {
@@ -67,13 +66,13 @@
 		}
 	});
 	_.extend(app, Backbone.Events);
-	_.bindAll(app, "error", "trigger", "navigate", "sendCmd");  
+	_.bindAll(app, "error", "navigate", "sendCmd");  
     
 	var login = new app.Login();
 	var userProfile = new app.UserProfile({ login: login });
     var twitter = new app.Twitter();
 
-    app.isAuth = function () {
+    app.isAuth = function() {
         return login.get("isAuthenticated");
     };
     app.twitterScreenName = function() {
@@ -111,6 +110,7 @@
 		})
 	};
 
-    $(".tabs").tabs();
+    $(".tabs a:first").tab('show');
+    $(".dropdown-toggle").dropdown();
 
 })(window);

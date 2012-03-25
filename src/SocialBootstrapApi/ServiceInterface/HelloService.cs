@@ -22,7 +22,7 @@ namespace SocialBootstrapApi.ServiceInterface
 		//Get's called by all HTTP Verbs (GET,POST,PUT,DELETE,etc) and endpoints JSON,XMl,JSV,etc
 		protected override object Run(Hello request)
 		{
-			return new HelloResponse { Result = "Hello, " + request.Name };
+			return new HelloResponse { Result = "Hello, Olle är en ÖL ål " + request.Name };
 		}
 	}
 }

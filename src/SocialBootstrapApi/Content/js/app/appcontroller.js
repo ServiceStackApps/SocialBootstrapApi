@@ -19,31 +19,31 @@
             ":user/followers": "userFollowers",
             "*catchall": "catchAll"
         },
-        initialize: function (opt) {
+        initialize: function(opt) {
             this.app = opt.app;
         },
-        timelines: function () {
+        timelines: function() {
             this.app.route("twitterProfileChange", login.get('screenName'), "timelines");
         },
-        tweets: function () {
+        tweets: function() {
             this.app.route("twitterProfileChange", login.get('screenName'), "tweets");
         },
-        friends: function () {
+        friends: function() {
             this.app.route("twitterProfileChange", login.get('screenName'), "friends");
         },
-        followers: function () {
+        followers: function() {
             this.app.route("twitterProfileChange", login.get('screenName'), "followers");
         },
-        userTimelines: function (user) {
+        userTimelines: function(user) {
             this.app.route("twitterProfileChange", user, "timelines");
         },
-        userTweets: function (user) {
+        userTweets: function(user) {
             this.app.route("twitterProfileChange", user, "tweets");
         },
-        userFriends: function (user) {
+        userFriends: function(user) {
             this.app.route("twitterProfileChange", user, "friends");
         },
-        userFollowers: function (user) {
+        userFollowers: function(user) {
             this.app.route("twitterProfileChange", user, "followers");
         },
         catchAll: function () {
@@ -53,7 +53,7 @@
     });
     app.routes = new app.Routes({ app: app });
 
-    userProfile.bind("change", function (profile) {
+    userProfile.bind("change", function(profile) {
         if (profile.hasTwitterAuth()) {
             twitter.twitterProfileChange(twitter.get("screenName") || profile.get("twitterScreenName"));
         }

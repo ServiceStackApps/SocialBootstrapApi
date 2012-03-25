@@ -10,8 +10,7 @@
     };
     
 	_.mixin({
-		formData: function (form)
-		{
+		formData: function(form) {
 			var ret = {};
 			$(form).find("INPUT,TEXTAREA").each(function() {
 				if (this.type == "button" || this.type == "submit") return;
@@ -24,23 +23,20 @@
 			});
 			return ret;
 		},
-		xhrMessage: function (xhr)
-		{
-			try
-			{
+		xhrMessage: function(xhr) {
+			try {
 				var respObj = JSON.parse(xhr.responseText);
 				if (!respObj.responseStatus) return null;
 				return respObj.responseStatus.message;
 			}
-			catch (e)
-			{
+			catch (e) {
 				return null;
 			}
 		},
-        get: function (url, data, success, error) {
+        get: function(url, data, success, error) {
             if (_.isFunction(data)) {
-                success = data;
                 error = success;
+                success = data;
                 data = undefined;
             }
             return _.ajax({
@@ -51,11 +47,10 @@
                 error: error
             });
         },
-		post: function (opt) {
+		post: function(opt) {
 		    return _.ajax(opt);
 		},
-        ajax: function (opt)
-		{                
+        ajax: function(opt) {                
             var o = _.defaults(opt, {
                type: 'POST',
                loading: function() {
@@ -71,24 +66,25 @@
 				type: o.type,
 				url: relativeUrl(o.url),
 				data: o.data,
-				success: function()
-				{
+				success: function() {
 					//console.log(arguments);
 					o.finishedLoading();
 				    $(o.form).clearErrors();
 					if (o.success) o.success.apply(null, arguments);
 				},
-				error: function(xhr,err,status)
-				{
+				error: function(xhr,err,status) {
 					//console.log(arguments);
 					o.finishedLoading();
 				    try {
+				        var r = JSON.parse(xhr.responseText);
+				        var errStatus = (r && r.responseStatus);
 				        if (o.form) {
-				            var r = JSON.parse(xhr.responseText);
-				            $(o.form).applyErrors(r && r.responseStatus);
+				            $(o.form).applyErrors(errStatus);
 				        }
-				    } catch(e){}
-					(o.error || (app.error || emptyFn)).apply(null, arguments);
+				        (o.error || app.error || emptyFn).call(null, errStatus);
+				        return;
+				    } catch (e) { }
+					(o.error || app.error || emptyFn).apply(null, arguments);
 				},
 				dataType: o.dataType || "json"
 			});
@@ -96,11 +92,10 @@
 	});
 
 	app.BaseModel = Backbone.Model.extend({
-	    initialize: function () {
+	    initialize: function() {
 	        console.log("BaseModel...");
 	    },
-		parse: function (resp, xhr)
-		{
+		parse: function(resp, xhr) {
 			if (!resp) return resp;
 			return resp.result || resp.results || resp;
 		},
@@ -110,19 +105,16 @@
 		    model.url = relativeUrl(url);
 		    Backbone.sync(method, model, options);
 		},
-		_super: function (funcName)
-		{
+		_super: function(funcName) {
 			return this.constructor.__super__[funcName].apply(this, _.rest(arguments));
 		}
 	});
 
 	app.BaseView = Backbone.View.extend({		
-		loading: function ()
-		{
+		loading: function() {
 			$(this.el).css({ opacity: 0.5 });
 		},
-		finishedLoading: function ()
-		{
+		finishedLoading: function() {
 			$(this.el).css({ opacity: 1 });
 		}
 	});

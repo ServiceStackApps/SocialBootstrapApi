@@ -5,7 +5,8 @@
  * Snippets of reusable CSS to develop faster and keep code readable
  * ----------------------------------------------------------------- */
 /* Override some defaults */
-html, body {
+html,
+body {
   background-color: #eee;
 }
 body {
@@ -21,41 +22,51 @@ footer {
   /* center align it with the container */
 
 }
-.container {
-  width: 960px;
-  /* downsize our container to make the content feel a bit tighter and more cohesive. NOTE: this removes two full columns from the grid, meaning you only go to 14 columns and not 16. */
-
-}
 a {
   cursor: pointer;
 }
-/* The white background content wrapper */.container > .content {
-  background-color: #fff;
-  padding: 20px;
-  margin: 0 -20px;
-  /* negative indent the amount of the padding to maintain the grid system */
-
-  -webkit-border-radius: 0 0 6px 6px;
-  -moz-border-radius: 0 0 6px 6px;
-  border-radius: 0 0 6px 6px;
-  -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
-  -moz-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+.media-grid {
+  margin-left: -20px;
+  margin-bottom: 0;
+  zoom: 1;
 }
-/* Page header tweaks */.page-header, .page-headerQQQ {
+.media-grid:before,
+.media-grid:after {
+  display: table;
+  content: "";
+  zoom: 1;
+}
+.media-grid:after {
+  clear: both;
+}
+.media-grid li {
+  display: inline;
+}
+.media-grid a {
+  float: left;
+  padding: 4px;
+  margin: 0 0 18px 20px;
+  border: 1px solid #ddd;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+  -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075);
+  -moz-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075);
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075);
+}
+.media-grid a img {
+  display: block;
+}
+.media-grid a:hover {
+  border-color: #0069d6;
+  -webkit-box-shadow: 0 1px 4px rgba(0, 105, 214, 0.25);
+  -moz-box-shadow: 0 1px 4px rgba(0, 105, 214, 0.25);
+  box-shadow: 0 1px 4px rgba(0, 105, 214, 0.25);
+}
+/* Page header tweaks */.page-header {
   background-color: #f5f5f5;
   padding: 20px 20px 10px;
   margin: -20px -20px 20px;
-}
-/* Styles you shouldn't keep as they are for displaying this base example only */
-.content .span12, .content .span4 {
-  min-height: 500px;
-}
-/* Give a quick and non-cross-browser friendly divider */
-.content .span5 {
-  margin-left: 0;
-  padding-left: 19px;
-  border-left: 1px solid #eee;
 }
 .topbar .btn {
   border: 0;
@@ -71,10 +82,10 @@ a {
   text-decoration: none;
 }
 /* end bootstrap customizations */
-html, body {
+html,
+body {
   color: #555;
 }
-#signed-out,
 #signed-in,
 .signed-out,
 .signed-in,
@@ -96,7 +107,8 @@ html, body {
 .authenticated #intro {
   display: none;
 }
-.authenticated #signup, .registered #signup {
+.authenticated #signup,
+.registered #signup {
   display: none;
 }
 #twitter .signed-in {
@@ -121,11 +133,11 @@ html, body {
   padding: 0 10px 10px 20px;
   margin: 0 0 20px -20px;
 }
-#intro, #twitter {
+#intro,
+#twitter {
   min-width: 500px;
-  min-height: 500px;
 }
-.content {
+#page-body {
   min-height: 950px;
 }
 #page-loading {
@@ -150,11 +162,18 @@ html, body {
 #login.error INPUT {
   background-color: darkred;
 }
-.error {
+.error,
+.error .help-inline {
   color: darkred;
 }
-#register input {
+#register input[type=text] {
   margin: 0 0 10px 0;
+}
+#register label.checkbox {
+  margin-left: 15px;
+}
+#register .actions {
+  padding: 10px 0 0 0;
 }
 .form-stacked {
   padding: 0;
@@ -179,23 +198,21 @@ html, body {
   padding-top: 0;
   padding-bottom: 0;
 }
-form.error > input, form.error > textarea {
+form.error > input,
+form.error > textarea {
   border-color: #EE5F5B;
   background: #FDDFDE;
 }
 #twitter-signin {
   padding: 10px 0 0 0;
 }
-/*
-.twitter-user, .twitter-tweet {
-	clear: left;
-}
-*/
-.tw-item IMG, .tw-current IMG {
+.tw-item IMG,
+.tw-current IMG {
   width: 58px;
   height: 58px;
 }
-DIV.tw-item, DIV.tw-item > DIV {
+DIV.tw-item,
+DIV.tw-item > DIV {
   display: block;
 }
 .tw-item .span9 {

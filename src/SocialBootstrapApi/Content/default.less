@@ -14,44 +14,40 @@ footer {
 .container > footer p {
 	text-align: center; /* center align it with the container */
 }
-.container {
-	width: 960px; /* downsize our container to make the content feel a bit tighter and more cohesive. NOTE: this removes two full columns from the grid, meaning you only go to 14 columns and not 16. */
-}
 a {
 	cursor: pointer;
 } 
 
-
-/* The white background content wrapper */ 
-.container > .content { 
-	background-color: #fff;
-	padding: 20px;
-	margin: 0 -20px; /* negative indent the amount of the padding to maintain the grid system */
-	-webkit-border-radius: 0 0 6px 6px;
-		-moz-border-radius: 0 0 6px 6px;
-			border-radius: 0 0 6px 6px; 
-	-webkit-box-shadow: 0 1px 2px rgba(0,0,0,.15);
-		-moz-box-shadow: 0 1px 2px rgba(0,0,0,.15);
-			box-shadow: 0 1px 2px rgba(0,0,0,.15);
-}  
+.media-grid {
+  margin-left: -@gridGutterWidth;
+  margin-bottom: 0;
+  .clearfix();
+  li {
+    display: inline;
+  }
+  a {
+    float: left;
+    padding: 4px;
+    margin: 0 0 @baseline @gridGutterWidth;
+    border: 1px solid #ddd;
+    .border-radius(4px);
+    .box-shadow(0 1px 1px rgba(0,0,0,.075));
+    img {
+      display: block;
+    }
+    &:hover {
+      border-color: @linkColor;
+      .box-shadow(0 1px 4px rgba(0,105,214,.25));
+    }
+  }
+}
 
 /* Page header tweaks */   
-.page-header, .page-headerQQQ {      
+.page-header {
 	background-color: #f5f5f5;   
 	padding: 20px 20px 10px;  
 	margin: -20px -20px 20px;
 } 
-
-/* Styles you shouldn't keep as they are for displaying this base example only */
-.content .span12, .content .span4 { 
-	min-height: 500px;
-}
-/* Give a quick and non-cross-browser friendly divider */
-.content .span5 {
-	margin-left: 0;
-	padding-left: 19px;
-	border-left: 1px solid #eee;
-}
 
 .topbar .btn {
 	border: 0;
@@ -70,10 +66,10 @@ a {
 /* end bootstrap customizations */
  
 html, body {
-	color: #555;
+	color: #555; 
 }
       
-#signed-out, #signed-in, .signed-out, .signed-in, 
+#signed-in, .signed-out, .signed-in, 
 #register-login, #register-signed-in, #page-loading, .app-loading
 {
     display: none;
@@ -104,10 +100,9 @@ html, body {
 
 #intro, #twitter {
 	min-width: 500px;
-	min-height: 500px;
 }
 
-.content {
+#page-body {
 	min-height: 950px;
 }
 
@@ -137,12 +132,18 @@ html, body {
 #login.error INPUT {
 	background-color: darkred;
 }
-.error {
+.error, .error .help-inline {
 	color: darkred;
 }
 #register {
-	input {
+	input[type=text] {
 		margin: 0 0 10px 0;	
+	}
+	label.checkbox {
+		margin-left: 15px;
+	}
+	.actions { 
+		padding: 10px 0 0 0;
 	}
 }
 
@@ -177,11 +178,6 @@ b[data-error], b[data-error-field] {
 #user-profile {
 }
 
-/*
-.twitter-user, .twitter-tweet {
-	clear: left;
-}
-*/
 .tw-item IMG, .tw-current IMG {
 	width:  58px;
 	height: 58px;

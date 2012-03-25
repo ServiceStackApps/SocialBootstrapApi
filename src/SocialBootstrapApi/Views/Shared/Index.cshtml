@@ -8,7 +8,7 @@
 <% if (email) { %>    
     <div id="credential-info">
         <h4>Credential Info</h4>
-        <img id="gravatar" src="<%= gravatarImageUrl64 %>" data-cmd="twitterProfileChange:<%= twitterScreenName %>" />
+        <img id="gravatar" class="thumbnail" src="<%= gravatarImageUrl64 %>" data-cmd="twitterProfileChange:<%= twitterScreenName %>" />
         <dl>
             <dt>Display Name</dt><dd><%= displayName %></dd>
             <dt>Email</dt><dd><%= email %></dd>
@@ -37,6 +37,24 @@
     </div>
 <% } %>
 </script> 
+<script type="text/template" id="template-current-user">
+<div class="row tw-current">
+    <div class="span1">
+        <ul class="media-grid">
+            <li>
+                <img class="thumbnail" src="<%= profile_image_url %>" alt="">
+            </li>
+        </ul>
+    </div>
+    <div class="span6">
+        @@<%= screen_name %> from <%= location %>. <%= statuses_count %> Tweets -
+        <i>Following <%= friends_count + ' / Followers ' + followers_count %></i>
+        <p>
+            <%= description %>
+        </p>
+    </div>
+</div>
+</script> 
 <script type="text/template" id="template-tweets">
 <% _.each(tweets, function(tweet){ 
     var user = tweet.user; %>    
@@ -46,15 +64,15 @@
             <ul class="media-grid">
                 <li>
                     <a data-cmd="twitterProfileChange:<%= user.screen_name %>">
-                        <img class="thumbnail" src="<%= user.profile_image_url %>" alt=""
+                        <img src="<%= user.profile_image_url %>" alt=""
                          data-cmd="twitterProfileChange:<%= user.screen_name %>">
                     </a>
                 </li>
             </ul>
         </div>
-        <div class="span9">
+        <div class="span6">
             <div class="row">
-                <a class="span7" data-cmd="twitterProfileChange:<%= user.screen_name %>">
+                <a class="span4" data-cmd="twitterProfileChange:<%= user.screen_name %>">
                     @@<%= user.screen_name %>
                 </a>
             </div>
@@ -66,24 +84,6 @@
 
 <% }); %>
 </script> 
-<script type="text/template" id="template-current-user">
-<div class="row tw-current">
-    <div class="span1">
-        <ul class="media-grid">
-            <li>
-                <img class="thumbnail" src="<%= profile_image_url %>" alt="">
-            </li>
-        </ul>
-    </div>
-    <div class="span9">
-        @@<%= screen_name %> from <%= location %>. <%= statuses_count %> Tweets -
-        <i>Following <%= friends_count + ' / Followers ' + followers_count %></i>
-        <p>
-            <%= description %>
-        </p>
-    </div>
-</div>
-</script> 
 <script type="text/template" id="template-users">
 <% _.each(users, function(user){ %>    
 
@@ -92,15 +92,15 @@
             <ul class="media-grid">
                 <li>
                     <a data-cmd="twitterProfileChange:<%= user.screen_name %>">
-                        <img class="thumbnail" src="<%= user.profile_image_url %>" alt="" 
+                        <img src="<%= user.profile_image_url %>" alt="" 
                              data-cmd="twitterProfileChange:<%= user.screen_name %>" />
                     </a>
                 </li>
             </ul>
         </div>
-        <div class="span9">
+        <div class="span6">
             <div class="row">
-                <a class="span7" data-cmd="twitterProfileChange:<%= user.screen_name %>">
+                <a class="span4" data-cmd="twitterProfileChange:<%= user.screen_name %>">
                     @@<%= user.screen_name %>
                 </a>
                 <i class="span2"><%= user.friends_count + ' / ' + user.followers_count %></i>
@@ -122,15 +122,15 @@
             <ul class="media-grid">
                 <li>
                     <a data-cmd="twitterProfileChange:<%= user.screen_name %>">
-                        <img class="thumbnail" src="<%= user.profile_image_url %>" alt=""
+                        <img src="<%= user.profile_image_url %>" alt=""
                              data-cmd="twitterProfileChange:<%= user.screen_name %>" />
                     </a>
                 </li>
             </ul>
         </div>
-        <div class="span9">
+        <div class="span6">
             <div class="row">
-                <a class="span7" data-cmd="twitterProfileChange:<%= user.screen_name %>">
+                <a class="span4" data-cmd="twitterProfileChange:<%= user.screen_name %>">
                     @@<%= user.screen_name %>
                 </a>
             </div>
@@ -176,7 +176,7 @@
 	<p>
 		As <a href="https://github.com/mythz/ScalingDotNET">Speed is the most important feature</a> in today's websites, this 
 		template includes only the fastest components with best-practices advanced minification and bundling techniques built-in -
-        essential in deliverying the fastest response times to your users.
+		essential in deliverying the fastest response times to your users.
 	</p>
 
 	<h3>Powered by ServiceStack</h3>
@@ -185,13 +185,19 @@
 	</p>
 	<p>
 		The <a href="http://www.servicestack.net/">ServiceStack</a> project dlls includes all the necessary 
-        libraries to build high-performance website and web services allowing you to authenticate and register 
-        with Facebook and Twitter as well as your own internally-hosted Registration and Authentication services and repositories,
+		libraries to build high-performance website and web services allowing you to authenticate and register 
+		with Facebook and Twitter as well as your own internally-hosted Registration and Authentication services and repositories,
 		Caching, Session, Logging, InMemory, 
-        <a href="https://github.com/ServiceStack/ServiceStack.Redis/">Redis</a> and 
+		<a href="https://github.com/ServiceStack/ServiceStack.Redis/">Redis</a> and 
 		<a href="https://github.com/ServiceStack/ServiceStack.OrmLite/">OrmLite</a> 
-        RDBMS providers - with SqlServer bundled (Sqlite, MySQL and PostgreSQL adapters available)
-        as well as super fast <a href="https://github.com/ServiceStack/ServiceStack.Text/">JSON, JSV and CSV text serializers</a>.
+		RDBMS providers - with SqlServer bundled (Sqlite, MySQL and PostgreSQL adapters available)
+		as well as super fast <a href="https://github.com/ServiceStack/ServiceStack.Text/">JSON, JSV and CSV text serializers</a>.
+	</p>
+
+	<h4>No client-side caching</h4>
+	<p>
+		To better demonstrate the performance of the ServiceStack webservice framework and serializers, 
+		no client-side caching (e.g. in JS or localStorage) is used, i.e. Every click makes a round-trip HTTP + JSON network call.
 	</p>
 
 	<h3>Handpicked choice external components inside</h3>
@@ -252,18 +258,18 @@
 
 </div>
 
-<div id="twitter" class="span11">
+<div id="twitter">
 
 	<div class="signed-in">
 		<div id="page-loading"><b>loading...</b></div>
 
 		<div class="current-user"></div>
-		<ul class="tabs">
-			<li class="active"><a href="#timelines" data-cmd="twitterTab:timelines">Timeline</a></li>
-			<li><a href="#tweets"    data-cmd="twitterTab:tweets">Tweets</a></li>
-			<li><a href="#friends"   data-cmd="twitterTab:friends">Friends</a></li>
-			<li><a href="#followers" data-cmd="twitterTab:followers">Followers</a></li>
-			<li class="directmessages"><a href="#directmessages" data-cmd="twitterTab:directmessages">Direct Messages</a></li>
+		<ul class="nav nav-tabs tabs">
+			<li class="active timelines"><a data-cmd="twitterTab:timelines">Timeline</a></li>
+			<li class="tweets"><a data-cmd="twitterTab:tweets">Tweets</a></li>
+			<li class="friends"><a data-cmd="twitterTab:friends">Friends</a></li>
+			<li class="followers"><a data-cmd="twitterTab:followers">Followers</a></li>
+			<li class="directmessages"><a data-cmd="twitterTab:directmessages">Direct Messages</a></li>
 		</ul>
         <div class="tab-content"></div>
 	</div>
@@ -272,7 +278,9 @@
 
 @section SideBar {
 
-<div id="register">
+<div id="sidebar" class="well sidebar-nav">
+
+	<div id="register">
     <div id="signup">
         <h3>New Here? Join Today!</h3>
         <form class="form-stacked fade-when-loading" action="@Url.Content("~/api/register")" method="POST">
@@ -308,6 +316,7 @@
             You can now sign in:
         </p>
         <form class="form-stacked fade-when-loading" action="@Url.Content("~/api/auth/credentials")">
+			<span class="error-summary"></span>
 			<div class="clearfix">
                 <input class="input-medium" name="userName" type="text" placeholder="Username" />
                 <span class="help-inline"></span>
@@ -322,19 +331,19 @@
 			</div>
         </form>
     </div>
-</div>
+    </div>
 
-<div id="user-profile">
-</div>
+    <div id="user-profile"></div>
 
-<div id="facebook-signin">
-    <a href="@Url.Content("~/api/auth/facebook")"><img src="@Url.Content("~/Content/img/sign-in-with-facebook.png")" alt="Sign-in with Facebook" /></a>
-</div>
+    <div id="facebook-signin">
+        <a href="@Url.Content("~/api/auth/facebook")"><img src="@Url.Content("~/Content/img/sign-in-with-facebook.png")" alt="Sign-in with Facebook" /></a>
+    </div>
 
-<div id="twitter-signin">
-    <a href="@Url.Content("~/api/auth/twitter")"><img src="@Url.Content("~/Content/img/sign-in-with-twitter-l.png")" alt="Sign-in with Twitter" /></a>
-</div>
+    <div id="twitter-signin">
+        <a href="@Url.Content("~/api/auth/twitter")"><img src="@Url.Content("~/Content/img/sign-in-with-twitter-l.png")" alt="Sign-in with Twitter" /></a>
+    </div>
 
+</div>
 }
 
 @section JavaScript {    
