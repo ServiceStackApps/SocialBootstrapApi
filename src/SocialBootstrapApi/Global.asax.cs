@@ -20,6 +20,7 @@ namespace SocialBootstrapApi
 
 		public static void RegisterRoutes(RouteCollection routes)
 		{
+			routes.IgnoreRoute("Content/{*pathInfo}");
 			routes.IgnoreRoute("api/{*pathInfo}"); 
 			routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
