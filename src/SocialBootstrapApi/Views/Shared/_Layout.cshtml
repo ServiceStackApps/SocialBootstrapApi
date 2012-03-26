@@ -11,7 +11,7 @@
     <!-- Le styles -->
 @{
 #if DEBUG	
-	@Html.RenderCssBundle("~/Content/app.css.bundle", BundleOptions.MinifiedAndCombined)
+	@Html.RenderCssBundle("~/Content/app.css.bundle", BundleOptions.MinifiedAndCombined);
 #else
     <link href="/Content/app.min.css?3611cd" rel="stylesheet" />
 #endif
@@ -106,7 +106,7 @@
 
 @{
 #if DEBUG
-  	@Html.RenderJsBundle("~/Content/app.js.bundle", BundleOptions.Normal)         
+  	@Html.RenderJsBundle("~/Content/app.js.bundle", BundleOptions.Normal);
 #else
 	<script src="/Content/js/jquery-1.7.js?3450ab" type="text/javascript"></script>    <script src="/Content/js/app.js?3611cf" type="text/javascript"></script>
 #endif
