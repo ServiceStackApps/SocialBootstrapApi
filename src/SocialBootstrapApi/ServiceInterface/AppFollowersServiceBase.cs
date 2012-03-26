@@ -35,8 +35,6 @@ namespace SocialBootstrapApi.ServiceInterface
 
 	public class AppFollowersServiceBase : AppServiceBase<TwitterFollowers>
 	{
-		public ICacheClient Cache { get; set; } //Injected in IOC as defined in AppHost
-
 		//Available on all HTTP Verbs (GET, POST, PUT, DELETE, etc) and endpoints JSON, XMl, JSV, etc
 		protected override object Run(TwitterFollowers request)
 		{

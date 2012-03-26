@@ -179,8 +179,10 @@ namespace SocialBootstrapApi
 			container.RegisterAs<CustomRegistrationValidator, IValidator<Registration>>();
 
 			//Create a DB Factory configured to access the UserAuth SQL Server DB
+			var connStr = appSettings.Get("SQLSERVER_CONNECTION_STRING", //AppHarbor or Local connection string
+				ConfigUtils.GetConnectionString("UserAuth")); 
 			container.Register<IDbConnectionFactory>(
-				new OrmLiteConnectionFactory(ConfigUtils.GetConnectionString("UserAuth"), //ConnectionString in Web.Config
+				new OrmLiteConnectionFactory(connStr, //ConnectionString in Web.Config
 					SqlServerOrmLiteDialectProvider.Instance) {
 						ConnectionFilter = x => new ProfiledDbConnection(x, Profiler.Current)
 					});
