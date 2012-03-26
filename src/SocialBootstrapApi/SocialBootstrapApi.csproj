@@ -143,6 +143,10 @@
     <Content Include="App_Data\UserAuth_log.ldf">
       <DependentUpon>UserAuth.mdf</DependentUpon>
     </Content>
+    <Content Include="Content\app.css" />
+    <Content Include="Content\app.js" />
+    <Content Include="Content\app.min.css" />
+    <Content Include="Content\app.min.js" />
     <Content Include="Content\css\bootstrap.css" />
     <Content Include="Content\default.min.css">
       <DependentUpon>default.less</DependentUpon>

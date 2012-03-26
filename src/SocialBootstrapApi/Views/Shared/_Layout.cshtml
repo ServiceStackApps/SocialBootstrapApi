@@ -9,7 +9,13 @@
     <meta name="author" content="">
 
     <!-- Le styles -->
+@{
+#if DEBUG	
 	@Html.RenderCssBundle("~/Content/app.css.bundle", BundleOptions.MinifiedAndCombined)
+#else
+    <link href="/Content/app.min.css?3611cd" rel="stylesheet" />
+#endif
+}
 
     <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
@@ -61,13 +67,13 @@
   	<div class="container" style="background: white; padding: 20px 20px 10px;">
 		<div class="page-header">
 			@if (this.IsSectionDefined("Title"))
-			{
+   {
 				@RenderSection("Title", required: false);
-			}
-			else
-			{
+   }
+   else
+   {
 				<h1>Bootstrap ServiceStack MVC Backbone.js<small> with Twitter and Facebook auth built-in</small></h1>
-			}
+   }
 		</div>
 
 		<div id="page-body" class="row"> 
@@ -97,8 +103,15 @@
 	</script>
 
 	@(true ? Html.Js("~/Content/js/jquery-1.7.js") : Html.Js("http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"))
-	@Html.RenderJsBundle("~/Content/app.js.bundle", BundleOptions.Normal)
-         
+
+@{
+#if DEBUG
+  	@Html.RenderJsBundle("~/Content/app.js.bundle", BundleOptions.Normal)         
+#else
+	<script src="/Content/js/jquery-1.7.js?3450ab" type="text/javascript"></script>    <script src="/Content/js/app.js?3611cf" type="text/javascript"></script>
+#endif
+}
+
 	@RenderSection("JavaScript", required: false)
 
   </body>
