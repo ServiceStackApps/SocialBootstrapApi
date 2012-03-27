@@ -4271,8 +4271,7 @@
     };
     
 	_.mixin({
-		formData: function (form)
-		{
+		formData: function(form) {
 			var ret = {};
 			$(form).find("INPUT,TEXTAREA").each(function() {
 				if (this.type == "button" || this.type == "submit") return;
@@ -4285,20 +4284,17 @@
 			});
 			return ret;
 		},
-		xhrMessage: function (xhr)
-		{
-			try
-			{
+		xhrMessage: function(xhr) {
+			try {
 				var respObj = JSON.parse(xhr.responseText);
 				if (!respObj.responseStatus) return null;
 				return respObj.responseStatus.message;
 			}
-			catch (e)
-			{
+			catch (e) {
 				return null;
 			}
 		},
-        get: function (url, data, success, error) {
+        get: function(url, data, success, error) {
             if (_.isFunction(data)) {
                 error = success;
                 success = data;
@@ -4312,11 +4308,10 @@
                 error: error
             });
         },
-		post: function (opt) {
+		post: function(opt) {
 		    return _.ajax(opt);
 		},
-        ajax: function (opt)
-		{                
+        ajax: function(opt) {                
             var o = _.defaults(opt, {
                type: 'POST',
                loading: function() {
@@ -4332,15 +4327,13 @@
 				type: o.type,
 				url: relativeUrl(o.url),
 				data: o.data,
-				success: function()
-				{
+				success: function() {
 					//console.log(arguments);
 					o.finishedLoading();
 				    $(o.form).clearErrors();
 					if (o.success) o.success.apply(null, arguments);
 				},
-				error: function(xhr,err,status)
-				{
+				error: function(xhr,err,status) {
 					//console.log(arguments);
 					o.finishedLoading();
 				    try {
@@ -4360,11 +4353,10 @@
 	});
 
 	app.BaseModel = Backbone.Model.extend({
-	    initialize: function () {
+	    initialize: function() {
 	        console.log("BaseModel...");
 	    },
-		parse: function (resp, xhr)
-		{
+		parse: function(resp, xhr) {
 			if (!resp) return resp;
 			return resp.result || resp.results || resp;
 		},
@@ -4374,19 +4366,16 @@
 		    model.url = relativeUrl(url);
 		    Backbone.sync(method, model, options);
 		},
-		_super: function (funcName)
-		{
+		_super: function(funcName) {
 			return this.constructor.__super__[funcName].apply(this, _.rest(arguments));
 		}
 	});
 
 	app.BaseView = Backbone.View.extend({		
-		loading: function ()
-		{
+		loading: function() {
 			$(this.el).css({ opacity: 0.5 });
 		},
-		finishedLoading: function ()
-		{
+		finishedLoading: function() {
 			$(this.el).css({ opacity: 1 });
 		}
 	});
@@ -4545,23 +4534,24 @@
 			gravatarImageUrl64: null,
 			showProfile: null
 		},
-		initialize: function (opt) {
+		initialize: function(opt) {
 		},
-		hasTwitterAuth: function () {
+		hasTwitterAuth: function() {
 		    return !!this.get('twitterUserId');
 		}
 	});
 
 	app.UserProfileView = app.BaseView.extend({
-		initialize: function () {
+		initialize: function() {
 			_.bindAll(this, "render");
 			this.model.bind("change", this.render);
 			this.$el = $(this.el);
 			this.template = _.template($("#template-userprofile").html());
 		},
-		render: function () {
+		render: function() {
 			this.$el.hide();
 			var attrs = this.model.attributes;
+			attrs.twitterScreenName = attrs.twitterScreenName || null;
 			attrs.twitterUserId = attrs.twitterUserId || null;
 			attrs.facebookUserId = attrs.facebookUserId || null;
 
@@ -4589,7 +4579,7 @@
         defaults: {
             screenName: null,
             tab: "timelines",
-            timelines: [],
+            timelines: [], 
             tweets: [],
             friends: [],
             followers: [],
@@ -4600,7 +4590,7 @@
             friends_count: null,
             followers_count: null
         },
-        initialize: function () {
+        initialize: function() {
             _.bindAll(this, "twitterProfileChange", "twitterTab", "screenNameChanged", "tabChanged");
             this.on("change:screenName", this.screenNameChanged);
             this.on("change:tab", this.tabChanged);
@@ -4611,7 +4601,7 @@
         error: function(e) {
             $("#twitter .tab-content").html('<div class="alert alert-error">' + (e.message || e) + '</div>');
         },
-        screenNameChanged: function () {
+        screenNameChanged: function() {
             $("BODY").toggleClass("self", this.viewingSelf());
             if (!this.get('screenName')) return;
 
@@ -4623,11 +4613,11 @@
                 self.load(self.tab());
             }, this.error);
         },
-        tabChanged: function () {
+        tabChanged: function() {
             $(".tabs ." + this.tab() + " a").tab('show');
             this.load(this.tab());
         },
-        load: function (tab) {
+        load: function(tab) {
             tab = tab || this.defaults.tab;
             var self = this, o = {}, 
                 tabTweetsUrl = tab === "directmessages" ? tab : this.get('screenName') + "/" + tab;
@@ -4639,7 +4629,7 @@
                 self.set(o);
             }, this.error);
         },
-        twitterProfileChange: function (screenName, tab) {
+        twitterProfileChange: function(screenName, tab) {
             this.set({ screenName: screenName || app.twitterScreenName(), tab: tab || this.tab() }, { silent: !app.isAuth() });
             this.navigate(this.navUrl());
         },
@@ -4649,10 +4639,10 @@
         navUrl: function() {
             return (this.viewingSelf() ? "" : this.get("screenName") + "/") + this.get("tab");
         },
-        tab: function () {
+        tab: function() {
             return this.get('tab') || this.defaults.tab;
         },
-        twitterTab: function (tab) {
+        twitterTab: function(tab) {
             tab = tab || this.tab();
             this.set({ tab: tab });
             this.navigate(this.navUrl());
@@ -4660,7 +4650,7 @@
     });
 
     app.TwitterView = app.BaseView.extend({
-        initialize: function () {
+        initialize: function() {
             _.bindAll(this, "render");
             this.$el = $(this.el);
             this.$signedInBody = this.$el.find(".signed-in .tab-content");
@@ -4674,23 +4664,23 @@
             this.model.on(changeEvents, this.render);
         },
         tabHooks: {
-            friends: function () {
+            friends: function() {
                 return this.usersTemplate({ users: this.model.get('friends') });
             },
-            followers: function () {
+            followers: function() {
                 return this.usersTemplate({ users: this.model.get('followers') });
             },
-            timelines: function () {
+            timelines: function() {
                 return this.tweetsTemplate({ tweets: this.model.get('timelines') });
             },
-            tweets: function () {
+            tweets: function() {
                 return this.tweetsTemplate({ tweets: this.model.get('tweets') });
             },
-            directmessages: function () {
+            directmessages: function() {
                 return this.directMessagesTemplate({ tweets: this.model.get('directmessages') });
             }
         },
-        render: function () {
+        render: function() {
             var screenName = this.model.get('screenName'), html = "";
             if (screenName) {
                 var tab = this.model.tab();
@@ -4724,7 +4714,7 @@
 		    Backbone.history.start({ pushState: true });
 		    this.handleClicks();
 		},
-		handleClicks: function () {
+		handleClicks: function() {
 			$(document.body).click(function (e) {
 			    console.log("handleClicks", e);
 				var dataCmd = $(e.srcElement).data('cmd');
@@ -4737,7 +4727,7 @@
 				app.sendCmd(evt, args);
 			});
 		},
-        finishedLoading: function () {
+        finishedLoading: function() {
 	        if (!this.hasLoaded) {
 	            this.hasLoaded = true;
 	            $(".app-loading").removeClass("app-loading");
@@ -4747,14 +4737,13 @@
 		navigate: function(path) {
 		    this.routes.navigate(path);
 		},
-		route: function (evt) {
+		route: function(evt) {
 		    var args = _.rest(arguments);
 		    console.log("route: " + evt, args);
 		    this.sendCmd(evt, args);
 		    this.finishedLoading();
 		},
-		sendCmd: function (evt, args)
-		{
+		sendCmd: function(evt, args) {
 		    if (_.isFunction(this.routes[evt])) 
 		        this.routes[evt].apply(this.routes, args);
 		    
@@ -4765,7 +4754,7 @@
 				if (_.isFunction(el[evt])) el[evt].apply(el, args);
 			});
 		},
-		error: function (xhr, err, statusText) {
+		error: function(xhr, err, statusText) {
 			console.log("App Error: ", arguments);
 			this.trigger("error", (err || xhr));
 			if (xhr.status == this.UnAuthorized) {
@@ -4784,7 +4773,7 @@
 	var userProfile = new app.UserProfile({ login: login });
     var twitter = new app.Twitter();
 
-    app.isAuth = function () {
+    app.isAuth = function() {
         return login.get("isAuthenticated");
     };
     app.twitterScreenName = function() {
@@ -4848,31 +4837,31 @@
             ":user/followers": "userFollowers",
             "*catchall": "catchAll"
         },
-        initialize: function (opt) {
+        initialize: function(opt) {
             this.app = opt.app;
         },
-        timelines: function () {
+        timelines: function() {
             this.app.route("twitterProfileChange", login.get('screenName'), "timelines");
         },
-        tweets: function () {
+        tweets: function() {
             this.app.route("twitterProfileChange", login.get('screenName'), "tweets");
         },
-        friends: function () {
+        friends: function() {
             this.app.route("twitterProfileChange", login.get('screenName'), "friends");
         },
-        followers: function () {
+        followers: function() {
             this.app.route("twitterProfileChange", login.get('screenName'), "followers");
         },
-        userTimelines: function (user) {
+        userTimelines: function(user) {
             this.app.route("twitterProfileChange", user, "timelines");
         },
-        userTweets: function (user) {
+        userTweets: function(user) {
             this.app.route("twitterProfileChange", user, "tweets");
         },
-        userFriends: function (user) {
+        userFriends: function(user) {
             this.app.route("twitterProfileChange", user, "friends");
         },
-        userFollowers: function (user) {
+        userFollowers: function(user) {
             this.app.route("twitterProfileChange", user, "followers");
         },
         catchAll: function () {
@@ -4882,7 +4871,7 @@
     });
     app.routes = new app.Routes({ app: app });
 
-    userProfile.bind("change", function (profile) {
+    userProfile.bind("change", function(profile) {
         if (profile.hasTwitterAuth()) {
             twitter.twitterProfileChange(twitter.get("screenName") || profile.get("twitterScreenName"));
         }

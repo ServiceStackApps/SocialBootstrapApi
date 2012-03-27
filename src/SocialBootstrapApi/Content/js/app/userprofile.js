@@ -37,6 +37,7 @@
 		render: function() {
 			this.$el.hide();
 			var attrs = this.model.attributes;
+			attrs.twitterScreenName = attrs.twitterScreenName || null;
 			attrs.twitterUserId = attrs.twitterUserId || null;
 			attrs.facebookUserId = attrs.facebookUserId || null;
 
