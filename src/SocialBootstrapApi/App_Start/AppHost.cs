@@ -168,8 +168,12 @@ namespace SocialBootstrapApi
 				() => new CustomUserSession(), //Use your own typed Custom UserSession type
 				new IAuthProvider[] {
                     new CredentialsAuthProvider(),         //HTML Form post of UserName/Password credentials
-                    new TwitterAuthProvider(appSettings),  //Sign-in with Twitter
-                    new FacebookAuthProvider(appSettings), //Sign-in with Facebook
+                    new TwitterAuthProvider(appSettings) {
+						RedirectUrl = "http://bootstrapapi.apphb.com/friends"
+					},  //Sign-in with Twitter
+                    new FacebookAuthProvider(appSettings) {
+						RedirectUrl = "http://bootstrapapi.apphb.com/friends"
+					}, //Sign-in with Facebook
                     new BasicAuthProvider(),               //Sign-in with Basic Auth
                 }));
 
@@ -181,7 +185,7 @@ namespace SocialBootstrapApi
 
 			//Create a DB Factory configured to access the UserAuth SQL Server DB
 			var connStr = appSettings.Get("SQLSERVER_CONNECTION_STRING", //AppHarbor or Local connection string
-				ConfigUtils.GetConnectionString("UserAuth")); 
+				ConfigUtils.GetConnectionString("UserAuth"));
 			container.Register<IDbConnectionFactory>(
 				new OrmLiteConnectionFactory(connStr, //ConnectionString in Web.Config
 					SqlServerOrmLiteDialectProvider.Instance) {
