@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Web.Mvc;
 using ServiceStack.CacheAccess;
@@ -206,4 +207,27 @@ namespace SocialBootstrapApi
 			//routes.IgnoreRoute("api/{*pathInfo}"); 
 		}
 	}
+
+	public static class AppHarborExtensions
+	{
+		public static string ToPublicUrl(this UrlHelper urlHelper, Uri relativeUri)
+		{
+			var httpContext = urlHelper.RequestContext.HttpContext;
+
+			var uriBuilder = new UriBuilder {
+				Host = httpContext.Request.Url.Host,
+				Path = "/",
+				Port = 80,
+				Scheme = "http",
+			};
+
+			if (httpContext.Request.IsLocal)
+			{
+				uriBuilder.Port = httpContext.Request.Url.Port;
+			}
+
+			return new Uri(uriBuilder.Uri, relativeUri).AbsoluteUri;
+		}
+	}
+
 }
