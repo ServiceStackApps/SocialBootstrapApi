@@ -4,6 +4,7 @@ using ServiceStack.ServiceHost;
 using ServiceStack.ServiceInterface;
 using ServiceStack.ServiceInterface.Auth;
 using ServiceStack.ServiceInterface.ServiceModel;
+using SocialBootstrapApi.Models;
 
 namespace SocialBootstrapApi.ServiceInterface
 {
@@ -26,6 +27,7 @@ namespace SocialBootstrapApi.ServiceInterface
 		protected override object Run(Reset request)
 		{
 			DbFactory.Exec(dbCmd => {
+				dbCmd.DeleteAll<User>();
 				dbCmd.DeleteAll<UserAuth>();
 				dbCmd.DeleteAll<UserOAuthProvider>();
 			});
