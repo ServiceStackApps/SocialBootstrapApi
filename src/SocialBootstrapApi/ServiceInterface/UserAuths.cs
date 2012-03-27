@@ -22,6 +22,8 @@ namespace SocialBootstrapApi.ServiceInterface
 			this.UserAuths = new List<UserAuth>();
 			this.OAuthProviders = new List<UserOAuthProvider>();
 		}
+		public CustomUserSession UserSession { get; set; }
+
 		public List<User> Users { get; set; }
 
 		public List<UserAuth> UserAuths { get; set; }
@@ -32,13 +34,14 @@ namespace SocialBootstrapApi.ServiceInterface
 	}
 
 	//Implementation. Can be called via any endpoint or format, see: http://servicestack.net/ServiceStack.Hello/
-	public class UserAuthsService : ServiceBase<UserAuths>
+	public class UserAuthsService : AppServiceBase<UserAuths>
 	{
 		public IDbConnectionFactory DbFactory { get; set; }
 
 		protected override object Run(UserAuths request)
 		{
 			return new UserAuthsResponse {
+				UserSession = base.UserSession,
 				Users = DbFactory.Exec(dbCmd => dbCmd.Select<User>()),
 				UserAuths = DbFactory.Exec(dbCmd => dbCmd.Select<UserAuth>()),
 				OAuthProviders = DbFactory.Exec(dbCmd => dbCmd.Select<UserOAuthProvider>()),
