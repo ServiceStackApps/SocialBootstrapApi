@@ -75,12 +75,6 @@
 
 		<div id="page-body" class="row"> 
 			<div class="span8">
-<pre>
-    ~/: @Url.Content("~/")
-    Request Url: @Url.RequestContext.HttpContext.Request.Url
-    Absolute Url: @Url.ToPublicUrl(new Uri("http://bootstrapapi.apphb.com/timelines"))
-    Absolute Request.Url: @Url.ToPublicUrl(Url.RequestContext.HttpContext.Request.Url)
-</pre>
 				@RenderBody()
 			</div>
 		    <div class="span4">
