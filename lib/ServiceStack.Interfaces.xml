@@ -281,12 +281,13 @@
             Log every service request
             </summary>
         </member>
-        <member name="M:ServiceStack.ServiceHost.IRequestLogger.Log(ServiceStack.ServiceHost.IRequestContext,System.Object)">
+        <member name="M:ServiceStack.ServiceHost.IRequestLogger.Log(ServiceStack.ServiceHost.IRequestContext,System.Object,System.Object)">
             <summary>
             Log a request
             </summary>
-            <param name="requestContext"></param>
-            <param name="requestDto"></param>
+            <param name="requestContext">The RequestContext</param>
+            <param name="requestDto">Request DTO</param>
+            <param name="response">Response DTO or Exception</param>
         </member>
         <member name="M:ServiceStack.ServiceHost.IRequestLogger.GetLatestLogs(System.Nullable{System.Int32})">
             <summary>
@@ -294,6 +295,32 @@
             </summary>
             <param name="take"></param>
             <returns></returns>
+        </member>
+        <member name="P:ServiceStack.ServiceHost.IRequestLogger.EnableSessionTracking">
+            <summary>
+            Turn On/Off Session Tracking
+            </summary>
+        </member>
+        <member name="P:ServiceStack.ServiceHost.IRequestLogger.EnableResponseTracking">
+            <summary>
+            Turn On/Off Tracking of Responses
+            </summary>
+        </member>
+        <member name="P:ServiceStack.ServiceHost.IRequestLogger.EnableErrorTracking">
+            <summary>
+            Turn On/Off Tracking of Exceptions
+            </summary>
+        </member>
+        <member name="P:ServiceStack.ServiceHost.IRequestLogger.RequiresRole">
+            <summary>
+            Limit access to /requestlogs service to role
+            </summary>
+        </member>
+        <member name="P:ServiceStack.ServiceHost.IRequestLogger.HideRequestBodyForRequestDtoTypes">
+            <summary>
+            Don't log request bodys for services with sensitive information.
+            By default Auth and Registration requests are hidden.
+            </summary>
         </member>
         <member name="T:ServiceStack.ServiceHost.IHasRequestFilter">
             <summary>

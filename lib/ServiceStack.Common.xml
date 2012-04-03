@@ -642,6 +642,13 @@
             <param name="response"></param>
             <returns></returns>
         </member>
+        <member name="M:ServiceStack.Common.Web.HttpResultExtensions.IsErrorResponse(System.Object)">
+            <summary>
+            Whether the response is an IHttpError or Exception
+            </summary>
+            <param name="response"></param>
+            <returns></returns>
+        </member>
         <member name="P:ServiceStack.Messaging.Rcon.Packet.FromServer">
             <summary>
             True if the packet originated on the server.
