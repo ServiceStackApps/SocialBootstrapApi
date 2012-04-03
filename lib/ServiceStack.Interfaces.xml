@@ -288,6 +288,13 @@
             <param name="requestContext"></param>
             <param name="requestDto"></param>
         </member>
+        <member name="M:ServiceStack.ServiceHost.IRequestLogger.GetLatestLogs(System.Nullable{System.Int32})">
+            <summary>
+            View the most recent logs
+            </summary>
+            <param name="take"></param>
+            <returns></returns>
+        </member>
         <member name="T:ServiceStack.ServiceHost.IHasRequestFilter">
             <summary>
             This interface can be implemented by an attribute
@@ -301,6 +308,13 @@
             <param name="req">The http request wrapper</param>
             <param name="res">The http response wrapper</param>
             <param name="requestDto">The request DTO</param>
+        </member>
+        <member name="P:ServiceStack.ServiceHost.IHasRequestFilter.Priority">
+            <summary>
+            Order in which Request Filters are executed. 
+            &lt;0 Executed before global request filters
+            &gt;0 Executed after global request filters
+            </summary>
         </member>
         <member name="T:ServiceStack.Logging.Support.Logging.TestLogger">
             <summary>
@@ -1055,6 +1069,13 @@
             <param name="res">The http response wrapper</param>
             <param name="requestDto">The response DTO</param>
         </member>
+        <member name="P:ServiceStack.ServiceHost.IHasResponseFilter.Priority">
+            <summary>
+            Order in which Response Filters are executed. 
+            &lt;0 Executed before global response filters
+            &gt;0 Executed after global response filters
+            </summary>
+        </member>
         <member name="T:ServiceStack.ServiceHost.IRequiresRequestStream">
             <summary>
             Implement on Request DTOs that need access to the raw Request Stream
@@ -1441,6 +1462,11 @@
             Logs the specified message.
             </summary>
             <param name="message">The message.</param>
+        </member>
+        <member name="T:ServiceStack.ServiceInterface.ServiceModel.RequestLogEntry">
+            <summary>
+            A log entry added by the IRequestLogger
+            </summary>
         </member>
     </members>
 </doc>

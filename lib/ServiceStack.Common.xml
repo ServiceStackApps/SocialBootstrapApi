@@ -628,6 +628,20 @@
             Factory to create consumers and producers that work with this service
             </summary>
         </member>
+        <member name="M:ServiceStack.Common.Web.HttpResultExtensions.ToResponseDto(System.Object)">
+            <summary>
+            Shortcut to get the ResponseDTO whether it's bare or inside a IHttpResult
+            </summary>
+            <param name="response"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ServiceStack.Common.Web.HttpResultExtensions.ToResponseStatus(System.Object)">
+            <summary>
+            Shortcut to get the ResponseStatus whether it's bare or inside a IHttpResult
+            </summary>
+            <param name="response"></param>
+            <returns></returns>
+        </member>
         <member name="P:ServiceStack.Messaging.Rcon.Packet.FromServer">
             <summary>
             True if the packet originated on the server.

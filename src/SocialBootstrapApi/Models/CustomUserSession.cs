@@ -44,6 +44,16 @@ namespace SocialBootstrapApi.Models
 				}
 			}
 
+			if (AppHost.Config.AdminUserNames.Contains(session.UserAuthName)
+				&& !session.HasRole(RoleNames.Admin))
+			{
+				var assignRoles = authService.ResolveService<AssignRolesService>();
+				assignRoles.Execute(new AssignRoles {
+					UserName = session.UserAuthName,
+					Roles = { RoleNames.Admin }
+				});
+			}
+
 			//Resolve the DbFactory from the IOC and persist the user info
 			authService.TryResolve<IDbConnectionFactory>().Exec(dbCmd => dbCmd.Save(user));
 		}
@@ -59,6 +69,6 @@ namespace SocialBootstrapApi.Models
 
 			string gravatarUrl = "http://www.gravatar.com/avatar/{0}?d=mm&s={1}".Fmt(sb, size);
 			return gravatarUrl;
-		}		
+		}
 	}
 }
