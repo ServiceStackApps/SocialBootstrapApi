@@ -316,6 +316,11 @@
             Limit access to /requestlogs service to role
             </summary>
         </member>
+        <member name="P:ServiceStack.ServiceHost.IRequestLogger.ExcludeRequestDtoTypes">
+            <summary>
+            Don't log requests of these types.
+            </summary>
+        </member>
         <member name="P:ServiceStack.ServiceHost.IRequestLogger.HideRequestBodyForRequestDtoTypes">
             <summary>
             Don't log request bodys for services with sensitive information.
