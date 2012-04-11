@@ -507,6 +507,11 @@
             to generate to and from that type.
             </summary>
         </member>
+        <member name="T:ServiceStack.ServiceInterface.ServiceModel.RequestLogEntry">
+            <summary>
+            A log entry added by the IRequestLogger
+            </summary>
+        </member>
         <member name="T:ServiceStack.ServiceHost.IServiceRoutes">
             <summary>
             Allow the registration of user-defined routes for services
@@ -1494,11 +1499,6 @@
             Logs the specified message.
             </summary>
             <param name="message">The message.</param>
-        </member>
-        <member name="T:ServiceStack.ServiceInterface.ServiceModel.RequestLogEntry">
-            <summary>
-            A log entry added by the IRequestLogger
-            </summary>
         </member>
     </members>
 </doc>
