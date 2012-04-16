@@ -189,8 +189,11 @@ namespace SocialBootstrapApi.Logic
 			var uri = new Uri(url);
 			var webReq = (HttpWebRequest)WebRequest.Create(uri);
 			webReq.Accept = ContentType.Json;
-			webReq.Headers[HttpRequestHeader.Authorization] = OAuthAuthorizer.AuthorizeRequest(
-				twitterAuth.OAuthProvider, twitterAuth.AccessToken, twitterAuth.AccessTokenSecret, HttpMethod.Get, uri, null);
+			if (twitterAuth.AccessToken != null)
+			{
+				webReq.Headers[HttpRequestHeader.Authorization] = OAuthAuthorizer.AuthorizeRequest(
+					twitterAuth.OAuthProvider, twitterAuth.AccessToken, twitterAuth.AccessTokenSecret, HttpMethod.Get, uri, null);
+			}
 
 			using (var webRes = webReq.GetResponse())
 				return webRes.DownloadText();
@@ -203,8 +206,11 @@ namespace SocialBootstrapApi.Logic
 
 			return urls.DownloadAllAsync(ContentType.Json, (webReq, uri) => {
 
-				webReq.Headers[HttpRequestHeader.Authorization] = OAuthAuthorizer.AuthorizeRequest(
-					twitterAuth.OAuthProvider, twitterAuth.AccessToken, twitterAuth.AccessTokenSecret, HttpMethod.Get, uri, null);
+				if (twitterAuth.AccessToken != null)
+				{
+					webReq.Headers[HttpRequestHeader.Authorization] = OAuthAuthorizer.AuthorizeRequest(
+						twitterAuth.OAuthProvider, twitterAuth.AccessToken, twitterAuth.AccessTokenSecret, HttpMethod.Get, uri, null);
+				}
 
 			});
 		}
