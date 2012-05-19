@@ -1213,6 +1213,19 @@
             <typeparam name="T"></typeparam>
             <param name="values">The values.</param>
         </member>
+        <member name="M:ServiceStack.Redis.IRedisClient.GetTypedClient``1">
+            <summary>
+            Returns a high-level typed client API
+            Shorter Alias is As&lt;T&gt;();
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="M:ServiceStack.Redis.IRedisClient.As``1">
+            <summary>
+            Returns a high-level typed client API
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
         <member name="T:ServiceStack.Messaging.QueueNames`1">
             <summary>
             Util static generic class to create unique queue names for types
