@@ -104,6 +104,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\ControllerBase.cs" />
+    <Compile Include="Controllers\SecureController.cs" />
+    <Compile Include="Controllers\PublicController.cs" />
     <Compile Include="Models\CustomUserSession.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Logic\TwitterGateway.cs" />
@@ -204,6 +206,8 @@
       <SubType>Designer</SubType>
     </Content>
     <None Include="Content\app.js.bundle" />
+    <Content Include="Views\Public\Index.cshtml" />
+    <Content Include="Views\Secure\Index.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
