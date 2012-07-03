@@ -28,6 +28,7 @@ Thumbs.db
 *.sbr
 *.resharper.user
 obj/
+bin/
 [Rr]elease*/
 _ReSharper*/
 [Tt]est[Rr]esult*
