@@ -129,6 +129,11 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:ServiceStack.WebHost.Endpoints.EndpointHost.CompleteRequest">
+            <summary>
+            Call to signal the completion of a ServiceStack-handled Request
+            </summary>
+        </member>
         <member name="T:ServiceStack.WebHost.Endpoints.AppHostHttpListenerBase">
             <summary>
             Inherit from this class if you want to host your web services inside a 
@@ -170,6 +175,11 @@
             Calls directly after services and filters are executed.
             </summary>
             <param name="instance"></param>
+        </member>
+        <member name="M:ServiceStack.WebHost.Endpoints.IAppHost.OnEndRequest">
+            <summary>
+            Called at the end of each request. Enables Request Scope.
+            </summary>
         </member>
         <member name="M:ServiceStack.WebHost.Endpoints.IAppHost.RegisterService(System.Type,System.String[])">
             <summary>
@@ -1873,6 +1883,18 @@
             <param name="requestContext"></param>
             <param name="cacheClient"></param>
             <param name="cacheKeys"></param>
+        </member>
+        <member name="M:ServiceStack.ServiceHost.ContainerResolveCache.CreateInstance(System.Type)">
+            <summary>
+            Creates instance using straight Resolve approach.
+            This will throw an exception if resolution fails
+            </summary>
+        </member>
+        <member name="M:ServiceStack.ServiceHost.ContainerResolveCache.CreateInstance(System.Type,System.Boolean)">
+            <summary>
+            Creates instance using the TryResolve approach if tryResolve = true.
+            Otherwise uses Resolve approach, which will throw an exception if resolution fails
+            </summary>
         </member>
         <member name="T:ServiceStack.MiniProfiler.SqlFormatters.InlineFormatter">
             <summary>
