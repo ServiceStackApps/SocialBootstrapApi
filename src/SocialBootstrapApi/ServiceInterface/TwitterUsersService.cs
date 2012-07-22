@@ -1,9 +1,6 @@
 using System.Collections.Generic;
 using ChaweetApi.ServiceModel;
-using ServiceStack.CacheAccess;
-using ServiceStack.ServiceInterface;
 using ServiceStack.ServiceInterface.ServiceModel;
-using SocialBootstrapApi.Logic;
 
 namespace SocialBootstrapApi.ServiceInterface
 {

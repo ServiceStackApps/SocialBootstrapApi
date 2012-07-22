@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using ServiceStack.OrmLite;
 using ServiceStack.ServiceHost;
-using ServiceStack.ServiceInterface;
 using ServiceStack.ServiceInterface.Auth;
 using ServiceStack.ServiceInterface.ServiceModel;
 using SocialBootstrapApi.Models;
@@ -40,18 +39,21 @@ namespace SocialBootstrapApi.ServiceInterface
 
 		protected override object Run(UserAuths request)
 		{
-			var response = new UserAuthsResponse {
-				UserSession = base.UserSession,
-				Users = DbFactory.Exec(dbCmd => dbCmd.Select<User>()),
-				UserAuths = DbFactory.Exec(dbCmd => dbCmd.Select<UserAuth>()),
-				OAuthProviders = DbFactory.Exec(dbCmd => dbCmd.Select<UserOAuthProvider>()),
-			};
+            using (var db = DbFactory.OpenDbConnection())
+            {
+                var response = new UserAuthsResponse {
+                    UserSession = base.UserSession,
+                    Users = db.Select<User>(),
+                    UserAuths = db.Select<UserAuth>(),
+                    OAuthProviders = db.Select<UserOAuthProvider>(),
+                };
 
-			response.UserAuths.ForEach(x => x.PasswordHash = "[Redacted]");
-			response.OAuthProviders.ForEach(x => 
-				x.AccessToken = x.AccessTokenSecret = x.RequestTokenSecret = "[Redacted]");
+                response.UserAuths.ForEach(x => x.PasswordHash = "[Redacted]");
+                response.OAuthProviders.ForEach(x =>
+                    x.AccessToken = x.AccessTokenSecret = x.RequestTokenSecret = "[Redacted]");
 
-			return response;
+                return response;
+            }
 		}
 	}
 }

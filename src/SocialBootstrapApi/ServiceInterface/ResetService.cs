@@ -26,11 +26,12 @@ namespace SocialBootstrapApi.ServiceInterface
 
 		protected override object Run(Reset request)
 		{
-			DbFactory.Exec(dbCmd => {
-				dbCmd.DeleteAll<User>();
-				dbCmd.DeleteAll<UserAuth>();
-				dbCmd.DeleteAll<UserOAuthProvider>();
-			});
+		    using (var db = DbFactory.OpenDbConnection())
+		    {
+                db.DeleteAll<User>();
+                db.DeleteAll<UserAuth>();
+                db.DeleteAll<UserOAuthProvider>();
+            }
 
 			var httpRes = base.RequestContext.Get<IHttpResponse>();
 			httpRes.Cookies.DeleteCookie("ss-id");

@@ -52,9 +52,9 @@ namespace SocialBootstrapApi.ServiceInterface
 		//Get's called by all HTTP Verbs (GET,POST,PUT,DELETE,etc) and endpoints JSON,XMl,JSV,etc
 		protected override object Run(Author request)
 		{			
-			return DbFactory.Exec(dbCmd => 
+			return DbFactory.Run(db => 
 			{
-				dbCmd.CreateTable<Author>(overwrite: true);
+				db.CreateTable<Author>(overwrite: true);
 
 				var authors = new List<Author> {
 					new Author { Name = "Demis Bellot", Birthday = DateTime.Today.AddYears(-20), Active = true, Earnings = 99.9m, Comments = "CSharp books", Rate = 10, City = "London" },
@@ -72,18 +72,18 @@ namespace SocialBootstrapApi.ServiceInterface
 					new Author { Name = "Xavi Garzon", Birthday = DateTime.Today.AddYears(-22), Active = true, Earnings = 75.0m, Comments = "CSharp books", Rate = 9, City = "Madrid" },
 					new Author { Name = "Luis garzon", Birthday = DateTime.Today.AddYears(-22), Active = true, Earnings = 85.0m, Comments = "CSharp books", Rate = 10, City = "Mexico" },
 				};
-				dbCmd.InsertAll(authors);
+				db.InsertAll(authors);
 
 				var agesAgo = DateTime.Today.AddYears(-20).Year;
 				return new AuthorResponse {
-					Results1 = dbCmd.Select<Author>(rn => rn.Birthday >= new DateTime(agesAgo, 1, 1) && rn.Birthday <= new DateTime(agesAgo, 12, 31)),
-					Results2 = dbCmd.Select<Author>(rn => Sql.In(rn.City, "London", "Madrid", "Berlin")),
-					Results3 = dbCmd.Select<Author>(rn => rn.Name.StartsWith("A")),
-					Results4 = dbCmd.Select<Author>(rn => rn.Name.EndsWith("garzon")),
-					Results5 = dbCmd.Select<Author>(rn => rn.Name.ToUpper().EndsWith("GARZON")),
-					Results6 = dbCmd.Select<Author>(rn => rn.Name.Contains("Benedict")),
-					Results7 = dbCmd.Select<Author>(rn => rn.Earnings <= 50),
-					Results8 = dbCmd.Select<Author>(rn => rn.Rate == 10 && rn.City == "Mexico"),
+					Results1 = db.Select<Author>(rn => rn.Birthday >= new DateTime(agesAgo, 1, 1) && rn.Birthday <= new DateTime(agesAgo, 12, 31)),
+					Results2 = db.Select<Author>(rn => Sql.In(rn.City, "London", "Madrid", "Berlin")),
+					Results3 = db.Select<Author>(rn => rn.Name.StartsWith("A")),
+					Results4 = db.Select<Author>(rn => rn.Name.EndsWith("garzon")),
+					Results5 = db.Select<Author>(rn => rn.Name.ToUpper().EndsWith("GARZON")),
+					Results6 = db.Select<Author>(rn => rn.Name.Contains("Benedict")),
+					Results7 = db.Select<Author>(rn => rn.Earnings <= 50),
+					Results8 = db.Select<Author>(rn => rn.Rate == 10 && rn.City == "Mexico"),
 				};
 			});
 

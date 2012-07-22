@@ -48,7 +48,7 @@ namespace SocialBootstrapApi.ServiceInterface
 			var userProfile = session.TranslateTo<UserProfile>();
 			userProfile.Id = int.Parse(session.UserAuthId);
 
-			var user = DbFactory.Exec(dbCmd => dbCmd.QueryById<User>(userProfile.Id));
+            var user = DbFactory.Run(db => db.QueryById<User>(userProfile.Id));
 			userProfile.PopulateWith(user);
 
 			return new UserProfileResponse {
