@@ -36,3 +36,4 @@ using System.Runtime.Serialization;
 [assembly: AssemblyFileVersion("1.0.0.0")]
 
 [assembly: ContractNamespace("http://schemas.servicestack.net/types", ClrNamespace = "SocialBootstrapApi.ServiceInterface")]
+[assembly: ContractNamespace("http://schemas.servicestack.net/types", ClrNamespace = "ChaweetApi.ServiceModel")]
