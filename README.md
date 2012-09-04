@@ -25,10 +25,10 @@ Here are some screenshots of the live app:
 
 ### Home Page
 
-![Home Page](http://www.servicestack.net/img/bootstrap-api-01-850.png)
+[![Home Page](http://www.servicestack.net/img/bootstrap-api-01-850.png)](http://bootstrapapi.apphb.com)
 
 ### Tweets 
 
-![Tweets](http://www.servicestack.net/img/bootstrap-api-02-850.png)
+[![Tweets](http://www.servicestack.net/img/bootstrap-api-02-850.png)](http://bootstrapapi.apphb.com)
 
 Follow [@demisbellot](http://twitter.com) for updates.
