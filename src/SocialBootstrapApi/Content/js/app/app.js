@@ -16,7 +16,7 @@
 		handleClicks: function() {
 			$(document.body).click(function (e) {
 			    console.log("handleClicks", e);
-				var dataCmd = $(e.srcElement).data('cmd');
+				var dataCmd = $(e.srcElement || e.target).data('cmd');
 				if (!dataCmd) return;
 
 				var cmd = dataCmd.split(':'),
