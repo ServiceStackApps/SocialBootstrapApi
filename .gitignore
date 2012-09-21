@@ -42,3 +42,4 @@ release/*
 *.min.js
 *.min.css
 
+bin/
