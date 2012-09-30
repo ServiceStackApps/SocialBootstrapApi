@@ -114,6 +114,7 @@
     <Compile Include="Mvc.Bundler.cs" />
     <Compile Include="ServiceInterface\AuthorService.cs" />
     <Compile Include="ServiceInterface\AppServiceBase.cs" />
+    <Compile Include="ServiceInterface\LoginService.cs" />
     <Compile Include="ServiceInterface\ResetService.cs" />
     <Compile Include="ServiceInterface\TwitterTimelinesService.cs" />
     <Compile Include="ServiceInterface\TwitterDirectMessagesService.cs" />
