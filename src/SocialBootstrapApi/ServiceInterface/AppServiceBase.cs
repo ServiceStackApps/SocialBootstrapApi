@@ -7,32 +7,13 @@ using SocialBootstrapApi.Models;
 
 namespace SocialBootstrapApi.ServiceInterface
 {
-	public abstract class AppServiceBase<T> : ServiceBase<T>
+	public abstract class AppServiceBase : Service
 	{
-		public ICacheClient Cache { get; set; } //Injected in IOC as defined in AppHost
-
-		private CustomUserSession userSession;
-		protected CustomUserSession UserSession
+	    public CustomUserSession UserSession
 		{
 			get
 			{
-				if (userSession != null) return userSession;
-				if (SessionKey != null)
-					userSession = this.Cache.Get<CustomUserSession>(SessionKey);
-				else
-					SessionFeature.CreateSessionIds();
-
-				var unAuthorizedSession = new CustomUserSession();
-				return userSession ?? (userSession = unAuthorizedSession);
-			}
-		}
-
-		protected string SessionKey
-		{
-			get
-			{
-				var sessionId = SessionFeature.GetSessionId();
-				return sessionId == null ? null : SessionFeature.GetSessionKey(sessionId);
+				return SessionAs<CustomUserSession>();
 			}
 		}
 

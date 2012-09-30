@@ -19,19 +19,12 @@ namespace SocialBootstrapApi.ServiceInterface
 
 	public class TwitterTweetsResponse
 	{
-		public TwitterTweetsResponse()
-		{
-			this.ResponseStatus = new ResponseStatus();
-		}
-
 		public List<Tweet> Results { get; set; }
-
-		public ResponseStatus ResponseStatus { get; set; }
 	}
 
-	public class TwitterTweetsService : AppServiceBase<TwitterTweets>
+	public class TwitterTweetsService : AppServiceBase
 	{
-		protected override object Run(TwitterTweets request)
+	    public object Any(TwitterTweets request)
 		{
 			var cacheKey = "cache:Tweet:" + request.ScreenName + ":tweets"
 				+ (request.Take.HasValue ? ":take:" + request.Take : "")

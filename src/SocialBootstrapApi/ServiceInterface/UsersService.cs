@@ -24,18 +24,16 @@ namespace SocialBootstrapApi.ServiceInterface
 		public ResponseStatus ResponseStatus { get; set; }
 	}
 
-	public class UsersService : RestServiceBase<Users>
+	public class UsersService : Service
 	{
-		public IDbConnectionFactory DbFactory { get; set; }
-
-		public override object OnGet(Users request)
+		public object Get(Users request)
 		{
 			var response = new UsersResponse();
 			
 			if (request.UserIds.Length == 0)
 				return response;
-			
-			var users = DbFactory.Exec(dbCmd => dbCmd.GetByIds<User>(request.UserIds));
+
+            var users = Db.Ids<User>(request.UserIds);
 
 			var userInfos = users.ConvertAll(x => x.TranslateTo<UserInfo>());
 

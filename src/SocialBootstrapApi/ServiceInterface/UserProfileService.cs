@@ -1,12 +1,10 @@
 using ServiceStack.Common;
 using ServiceStack.OrmLite;
 using ServiceStack.ServiceInterface;
-using ServiceStack.ServiceInterface.ServiceModel;
 using SocialBootstrapApi.Models;
 
 namespace SocialBootstrapApi.ServiceInterface
 {
-	[Authenticate]
 	public class UserProfile
 	{
 		public int Id { get; set; }
@@ -25,30 +23,22 @@ namespace SocialBootstrapApi.ServiceInterface
 		public string GravatarImageUrl64 { get; set; }
 	}
 
-	public class UserProfileResponse : IHasResponseStatus
+	public class UserProfileResponse
 	{
-		public UserProfileResponse()
-		{
-			this.ResponseStatus = new ResponseStatus();
-		}
-
 		public UserProfile Result { get; set; }
-	
-		public ResponseStatus ResponseStatus { get; set; }
 	}
 
-	public class UserProfileService : RestServiceBase<UserProfile>
+    [Authenticate]
+    public class UserProfileService : AppServiceBase
 	{
-		public IDbConnectionFactory DbFactory { get; set; }
-
-		public override object OnGet(UserProfile request)
+		public object Get(UserProfile request)
 		{
-			var session = this.GetSession();
+		    var session = base.UserSession;
 
 			var userProfile = session.TranslateTo<UserProfile>();
 			userProfile.Id = int.Parse(session.UserAuthId);
 
-            var user = DbFactory.Run(db => db.QueryById<User>(userProfile.Id));
+            var user = Db.QueryById<User>(userProfile.Id);
 			userProfile.PopulateWith(user);
 
 			return new UserProfileResponse {

@@ -2,7 +2,6 @@
 using ChaweetApi.ServiceModel;
 using ServiceStack.Common;
 using ServiceStack.ServiceHost;
-using ServiceStack.ServiceInterface.ServiceModel;
 
 namespace SocialBootstrapApi.ServiceInterface
 {
@@ -19,19 +18,12 @@ namespace SocialBootstrapApi.ServiceInterface
 
 	public class TwitterTimelinesResponse
 	{
-		public TwitterTimelinesResponse()
-		{
-			this.ResponseStatus = new ResponseStatus();
-		}
-
 		public List<Tweet> Results { get; set; }
-
-		public ResponseStatus ResponseStatus { get; set; }
 	}
 
-	public class TwitterTimelinesService : AppServiceBase<TwitterTimelines>
+	public class TwitterTimelinesService : AppServiceBase
 	{
-		protected override object Run(TwitterTimelines request)
+	    public object Any(TwitterTimelines request)
 		{
 			var cacheKey = "cache:Tweet:" + request.ScreenName + ":timeline"
 				+ (request.Take.HasValue ? ":take:" + request.Take : "")

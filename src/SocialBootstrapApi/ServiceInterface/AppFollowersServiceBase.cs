@@ -30,10 +30,10 @@ namespace SocialBootstrapApi.ServiceInterface
 		public ResponseStatus ResponseStatus { get; set; } 
 	}
 
-	public class AppFollowersServiceBase : AppServiceBase<TwitterFollowers>
+	public class AppFollowersServiceBase : AppServiceBase
 	{
 		//Available on all HTTP Verbs (GET, POST, PUT, DELETE, etc) and endpoints JSON, XMl, JSV, etc
-		protected override object Run(TwitterFollowers request)
+	    public object Any(TwitterFollowers request)
 		{
 			if (request.UserId.IsNullOrEmpty() && request.ScreenName.IsNullOrEmpty())
 				throw new ArgumentNullException("UserId or UserName is required");

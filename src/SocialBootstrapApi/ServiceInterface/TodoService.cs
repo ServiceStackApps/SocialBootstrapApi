@@ -9,7 +9,7 @@ namespace SocialBootstrapApi.ServiceInterface
 	[DataContract]
 	public class Todo
 	{
-		[DataMember(Order = 1)]
+		[DataMember(Order = 1)] //Explicit Attributes required for ProtoBuf (not MsgPack)
 		public long Id { get; set; }
 		[DataMember(Order = 2)]
 		public string Content { get; set; }
@@ -20,11 +20,11 @@ namespace SocialBootstrapApi.ServiceInterface
 	}
 
 	//REST Service implementation
-	public class TodoService : RestServiceBase<Todo>
+	public class TodoService : Service
 	{
 		public TodoRepository Repository { get; set; }  //Injected by IOC
 
-		public override object OnGet(Todo request)
+		public object Get(Todo request)
 		{
 			if (request.Id == default(long))
 				return Repository.GetAll();
@@ -33,15 +33,14 @@ namespace SocialBootstrapApi.ServiceInterface
 		}
 
 		//Called for new and update
-		public override object OnPost(Todo todo)
+		public object Post(Todo todo)
 		{
 			return Repository.Store(todo);
 		}
 
-		public override object OnDelete(Todo request)
+		public void Delete(Todo request)
 		{
 			Repository.DeleteById(request.Id);
-			return null;
 		}
 	}
 

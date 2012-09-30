@@ -2,7 +2,6 @@
 using ChaweetApi.ServiceModel;
 using ServiceStack.Common;
 using ServiceStack.ServiceHost;
-using ServiceStack.ServiceInterface.ServiceModel;
 
 namespace SocialBootstrapApi.ServiceInterface
 {
@@ -17,19 +16,12 @@ namespace SocialBootstrapApi.ServiceInterface
 
 	public class TwitterDirectMessagesResponse
 	{
-		public TwitterDirectMessagesResponse()
-		{
-			this.ResponseStatus = new ResponseStatus();
-		}
-
 		public List<DirectMessage> Results { get; set; }
-
-		public ResponseStatus ResponseStatus { get; set; }
 	}
 
-	public class TwitterDirectMessagesService : AppServiceBase<TwitterDirectMessages>
+	public class TwitterDirectMessagesService : AppServiceBase
 	{
-		protected override object Run(TwitterDirectMessages request)
+	    public object Any(TwitterDirectMessages request)
 		{
 			var cacheKey = "cache:DirectMessage:" + base.UserSession.TwitterScreenName + ":dms"
 				+ (request.Take.HasValue ? ":take:" + request.Take : "")

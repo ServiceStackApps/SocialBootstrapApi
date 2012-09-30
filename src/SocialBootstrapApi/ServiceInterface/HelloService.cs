@@ -1,5 +1,4 @@
 using ServiceStack.ServiceInterface;
-using ServiceStack.ServiceInterface.ServiceModel;
 
 namespace SocialBootstrapApi.ServiceInterface
 {
@@ -10,17 +9,16 @@ namespace SocialBootstrapApi.ServiceInterface
 	}
 
 	//Response DTO
-	public class HelloResponse : IHasResponseStatus
+	public class HelloResponse
 	{
 		public string Result { get; set; }
-		public ResponseStatus ResponseStatus { get; set; } //Where Exceptions get auto-serialized
 	}
 
 	//Can be called via any endpoint or format, see: http://servicestack.net/ServiceStack.Hello/
-	public class HelloService : ServiceBase<Hello>
+	public class HelloService : Service
 	{
 		//Get's called by all HTTP Verbs (GET,POST,PUT,DELETE,etc) and endpoints JSON,XMl,JSV,etc
-		protected override object Run(Hello request)
+	    public object Any(Hello request)
 		{
 			return new HelloResponse { Result = "Hello, Olle är en ÖL ål " + request.Name };
 		}

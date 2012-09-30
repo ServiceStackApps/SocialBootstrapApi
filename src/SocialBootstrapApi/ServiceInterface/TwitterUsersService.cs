@@ -12,24 +12,20 @@ namespace SocialBootstrapApi.ServiceInterface
 	}
 
 	//Response DTO
-	public class TwitterUsersResponse : IHasResponseStatus
+	public class TwitterUsersResponse
 	{
 		public TwitterUsersResponse()
 		{
 			this.Results = new List<TwitterUser>();
-			this.ResponseStatus = new ResponseStatus();
 		}
 
 		public List<TwitterUser> Results { get; set; }
-
-		//DTO to hold error messages and Exceptions get auto-serialized into
-		public ResponseStatus ResponseStatus { get; set; }
 	}
 
-	public class TwitterUsersService : AppServiceBase<TwitterUsers>
+	public class TwitterUsersService : AppServiceBase
 	{
 		//Available on all HTTP Verbs (GET,POST,PUT,DELETE,etc) and endpoints JSON,XMl,JSV,etc
-		protected override object Run(TwitterUsers request)
+	    public object Any(TwitterUsers request)
 		{
 			var userIds = request.UserIds ?? new List<string>();
 			var userNames = request.ScreenNames ?? new List<string>();
