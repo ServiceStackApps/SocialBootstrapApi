@@ -22,7 +22,7 @@ Thumbs.db
 *.cache
 *.ilk
 *.log
-#[Bb]in
+#[Bb]in/
 [Dd]ebug*/
 *.lib
 *.sbr
@@ -41,4 +41,3 @@ release/latest/
 release/*
 *.min.js
 *.min.css
-
