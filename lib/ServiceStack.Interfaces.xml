@@ -11,45 +11,36 @@
             	each request DTO, to map multiple paths to the service.
             </summary>
         </member>
-        <member name="M:ServiceStack.ServiceHost.RestServiceAttribute.#ctor(System.String)">
+        <member name="T:ServiceStack.ServiceHost.RouteAttribute">
             <summary>
-            	<para>Initializes an instance of the <see cref="T:ServiceStack.ServiceHost.RestServiceAttribute"/> class.</para>
+            	Used to decorate Request DTO's to associate a RESTful request 
+            	path mapping with a service.  Multiple attributes can be applied to 
+            	each request DTO, to map multiple paths to the service.
+            </summary>
+        </member>
+        <member name="M:ServiceStack.ServiceHost.RouteAttribute.#ctor(System.String)">
+            <summary>
+            	<para>Initializes an instance of the <see cref="T:ServiceStack.ServiceHost.RouteAttribute"/> class.</para>
             </summary>
             <param name="path">
             	<para>The path template to map to the request.  See 
-            	<see cref="P:ServiceStack.ServiceHost.RestServiceAttribute.Path">RestServiceAttribute.Path</see>
+            	<see cref="P:ServiceStack.ServiceHost.RouteAttribute.Path">RouteAttribute.Path</see>
             	for details on the correct format.</para>
             </param>
         </member>
-        <member name="M:ServiceStack.ServiceHost.RestServiceAttribute.#ctor(System.String,System.String)">
+        <member name="M:ServiceStack.ServiceHost.RouteAttribute.#ctor(System.String,System.String)">
             <summary>
-            	<para>Initializes an instance of the <see cref="T:ServiceStack.ServiceHost.RestServiceAttribute"/> class.</para>
+            	<para>Initializes an instance of the <see cref="T:ServiceStack.ServiceHost.RouteAttribute"/> class.</para>
             </summary>
             <param name="path">
             	<para>The path template to map to the request.  See 
-            	<see cref="P:ServiceStack.ServiceHost.RestServiceAttribute.Path">RestServiceAttribute.Path</see>
-            	for details on the correct format.</para>
-            </param>
-            <param name="verbs">A comma-delimited list of HTTP verbs supported by the 
-            	service.  If unspecified, all verbs are assumed to be supported.</param>
-        </member>
-        <member name="M:ServiceStack.ServiceHost.RestServiceAttribute.#ctor(System.String,System.String,System.String)">
-            <summary>
-            	<para>Initializes an instance of the <see cref="T:ServiceStack.ServiceHost.RestServiceAttribute"/> class.</para>
-            </summary>
-            <param name="path">
-            	<para>The path template to map to the request.  See 
-            	<see cref="P:ServiceStack.ServiceHost.RestServiceAttribute.Path">RestServiceAttribute.Path</see>
+            	<see cref="P:ServiceStack.ServiceHost.RouteAttribute.Path">RouteAttribute.Path</see>
             	for details on the correct format.</para>
             </param>
             <param name="verbs">A comma-delimited list of HTTP verbs supported by the 
             	service.  If unspecified, all verbs are assumed to be supported.</param>
-            <param name="defaultContentType">The default MIME type in which the response
-            	object returned to the client is formatted, if formatting hints are unspecified
-            	in the URL. Specify <see langword="null"/> or empty to require formatting
-            	hints from the client.</param>
         </member>
-        <member name="P:ServiceStack.ServiceHost.RestServiceAttribute.Path">
+        <member name="P:ServiceStack.ServiceHost.RouteAttribute.Path">
             <summary>
             	Gets or sets the path template to be mapped to the request.
             </summary>
@@ -98,7 +89,7 @@
             	the end of the path.</para>
             </remarks>
         </member>
-        <member name="P:ServiceStack.ServiceHost.RestServiceAttribute.Verbs">
+        <member name="P:ServiceStack.ServiceHost.RouteAttribute.Verbs">
             <summary>
             	Gets or sets a comma-delimited list of HTTP verbs supported by the service, such as
             	"GET,PUT,POST,DELETE".
@@ -108,18 +99,34 @@
             	by the service, <see langword="null"/> or empty if all verbs are supported.
             </value>
         </member>
-        <member name="P:ServiceStack.ServiceHost.RestServiceAttribute.DefaultContentType">
+        <member name="M:ServiceStack.ServiceHost.RestServiceAttribute.#ctor(System.String)">
             <summary>
-            	Gets or sets the default MIME type in which the response 
-            	object returned to the client is formatted, when format hints 
-            	are not provided in the URI.  Some valid examples are such as 
-            	"application/json", or "application/xml".
+            	<para>Initializes an instance of the <see cref="T:ServiceStack.ServiceHost.RestServiceAttribute"/> class.</para>
             </summary>
-            <value>
-            	A <see cref="T:System.String"/> providing the default MIME type of the response;
-            	<see langword="null"/> or empty if formatting hints are required 
-            	from the client.
-            </value>
+            <param name="path">
+            	<para>The path template to map to the request.  See 
+            	<see cref="!:Path">RestServiceAttribute.Path</see>
+            	for details on the correct format.</para>
+            </param>
+        </member>
+        <member name="M:ServiceStack.ServiceHost.RestServiceAttribute.#ctor(System.String,System.String)">
+            <summary>
+            	<para>Initializes an instance of the <see cref="T:ServiceStack.ServiceHost.RestServiceAttribute"/> class.</para>
+            </summary>
+            <param name="path">
+            	<para>The path template to map to the request.  See 
+            	<see cref="!:Path">RestServiceAttribute.Path</see>
+            	for details on the correct format.</para>
+            </param>
+            <param name="verbs">A comma-delimited list of HTTP verbs supported by the 
+            	service.  If unspecified, all verbs are assumed to be supported.</param>
+        </member>
+        <member name="T:ServiceStack.ServiceHost.IService`1">
+            <summary>
+            Base interface all webservices need to implement.
+            For simplicity this is the only interface you need to implement
+            </summary>
+            <typeparam name="T"></typeparam>
         </member>
         <member name="T:ServiceStack.Redis.Generic.IRedisTypedQueueableOperation`1">
             <summary>
@@ -132,6 +139,17 @@
             For providers that want a cleaner API with a little more perf
             </summary>
             <typeparam name="T"></typeparam>
+        </member>
+        <member name="T:ServiceStack.ServiceInterface.ServiceModel.ErrorResponse">
+            <summary>
+            Generic ResponseStatus for when Response Type can't be inferred.
+            In schemaless formats like JSON, JSV it has the same shape as a typed Response DTO
+            </summary>
+        </member>
+        <member name="T:ServiceStack.ServiceInterface.ServiceModel.IHasResponseStatus">
+            <summary>
+            Contract indication that the Response DTO has a ResponseStatus
+            </summary>
         </member>
         <member name="M:ServiceStack.Messaging.IMessageQueueClient.Publish(System.String,System.Byte[])">
             <summary>
@@ -218,6 +236,16 @@
         <member name="P:ServiceStack.ServiceHost.IHttpRequest.Items">
             <summary>
             Attach any data to this request that all filters and services can access.
+            </summary>
+        </member>
+        <member name="P:ServiceStack.ServiceHost.IHttpRequest.UserHostAddress">
+            <summary>
+            The Remote Ip as reported by Request.UserHostAddress
+            </summary>
+        </member>
+        <member name="P:ServiceStack.ServiceHost.IHttpRequest.RemoteIp">
+            <summary>
+            The Remote Ip as reported by X-Forwarded-For, X-Real-IP or Request.UserHostAddress
             </summary>
         </member>
         <member name="P:ServiceStack.ServiceHost.IHttpRequest.IsSecureConnection">
@@ -531,7 +559,7 @@
             <typeparam name="TRequest">The type of request DTO to map 
             	the path to.</typeparam>
             <param name="restPath">The path to map the request DTO to.
-            	See <see cref="P:ServiceStack.ServiceHost.RestServiceAttribute.Path">RestServiceAttribute.Path</see>
+            	See <see cref="!:RestServiceAttribute.Path">RestServiceAttribute.Path</see>
             	for details on the correct format.</param>
             <returns>The same <see cref="T:ServiceStack.ServiceHost.IServiceRoutes"/> instance;
             	never <see langword="null"/>.</returns>
@@ -544,7 +572,7 @@
             <typeparam name="TRequest">The type of request DTO to map 
             	the path to.</typeparam>
             <param name="restPath">The path to map the request DTO to.
-            	See <see cref="P:ServiceStack.ServiceHost.RestServiceAttribute.Path">RestServiceAttribute.Path</see>
+            	See <see cref="!:RestServiceAttribute.Path">RestServiceAttribute.Path</see>
             	for details on the correct format.</param>
             <param name="verbs">
             	The comma-delimited list of HTTP verbs supported by the path, 
@@ -554,31 +582,7 @@
             <returns>The same <see cref="T:ServiceStack.ServiceHost.IServiceRoutes"/> instance;
             	never <see langword="null"/>.</returns>
         </member>
-        <member name="M:ServiceStack.ServiceHost.IServiceRoutes.Add``1(System.String,System.String,System.String)">
-            <summary>
-            	Maps the specified REST path to the specified request DTO, 
-            	specifies the HTTP verbs supported by the path, and indicates
-            	the default MIME type of the returned response.
-            </summary>
-            <typeparam name="TRequest">The type of request DTO to map 
-            	the path to.</typeparam>
-            <param name="restPath">The path to map the request DTO to.
-            	See <see cref="P:ServiceStack.ServiceHost.RestServiceAttribute.Path">RestServiceAttribute.Path</see>
-            	for details on the correct format.</param>
-            <param name="verbs">
-            	The comma-delimited list of HTTP verbs supported by the path, 
-            	such as "GET,PUT,DELETE".
-            </param>
-            <param name="defaultContentType">
-            	The default MIME type in which the response object returned to the client
-            	is formatted, if formatting hints are not provided by the client.
-            	Specify <see langword="null"/> or empty to require formatting hints from
-            	the client.
-            </param>
-            <returns>The same <see cref="T:ServiceStack.ServiceHost.IServiceRoutes"/> instance;
-            	never <see langword="null"/>.</returns>
-        </member>
-        <member name="M:ServiceStack.ServiceHost.IServiceRoutes.Add(System.Type,System.String,System.String,System.String)">
+        <member name="M:ServiceStack.ServiceHost.IServiceRoutes.Add(System.Type,System.String,System.String)">
             <summary>
             	Maps the specified REST path to the specified request DTO, 
             	specifies the HTTP verbs supported by the path, and indicates
@@ -588,17 +592,11 @@
             	The type of request DTO to map the path to.
             </param>
             <param name="restPath">The path to map the request DTO to.
-            	See <see cref="P:ServiceStack.ServiceHost.RestServiceAttribute.Path">RestServiceAttribute.Path</see>
+            	See <see cref="!:RestServiceAttribute.Path">RestServiceAttribute.Path</see>
             	for details on the correct format.</param>
             <param name="verbs">
             	The comma-delimited list of HTTP verbs supported by the path, 
             	such as "GET,PUT,DELETE".
-            </param>
-            <param name="defaultContentType">
-            	The default MIME type in which the response object returned to the client
-            	is formatted, if formatting hints are not provided by the client.
-            	Specify <see langword="null"/> or empty to require formatting hints from
-            	the client.
             </param>
             <returns>The same <see cref="T:ServiceStack.ServiceHost.IServiceRoutes"/> instance;
             	never <see langword="null"/>.</returns>
@@ -655,6 +653,11 @@
             Implement on services that need access to the RequestContext
             </summary>
         </member>
+        <member name="P:ServiceStack.ServiceHost.IHttpResult.Status">
+            <summary>
+            The HTTP Response Status
+            </summary>
+        </member>
         <member name="P:ServiceStack.ServiceHost.IHttpResult.StatusCode">
             <summary>
             The HTTP Response Status Code
@@ -678,11 +681,6 @@
         <member name="P:ServiceStack.ServiceHost.IHttpResult.Response">
             <summary>
             Response DTO
-            </summary>
-        </member>
-        <member name="P:ServiceStack.ServiceHost.IHttpResult.TemplateName">
-            <summary>
-            A specific template, if not the default (for HTML, Markdown, etc. ContentTypes)
             </summary>
         </member>
         <member name="P:ServiceStack.ServiceHost.IHttpResult.ResponseFilter">
@@ -889,6 +887,11 @@
             </summary>
             <typeparam name="T"></typeparam>
         </member>
+        <member name="T:ServiceStack.ServiceHost.IExpress">
+            <summary>
+            Marker interface to mark an Express controller with different routes for each method
+            </summary>
+        </member>
         <member name="T:ServiceStack.Logging.LogManager">
             <summary>
             Logging API for this library. You can inject your own implementation otherwise
@@ -1061,6 +1064,14 @@
             <summary>
             Gets a value indicating whether this instance is closed.
             </summary>
+        </member>
+        <member name="T:ServiceStack.ServiceHost.IRestOptionsService`1">
+            <summary>
+            If the Service also implements this interface,
+            IRestPutService.Options() will be used instead of IService.Execute() for 
+            EndpointAttributes.HttpPut requests
+            </summary>
+            <typeparam name="T"></typeparam>
         </member>
         <member name="M:ServiceStack.Redis.IRedisClientsManager.GetClient">
             <summary>
@@ -1441,17 +1452,10 @@
             Can hold a specific error message for each named field.
             </summary>
         </member>
-        <member name="T:ServiceStack.ServiceInterface.ServiceModel.IHasResponseStatus">
+        <member name="T:ServiceStack.ServiceHost.IService">
             <summary>
-            Contract indication that the Response DTO has a ResponseStatus
+            Marker interfaces
             </summary>
-        </member>
-        <member name="T:ServiceStack.ServiceHost.IService`1">
-            <summary>
-            Base interface all webservices need to implement.
-            For simplicity this is the only interface you need to implement
-            </summary>
-            <typeparam name="T"></typeparam>
         </member>
         <member name="T:ServiceStack.Logging.Support.Logging.NullDebugLogger">
             <summary>

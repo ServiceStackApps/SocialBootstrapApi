@@ -48,6 +48,11 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="P:ServiceStack.Markdown.MarkdownViewBase.ViewEngine">
+            <summary>
+            Reference to MarkdownViewEngine
+            </summary>
+        </member>
         <member name="P:ServiceStack.Markdown.MarkdownViewBase.AppHost">
             <summary>
             The AppHost so you can access configuration and resolve dependencies, etc.
@@ -115,6 +120,13 @@
             Provide for quick lookups based on hashes that can be determined from a request url
             </summary>
         </member>
+        <member name="M:ServiceStack.WebHost.Endpoints.EndpointHost.ApplyPreRequestFilters(ServiceStack.ServiceHost.IHttpRequest,ServiceStack.ServiceHost.IHttpResponse)">
+            <summary>
+            Applies the raw request filters. Returns whether or not the request has been handled 
+            and no more processing should be done.
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:ServiceStack.WebHost.Endpoints.EndpointHost.ApplyRequestFilters(ServiceStack.ServiceHost.IHttpRequest,ServiceStack.ServiceHost.IHttpResponse,System.Object)">
             <summary>
             Applies the request filters. Returns whether or not the request has been handled 
@@ -132,6 +144,11 @@
         <member name="M:ServiceStack.WebHost.Endpoints.EndpointHost.CompleteRequest">
             <summary>
             Call to signal the completion of a ServiceStack-handled Request
+            </summary>
+        </member>
+        <member name="P:ServiceStack.WebHost.Endpoints.EndpointHost.Container">
+            <summary>
+            The AppHost.Container. Note: it is not thread safe to register dependencies after AppStart.
             </summary>
         </member>
         <member name="T:ServiceStack.WebHost.Endpoints.AppHostHttpListenerBase">
@@ -194,9 +211,24 @@
             </summary>
             <param name="plugins"></param>
         </member>
+        <member name="M:ServiceStack.WebHost.Endpoints.IAppHost.CreateServiceRunner``1(ServiceStack.WebHost.Endpoints.ActionContext)">
+            <summary>
+            Create a service runner for IService actions
+            </summary>
+        </member>
+        <member name="P:ServiceStack.WebHost.Endpoints.IAppHost.Routes">
+            <summary>
+            Register user-defined custom routes.
+            </summary>
+        </member>
         <member name="P:ServiceStack.WebHost.Endpoints.IAppHost.ContentTypeFilters">
             <summary>
             Register custom ContentType serializers
+            </summary>
+        </member>
+        <member name="P:ServiceStack.WebHost.Endpoints.IAppHost.PreRequestFilters">
+            <summary>
+            Add Request Filters, to be applied before the dto is deserialized
             </summary>
         </member>
         <member name="P:ServiceStack.WebHost.Endpoints.IAppHost.RequestFilters">
@@ -209,9 +241,19 @@
             Add Response Filters
             </summary>
         </member>
-        <member name="P:ServiceStack.WebHost.Endpoints.IAppHost.HtmlProviders">
+        <member name="P:ServiceStack.WebHost.Endpoints.IAppHost.ViewEngines">
             <summary>
             Add alternative HTML View Engines
+            </summary>
+        </member>
+        <member name="P:ServiceStack.WebHost.Endpoints.IAppHost.ExceptionHandler">
+            <summary>
+            Provide an exception handler for un-caught exceptions
+            </summary>
+        </member>
+        <member name="P:ServiceStack.WebHost.Endpoints.IAppHost.ServiceExceptionHandler">
+            <summary>
+            Provide an exception handler for unhandled exceptions
             </summary>
         </member>
         <member name="P:ServiceStack.WebHost.Endpoints.IAppHost.CatchAllHandlers">
@@ -227,6 +269,16 @@
         <member name="P:ServiceStack.WebHost.Endpoints.IAppHost.Config">
             <summary>
             The AppHost config
+            </summary>
+        </member>
+        <member name="P:ServiceStack.WebHost.Endpoints.IAppHost.Plugins">
+            <summary>
+            List of pre-registered and user-defined plugins to be enabled in this AppHost
+            </summary>
+        </member>
+        <member name="P:ServiceStack.WebHost.Endpoints.IAppHost.VirtualPathProvider">
+            <summary>
+            Virtual access to file resources
             </summary>
         </member>
         <member name="M:ServiceStack.WebHost.Endpoints.Support.HttpListenerBase.Start(System.String)">
@@ -250,6 +302,9 @@
             Overridable method that can be used to implement a custom hnandler
             </summary>
             <param name="context"></param>
+        </member>
+        <member name="P:ServiceStack.WebHost.Endpoints.Support.HttpListenerBase.Plugins">
+            TODO: plugin added with .Add method after host initialization won't be configured. Each plugin should have state so we can invoke Register method if host was already started.  
         </member>
         <member name="T:ServiceStack.Properties.Resources">
             <summary>
@@ -457,11 +512,6 @@
             then convert it to structurally valid XHTML (or HTML).
             </summary>
         </member>
-        <member name="F:MarkdownSharp.Markdown._nestDepth">
-            <summary>
-            maximum nested depth of [] and () supported by the transform; implementation detail
-            </summary>
-        </member>
         <member name="F:MarkdownSharp.Markdown._tabWidth">
             <summary>
             Tabs are automatically converted to spaces as part of the transform  
@@ -490,6 +540,11 @@
         <member name="M:MarkdownSharp.Markdown.#ctor(MarkdownSharp.MarkdownOptions)">
             <summary>
             Create a new Markdown instance and set the options from the MarkdownOptions object.
+            </summary>
+        </member>
+        <member name="F:MarkdownSharp.Markdown._nestDepth">
+            <summary>
+            maximum nested depth of [] and () supported by the transform; implementation detail
             </summary>
         </member>
         <member name="M:MarkdownSharp.Markdown.#cctor">
@@ -1268,6 +1323,16 @@
             <summary>
             Use this to treat Request.Items[] as a cache by returning pre-computed items to save 
             calculating them multiple times.
+            </summary>
+        </member>
+        <member name="M:ServiceStack.WebHost.Endpoints.Extensions.HttpRequestExtensions.SetItem(ServiceStack.ServiceHost.IHttpRequest,System.String,System.Object)">
+            <summary>
+            Store an entry in the IHttpRequest.Items Dictionary
+            </summary>
+        </member>
+        <member name="M:ServiceStack.WebHost.Endpoints.Extensions.HttpRequestExtensions.GetItem(ServiceStack.ServiceHost.IHttpRequest,System.String)">
+            <summary>
+            Get an entry from the IHttpRequest.Items Dictionary
             </summary>
         </member>
         <member name="T:ServiceStack.MiniProfiler.SqlTiming">
@@ -2813,6 +2878,23 @@
             </summary>
             <param name="serviceTypes"></param>
         </member>
+        <member name="M:ServiceStack.WebHost.Endpoints.AppHostHttpListenerLongRunningBase.Start(System.String)">
+            <summary>
+            Starts the Web Service
+            </summary>
+            <param name="urlBase">
+            A Uri that acts as the base that the server is listening on.
+            Format should be: http://127.0.0.1:8080/ or http://127.0.0.1:8080/somevirtual/
+            Note: the trailing backslash is required! For more info see the
+            HttpListener.Prefixes property on MSDN.
+            </param>
+        </member>
+        <member name="M:ServiceStack.WebHost.Endpoints.AppHostHttpListenerLongRunningBase.ThreadPoolManager.Dispose">
+            <summary>
+            Exécute les tâches définies par l'application associées à la libération ou à la redéfinition des ressources non managées.
+            </summary>
+            <filterpriority>2</filterpriority>
+        </member>
         <member name="T:ServiceStack.WebHost.Endpoints.AppHostBase">
             <summary>
             Inherit from this class if you want to host your web services inside an
@@ -2871,6 +2953,47 @@
             Keep default file contents in-memory
             </summary>
             <param name="defaultFilePath"></param>
+        </member>
+        <member name="F:ServiceStack.ServiceHost.DtoUtils.ResponseStatusPropertyName">
+            <summary>
+            Naming convention for the ResponseStatus property name on the response DTO
+            </summary>
+        </member>
+        <member name="F:ServiceStack.ServiceHost.DtoUtils.UrnServiceErrorType">
+            <summary>
+            Service error logs are kept in 'urn:ServiceErrors:{ServiceName}'
+            </summary>
+        </member>
+        <member name="F:ServiceStack.ServiceHost.DtoUtils.CombinedServiceLogId">
+            <summary>
+            Combined service error logs are maintained in 'urn:ServiceErrors:All'
+            </summary>
+        </member>
+        <member name="M:ServiceStack.ServiceHost.DtoUtils.CreateResponseDto(System.Object,ServiceStack.ServiceInterface.ServiceModel.ResponseStatus)">
+            <summary>
+            Create an instance of the service response dto type and inject it with the supplied responseStatus
+            </summary>
+            <param name="request"></param>
+            <param name="responseStatus"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ServiceStack.ServiceHost.DtoUtils.CreateResponseStatus(System.String,System.String,System.Collections.Generic.IEnumerable{ServiceStack.Validation.ValidationErrorField})">
+            <summary>
+            Creates the error response from the values provided.
+            
+            If the errorCode is empty it will use the first validation error code, 
+            if there is none it will throw an error.
+            </summary>
+            <param name="errorCode">The error code.</param>
+            <param name="errorMessage">The error message.</param>
+            <param name="validationErrors">The validation errors.</param>
+            <returns></returns>
+        </member>
+        <member name="M:ServiceStack.ServiceHost.DtoUtils.GetRequestErrorBody(System.Object)">
+            <summary>
+            Override to provide additional/less context about the Service Exception. 
+            By default the request is serialized and appended to the ResponseStatus StackTrace.
+            </summary>
         </member>
         <member name="T:ServiceStack.MiniProfiler.SqlTimingParameter">
             <summary>
@@ -2952,6 +3075,16 @@
         <member name="T:ServiceStack.ServiceHost.ServiceControllerReflection">
             <summary>
             Keeping around just to compare how slow it is
+            </summary>
+        </member>
+        <member name="T:ServiceStack.WebHost.Endpoints.ActionContext">
+            <summary>
+            Context to capture IService action
+            </summary>
+        </member>
+        <member name="T:ServiceStack.VirtualPath.InMemoryVirtualPathProvider">
+            <summary>
+            In Memory repository for files. Useful for testing.
             </summary>
         </member>
         <member name="T:ServiceStack.MiniProfiler.Helpers.ExtensionMethods">
