@@ -615,6 +615,16 @@
             <param name="pathInfo"></param>
             <returns></returns>
         </member>
+        <member name="M:ServiceStack.ServiceHost.IServiceController.ExecuteMessage``1(ServiceStack.Messaging.IMessage{``0})">
+            <summary>
+            Executes the MQ DTO request.
+            </summary>
+        </member>
+        <member name="M:ServiceStack.ServiceHost.IServiceController.ExecuteMessage``1(ServiceStack.Messaging.IMessage{``0},ServiceStack.ServiceHost.IRequestContext)">
+            <summary>
+            Executes the MQ DTO request with the supplied requestContext
+            </summary>
+        </member>
         <member name="M:ServiceStack.ServiceHost.IServiceController.Execute(System.Object,ServiceStack.ServiceHost.IRequestContext)">
             <summary>
             Executes the DTO request under the supplied requestContext.

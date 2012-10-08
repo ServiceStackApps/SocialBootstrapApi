@@ -34,6 +34,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="DotNetOpenAuth">
+      <HintPath>..\..\lib\DotNetOpenAuth.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
@@ -42,6 +45,9 @@
     <Reference Include="ServiceStack, Version=3.5.5.30080, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\ServiceStack.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceStack.Authentication.OpenId">
+      <HintPath>..\..\lib\ServiceStack.Authentication.OpenId.dll</HintPath>
     </Reference>
     <Reference Include="ServiceStack.Common, Version=3.5.5.30076, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -170,7 +176,9 @@
     <Content Include="Content\img\favicon.ico" />
     <Content Include="Content\img\loader.gif" />
     <Content Include="Content\img\sign-in-with-facebook.png" />
+    <Content Include="Content\img\sign-in-with-google.png" />
     <Content Include="Content\img\sign-in-with-twitter-l.png" />
+    <Content Include="Content\img\sign-in-with-yahoo.png" />
     <Content Include="Content\js\app\base.js" />
     <Content Include="Content\js\app\appcontroller.js" />
     <Content Include="Content\js\app\twitter.js" />

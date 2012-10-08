@@ -4531,6 +4531,12 @@
 			facebookUserId: null,
 			facebookUserName: null,
 			facebookEmail: null,
+			googleUserId: null,
+			googleFullName: null,
+			googleEmail: null,
+			yahooUserId: null,
+			yahooFullName: null,
+			yahooEmail: null,
 			gravatarImageUrl64: null,
 			showProfile: null
 		},
@@ -4554,10 +4560,14 @@
 			attrs.twitterScreenName = attrs.twitterScreenName || null;
 			attrs.twitterUserId = attrs.twitterUserId || null;
 			attrs.facebookUserId = attrs.facebookUserId || null;
+			attrs.googleUserId = attrs.googleUserId || null;
+			attrs.yahooUserId = attrs.yahooUserId || null;
 
 			console.log(attrs);
 			$("BODY").toggleClass("authenticated-twitter", !!attrs.twitterUserId);
 			$("BODY").toggleClass("authenticated-facebook", !!attrs.facebookUserId);
+			$("BODY").toggleClass("authenticated-google", !!attrs.googleUserId);
+			$("BODY").toggleClass("authenticated-yahoo", !!attrs.yahooUserId);
 
 			var showProfile = attrs.email || attrs.twitterUserId || attrs.facebookUserId;
 			if (showProfile) {

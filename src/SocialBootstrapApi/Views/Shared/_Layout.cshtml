@@ -1,5 +1,4 @@
 ﻿@using ServiceStack.Mvc
-@using SocialBootstrapApi
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -63,14 +62,14 @@
 
   	<div class="container" style="background: white; padding: 20px 20px 10px;">
 		<div class="page-header">
-			@if (this.IsSectionDefined("Title"))
-   {
-				@RenderSection("Title", required: false);
-   }
-   else
-   {
-				<h1>Bootstrap ServiceStack MVC Backbone.js<small> with Twitter and Facebook auth built-in</small></h1>
-   }
+        @if (this.IsSectionDefined("Title"))
+        {
+			@RenderSection("Title", required: false);
+        }
+        else
+        {
+			<h1>Bootstrap ServiceStack MVC Backbone.js<small> with Twitter and Facebook auth built-in</small></h1>
+        }
 		</div>
 
 		<div id="page-body" class="row"> 

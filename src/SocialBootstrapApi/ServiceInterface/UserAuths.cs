@@ -44,6 +44,9 @@ namespace SocialBootstrapApi.ServiceInterface
             response.UserAuths.ForEach(x => x.PasswordHash = "[Redacted]");
             response.OAuthProviders.ForEach(x =>
                 x.AccessToken = x.AccessTokenSecret = x.RequestTokenSecret = "[Redacted]");
+            if (response.UserSession != null)
+                response.UserSession.ProviderOAuthAccess.ForEach(x =>
+                x.AccessToken = x.AccessTokenSecret = x.RequestTokenSecret = "[Redacted]");
 
             return response;
         }

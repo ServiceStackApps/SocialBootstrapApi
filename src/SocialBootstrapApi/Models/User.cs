@@ -18,6 +18,12 @@ namespace SocialBootstrapApi.Models
 		public string FacebookUserId { get; set; }
 		public string FacebookUserName { get; set; }
 		public string FacebookEmail { get; set; }
-		public string GravatarImageUrl64 { get; set; }
+        public string GoogleUserId { get; set; }
+        public string GoogleFullName { get; set; }
+        public string GoogleEmail { get; set; }
+        public string YahooUserId { get; set; }
+        public string YahooFullName { get; set; }
+        public string YahooEmail { get; set; }
+        public string GravatarImageUrl64 { get; set; }
 	}
 }

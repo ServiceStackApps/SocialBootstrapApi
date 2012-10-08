@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Web.Mvc;
+using ServiceStack.Authentication.OpenId;
 using ServiceStack.CacheAccess;
 using ServiceStack.CacheAccess.Providers;
 using ServiceStack.Common.Web;
@@ -173,7 +174,11 @@ namespace SocialBootstrapApi
                     new CredentialsAuthProvider(),         //HTML Form post of UserName/Password credentials
                     new TwitterAuthProvider(appSettings),  //Sign-in with Twitter
                     new FacebookAuthProvider(appSettings), //Sign-in with Facebook
+                    new DigestAuthProvider(appSettings),   //Sign-in with Basic Auth
                     new BasicAuthProvider(),               //Sign-in with Basic Auth
+                    new GoogleOpenIdOAuthProvider(appSettings), //Sign-in with Goolge OpenId
+                    new YahooOpenIdOAuthProvider(appSettings),  //Sign-in with Yahoo OpenId
+                    new OpenIdOAuthProvider(appSettings),       //Sign-in with Custom OpenId
                 }));
 
 			//Provide service for new users to register so they can login with supplied credentials.

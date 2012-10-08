@@ -4114,6 +4114,12 @@ body {
 .authenticated-facebook #facebook-signin {
   display: none;
 }
+.authenticated-google #google-signin {
+  display: none;
+}
+.authenticated-yahoo #yahoo-signin {
+  display: none;
+}
 .directmessages {
   display: none;
 }

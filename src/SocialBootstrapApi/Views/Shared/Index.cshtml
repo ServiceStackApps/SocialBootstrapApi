@@ -35,6 +35,24 @@
             <dt>Email</dt><dd><%= facebookEmail %></dd>
         </dl>
     </div>
+<% } if (googleUserId) { %>
+    <div id="google-info">
+        <h4>Google Info</h4>
+        <dl>
+            <dt>User Id</dt><dd><%= googleUserId %></dd>
+            <dt>Full Name</dt><dd><%= googleFullName %></dd>
+            <dt>Email</dt><dd><%= googleEmail %></dd>
+        </dl>
+    </div>
+<% } if (yahooUserId) { %>
+    <div id="yahoo-info">
+        <h4>Yahoo Info</h4>
+        <dl>
+            <dt>User Id</dt><dd><%= yahooUserId %></dd>
+            <dt>Full Name</dt><dd><%= yahooFullName %></dd>
+            <dt>Email</dt><dd><%= yahooEmail %></dd>
+        </dl>
+    </div>
 <% } %>
 </script> 
 <script type="text/template" id="template-current-user">
@@ -341,6 +359,27 @@
 
     <div id="twitter-signin">
         <a href="@Url.Content("~/api/auth/twitter")"><img src="@Url.Content("~/Content/img/sign-in-with-twitter-l.png")" alt="Sign-in with Twitter" /></a>
+    </div>
+    
+    <h4 style="margin: 20px 0 10px 0;">Open Id Providers</h4>
+
+    <div id="google-signin">
+        <form action="@Url.Content("~/api/auth/googleopenid")" method="POST">
+            <input type="image" src="@Url.Content("~/Content/img/sign-in-with-google.png")" alt="Sign in with Google">
+        </form>
+    </div>
+
+    <div id="yahoo-signin">
+        <form action="@Url.Content("~/api/auth/yahooopenid")" method="POST">
+            <input type="image" src="@Url.Content("~/Content/img/sign-in-with-yahoo.png")" alt="Sign in with Yahoo!">
+        </form>
+    </div>
+
+    <div id="openid-signin">
+        <form action="@Url.Content("~/api/auth/openid")" method="POST">
+            <input type="text" name="OpenIdUrl" style="width:160px;margin:0;" value="http://myopenid.com" />
+            <input type="submit" class="btn" value="Sign In"/>
+        </form>
     </div>
 
 </div>
