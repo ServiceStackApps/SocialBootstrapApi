@@ -171,11 +171,11 @@ namespace SocialBootstrapApi
             Plugins.Add(new AuthFeature(
                 () => new CustomUserSession(), //Use your own typed Custom UserSession type
                 new IAuthProvider[] {
-                    new CredentialsAuthProvider(),         //HTML Form post of UserName/Password credentials
-                    new TwitterAuthProvider(appSettings),  //Sign-in with Twitter
-                    new FacebookAuthProvider(appSettings), //Sign-in with Facebook
-                    new DigestAuthProvider(appSettings),   //Sign-in with Basic Auth
-                    new BasicAuthProvider(),               //Sign-in with Basic Auth
+                    new CredentialsAuthProvider(),              //HTML Form post of UserName/Password credentials
+                    new TwitterAuthProvider(appSettings),       //Sign-in with Twitter
+                    new FacebookAuthProvider(appSettings),      //Sign-in with Facebook
+                    new DigestAuthProvider(appSettings),        //Sign-in with Digest Auth
+                    new BasicAuthProvider(),                    //Sign-in with Basic Auth
                     new GoogleOpenIdOAuthProvider(appSettings), //Sign-in with Goolge OpenId
                     new YahooOpenIdOAuthProvider(appSettings),  //Sign-in with Yahoo OpenId
                     new OpenIdOAuthProvider(appSettings),       //Sign-in with Custom OpenId
