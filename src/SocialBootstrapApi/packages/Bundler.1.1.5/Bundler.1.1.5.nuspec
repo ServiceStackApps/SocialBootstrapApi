@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>Bundler</id>
+    <version>1.1.5</version>
+    <title>Bundler: Compile &amp; Minify js, coffeescript, css, less, sass. Integrate in VS.NET/MVC</title>
+    <authors>Demis Bellot</authors>
+    <owners>Demis Bellot</owners>
+    <licenseUrl>https://github.com/ServiceStack/Bundler/blob/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/ServiceStack/Bundler</projectUrl>
+    <iconUrl>http://www.servicestack.net/logo-100x100.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>A native node.js-powered Bundler with integration with VS.NET extension + ASP.NET MVC. No added compile or runtime performance costs.
+
+		Extremely fast and simple pure node.js/javascript solution to statically complie, minify and combine your websites .css, .less, .coffee and .js files into user-defined bundles. Supports configurable bundle settings providing ideal unminified output for development and combined minified .min.js and .min.css files optimal for deployment. Integrates with MVC. No .dlls, includes all soure code for all customizable build scripts. Self-contained, no dependencies required at run-time.        
+
+        More info at: https://github.com/ServiceStack/Bundler</description>
+    <summary>CoffeeScript, JavaScript, Less, Sass, Css compiler, minifier and combiner for ASP.NET MVC websites.</summary>
+    <copyright>ServiceStack 2012 and contributors</copyright>
+    <tags>LESS CoffeeScript JavaScript CSS SASS Node JS Minify Minifier Compiler Combine Concatenate Optimization</tags>
+  </metadata>
+</package>

@@ -1,5 +1,4 @@
 ﻿using System.Linq;
-using ServiceStack.CacheAccess;
 using ServiceStack.ServiceInterface;
 using ServiceStack.ServiceInterface.Auth;
 using SocialBootstrapApi.Logic;
