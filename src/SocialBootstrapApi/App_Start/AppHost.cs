@@ -103,7 +103,7 @@ namespace SocialBootstrapApi
 
             //Register a external dependency-free 
             container.Register<ICacheClient>(new MemoryCacheClient());
-            //Configure an alt. distributed peristed cache that survives AppDomain restarts. e.g Redis
+            //Configure an alt. distributed persistent cache that survives AppDomain restarts. e.g Redis
             //container.Register<IRedisClientsManager>(c => new PooledRedisClientManager("localhost:6379"));
 
             //Enable Authentication an Registration
@@ -164,7 +164,7 @@ namespace SocialBootstrapApi
         private void ConfigureAuth(Funq.Container container)
         {
             //Enable and register existing services you want this host to make use of.
-            //Look in Web.config for examples on how to configure your oauth proviers, e.g. oauth.facebook.AppId, etc.
+            //Look in Web.config for examples on how to configure your oauth providers, e.g. oauth.facebook.AppId, etc.
             var appSettings = new AppSettings();
 
             //Register all Authentication methods you want to enable for this web app.            
@@ -176,7 +176,7 @@ namespace SocialBootstrapApi
                     new FacebookAuthProvider(appSettings),      //Sign-in with Facebook
                     new DigestAuthProvider(appSettings),        //Sign-in with Digest Auth
                     new BasicAuthProvider(),                    //Sign-in with Basic Auth
-                    new GoogleOpenIdOAuthProvider(appSettings), //Sign-in with Goolge OpenId
+                    new GoogleOpenIdOAuthProvider(appSettings), //Sign-in with Google OpenId
                     new YahooOpenIdOAuthProvider(appSettings),  //Sign-in with Yahoo OpenId
                     new OpenIdOAuthProvider(appSettings),       //Sign-in with Custom OpenId
                 }));
