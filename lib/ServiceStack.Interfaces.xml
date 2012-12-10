@@ -89,6 +89,16 @@
             	the end of the path.</para>
             </remarks>
         </member>
+        <member name="P:ServiceStack.ServiceHost.RouteAttribute.Summary">
+            <summary>
+               Gets or sets short summary of what the route does.
+            </summary>
+        </member>
+        <member name="P:ServiceStack.ServiceHost.RouteAttribute.Notes">
+            <summary>
+               Gets or sets longer text to explain the behaviour of the route. 
+            </summary>
+        </member>
         <member name="P:ServiceStack.ServiceHost.RouteAttribute.Verbs">
             <summary>
             	Gets or sets a comma-delimited list of HTTP verbs supported by the service, such as
@@ -597,6 +607,31 @@
             <param name="verbs">
             	The comma-delimited list of HTTP verbs supported by the path, 
             	such as "GET,PUT,DELETE".
+            </param>
+            <returns>The same <see cref="T:ServiceStack.ServiceHost.IServiceRoutes"/> instance;
+            	never <see langword="null"/>.</returns>
+        </member>
+        <member name="M:ServiceStack.ServiceHost.IServiceRoutes.Add(System.Type,System.String,System.String,System.String,System.String)">
+            <summary>
+            	Maps the specified REST path to the specified request DTO, 
+            	specifies the HTTP verbs supported by the path, and indicates
+            	the default MIME type of the returned response.
+            </summary>
+            <param name="requestType">
+            	The type of request DTO to map the path to.
+            </param>
+            <param name="restPath">The path to map the request DTO to.
+            	See <see cref="!:RestServiceAttribute.Path">RestServiceAttribute.Path</see>
+            	for details on the correct format.</param>
+            <param name="verbs">
+            	The comma-delimited list of HTTP verbs supported by the path, 
+            	such as "GET,PUT,DELETE".
+            </param>
+            <param name="summary">
+                The short summary of what the REST does. 
+            </param>
+            <param name="notes">
+                The longer text to explain the behaviour of the REST. 
             </param>
             <returns>The same <see cref="T:ServiceStack.ServiceHost.IServiceRoutes"/> instance;
             	never <see langword="null"/>.</returns>
@@ -1125,6 +1160,18 @@
             Gets the session for this request, creates one if it doesn't exist.
             Only for ASP.NET apps. Uses the HttpContext.Current singleton.
             </summary>
+        </member>
+        <member name="M:ServiceStack.CacheAccess.IRemoveByPattern.RemoveByPattern(System.String)">
+            <summary>
+            Removes items from cache that have keys matching the specified wildcard pattern
+            </summary>
+            <param name="pattern">The wildcard, where "*" means any sequence of characters and "?" means any single character.</param>
+        </member>
+        <member name="M:ServiceStack.CacheAccess.IRemoveByPattern.RemoveByRegex(System.String)">
+            <summary>
+            Removes items from the cache based on the specified regular expression pattern
+            </summary>
+            <param name="regex">Regular expression pattern to search cache keys</param>
         </member>
         <member name="T:ServiceStack.ServiceHost.IHasResponseFilter">
             <summary>

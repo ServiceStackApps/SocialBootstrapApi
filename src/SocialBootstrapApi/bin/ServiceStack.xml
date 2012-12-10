@@ -302,7 +302,7 @@
             <param name="urlBase">
             A Uri that acts as the base that the server is listening on.
             Format should be: http://127.0.0.1:8080/ or http://127.0.0.1:8080/somevirtual/
-            Note: the trailing backslash is required! For more info see the
+            Note: the trailing slash is required! For more info see the
             HttpListener.Prefixes property on MSDN.
             </param>
         </member>
@@ -2900,7 +2900,7 @@
             <param name="urlBase">
             A Uri that acts as the base that the server is listening on.
             Format should be: http://127.0.0.1:8080/ or http://127.0.0.1:8080/somevirtual/
-            Note: the trailing backslash is required! For more info see the
+            Note: the trailing slash is required! For more info see the
             HttpListener.Prefixes property on MSDN.
             </param>
         </member>
@@ -2999,16 +2999,13 @@
             <param name="responseStatus"></param>
             <returns></returns>
         </member>
-        <member name="M:ServiceStack.ServiceHost.DtoUtils.CreateResponseStatus(System.String,System.String,System.Collections.Generic.IEnumerable{ServiceStack.Validation.ValidationErrorField})">
+        <member name="M:ServiceStack.ServiceHost.DtoUtils.HandleException(ServiceStack.ServiceHost.IResolver,System.Object,System.Exception)">
             <summary>
-            Creates the error response from the values provided.
             
-            If the errorCode is empty it will use the first validation error code, 
-            if there is none it will throw an error.
             </summary>
-            <param name="errorCode">The error code.</param>
-            <param name="errorMessage">The error message.</param>
-            <param name="validationErrors">The validation errors.</param>
+            <param name="iocResolver"></param>
+            <param name="request"></param>
+            <param name="ex"></param>
             <returns></returns>
         </member>
         <member name="M:ServiceStack.ServiceHost.DtoUtils.GetRequestErrorBody(System.Object)">
@@ -3057,13 +3054,38 @@
             How large the type is, e.g. for string, size could be 4000
             </summary>
         </member>
+        <member name="M:ServiceStack.CacheAccess.Providers.MemoryCacheClient.CacheAdd(System.String,System.Object)">
+            <summary>
+            Add value with specified key to the cache, and set the cache entry to never expire.
+            </summary>
+            <param name="key">Key associated with value.</param>
+            <param name="value">Value being cached.</param>
+            <returns></returns>
+        </member>
         <member name="M:ServiceStack.CacheAccess.Providers.MemoryCacheClient.CacheAdd(System.String,System.Object,System.DateTime)">
             <summary>
             Stores The value with key only if such key doesn't exist at the server yet. 
             </summary>
             <param name="key">The key.</param>
             <param name="value">The value.</param>
-            <param name="expiresAt">The expires at.</param>
+            <param name="expiresAt">The UTC DateTime at which the cache entry expires.</param>
+            <returns></returns>
+        </member>
+        <member name="M:ServiceStack.CacheAccess.Providers.MemoryCacheClient.CacheSet(System.String,System.Object)">
+            <summary>
+            Adds or replaces the value with key, and sets the cache entry to never expire.
+            </summary>
+            <param name="key">The key.</param>
+            <param name="value">The value.</param>
+            <returns></returns>
+        </member>
+        <member name="M:ServiceStack.CacheAccess.Providers.MemoryCacheClient.CacheSet(System.String,System.Object,System.DateTime)">
+            <summary>
+            Adds or replaces the value with key.
+            </summary>
+            <param name="key">The key.</param>
+            <param name="value">The value.</param>
+            <param name="expiresAt">The UTC DateTime at which the cache entry expires.</param>
             <returns></returns>
         </member>
         <member name="M:ServiceStack.CacheAccess.Providers.MemoryCacheClient.CacheSet(System.String,System.Object,System.DateTime,System.Nullable{System.Int64})">
@@ -3072,9 +3094,126 @@
             </summary>
             <param name="key">The key.</param>
             <param name="value">The value.</param>
-            <param name="expiresAt">The expires at.</param>
+            <param name="expiresAt">The UTC DateTime at which the cache entry expires.</param>
             <param name="checkLastModified">The check last modified.</param>
             <returns>True; if it succeeded</returns>
+        </member>
+        <member name="M:ServiceStack.CacheAccess.Providers.MemoryCacheClient.CacheReplace(System.String,System.Object)">
+            <summary>
+            Replace the value with specified key if it exists, and set the cache entry to never expire.
+            </summary>
+            <param name="key">The key of the cache entry.</param>
+            <param name="value">The value to be cached.</param>
+            <returns></returns>
+        </member>
+        <member name="M:ServiceStack.CacheAccess.Providers.MemoryCacheClient.CacheReplace(System.String,System.Object,System.DateTime)">
+            <summary>
+            Replace the value with specified key if it exists.
+            </summary>
+            <param name="key">The key of the cache entry.</param>
+            <param name="value">The value to be cached.</param>
+            <param name="expiresAt">The UTC DateTime at which the cache entry expires.</param>
+            <returns></returns>
+        </member>
+        <member name="M:ServiceStack.CacheAccess.Providers.MemoryCacheClient.Add``1(System.String,``0)">
+            <summary>
+            Add the value with key to the cache, set to never expire.
+            </summary>
+            <param name="key">The key of the cache entry.</param>
+            <param name="value">The value being cached.</param>
+            <returns>True if Add succeeds, otherwise false.</returns>
+        </member>
+        <member name="M:ServiceStack.CacheAccess.Providers.MemoryCacheClient.Set``1(System.String,``0)">
+            <summary>
+            Add or replace the value with key to the cache, set to never expire.
+            </summary>
+            <param name="key">The key of the cache entry.</param>
+            <param name="value">The value being cached.</param>
+            <returns>True if Set succeeds, otherwise false.</returns>
+        </member>
+        <member name="M:ServiceStack.CacheAccess.Providers.MemoryCacheClient.Replace``1(System.String,``0)">
+            <summary>
+            Replace the value with key in the cache, set to never expire.
+            </summary>
+            <param name="key">The key of the cache entry.</param>
+            <param name="value">The value being cached.</param>
+            <returns>True if Replace succeeds, otherwise false.</returns>
+        </member>
+        <member name="M:ServiceStack.CacheAccess.Providers.MemoryCacheClient.Add``1(System.String,``0,System.DateTime)">
+            <summary>
+            Add the value with key to the cache, set to expire at specified DateTime.
+            </summary>
+            <remarks>This method examines the DateTimeKind of expiresAt to determine if conversion to
+            universal time is needed. The version of Add that takes a TimeSpan expiration is faster 
+            than using this method with a DateTime of Kind other than Utc, and is not affected by 
+            ambiguous local time during daylight savings/standard time transition.</remarks>
+            <param name="key">The key of the cache entry.</param>
+            <param name="value">The value being cached.</param>
+            <param name="expiresAt">The DateTime at which the cache entry expires.</param>
+            <returns>True if Add succeeds, otherwise false.</returns>
+        </member>
+        <member name="M:ServiceStack.CacheAccess.Providers.MemoryCacheClient.Set``1(System.String,``0,System.DateTime)">
+            <summary>
+            Add or replace the value with key to the cache, set to expire at specified DateTime.
+            </summary>
+            <remarks>This method examines the DateTimeKind of expiresAt to determine if conversion to
+            universal time is needed. The version of Set that takes a TimeSpan expiration is faster 
+            than using this method with a DateTime of Kind other than Utc, and is not affected by 
+            ambiguous local time during daylight savings/standard time transition.</remarks>
+            <param name="key">The key of the cache entry.</param>
+            <param name="value">The value being cached.</param>
+            <param name="expiresAt">The DateTime at which the cache entry expires.</param>
+            <returns>True if Set succeeds, otherwise false.</returns>
+        </member>
+        <member name="M:ServiceStack.CacheAccess.Providers.MemoryCacheClient.Replace``1(System.String,``0,System.DateTime)">
+            <summary>
+            Replace the value with key in the cache, set to expire at specified DateTime.
+            </summary>
+            <remarks>This method examines the DateTimeKind of expiresAt to determine if conversion to
+            universal time is needed. The version of Replace that takes a TimeSpan expiration is faster 
+            than using this method with a DateTime of Kind other than Utc, and is not affected by 
+            ambiguous local time during daylight savings/standard time transition.</remarks>
+            <param name="key">The key of the cache entry.</param>
+            <param name="value">The value being cached.</param>
+            <param name="expiresAt">The DateTime at which the cache entry expires.</param>
+            <returns>True if Replace succeeds, otherwise false.</returns>
+        </member>
+        <member name="M:ServiceStack.CacheAccess.Providers.MemoryCacheClient.Add``1(System.String,``0,System.TimeSpan)">
+            <summary>
+            Add the value with key to the cache, set to expire after specified TimeSpan.
+            </summary>
+            <param name="key">The key of the cache entry.</param>
+            <param name="value">The value being cached.</param>
+            <param name="expiresIn">The TimeSpan at which the cache entry expires.</param>
+            <returns>True if Add succeeds, otherwise false.</returns>
+        </member>
+        <member name="M:ServiceStack.CacheAccess.Providers.MemoryCacheClient.Set``1(System.String,``0,System.TimeSpan)">
+            <summary>
+            Add or replace the value with key to the cache, set to expire after specified TimeSpan.
+            </summary>
+            <param name="key">The key of the cache entry.</param>
+            <param name="value">The value being cached.</param>
+            <param name="expiresIn">The TimeSpan at which the cache entry expires.</param>
+            <returns>True if Set succeeds, otherwise false.</returns>
+        </member>
+        <member name="M:ServiceStack.CacheAccess.Providers.MemoryCacheClient.Replace``1(System.String,``0,System.TimeSpan)">
+            <summary>
+            Replace the value with key in the cache, set to expire after specified TimeSpan.
+            </summary>
+            <param name="key">The key of the cache entry.</param>
+            <param name="value">The value being cached.</param>
+            <param name="expiresIn">The TimeSpan at which the cache entry expires.</param>
+            <returns>True if Replace succeeds, otherwise false.</returns>
+        </member>
+        <member name="M:ServiceStack.CacheAccess.Providers.MemoryCacheClient.CacheEntry.#ctor(System.Object,System.DateTime)">
+            <summary>
+            Create new instance of CacheEntry.
+            </summary>
+            <param name="value">The value being cached.</param>
+            <param name="expiresAt">The UTC time at which CacheEntry expires.</param>
+        </member>
+        <member name="P:ServiceStack.CacheAccess.Providers.MemoryCacheClient.CacheEntry.ExpiresAt">
+            <summary>UTC time at which CacheEntry expires.</summary>
         </member>
         <member name="M:ServiceStack.WebHost.Endpoints.Extensions.HttpResponseExtensions.WriteToResponse(ServiceStack.ServiceHost.IHttpResponse,System.Object,ServiceStack.ServiceHost.ResponseSerializerDelegate,ServiceStack.ServiceHost.IRequestContext,System.Byte[],System.Byte[])">
             <summary>

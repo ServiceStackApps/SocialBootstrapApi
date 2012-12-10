@@ -125,7 +125,6 @@ namespace SocialBootstrapApi
             SetConfig(new EndpointHostConfig {
                 //EnableFeatures = Feature.All.Remove(disableFeatures),
                 AppendUtf8CharsetOnContentTypes = new HashSet<string> { ContentType.Html },
-                DebugMode = true, //Show StackTraces in service responses during development
             });
 
             //Set MVC to use the same Funq IOC as ServiceStack
