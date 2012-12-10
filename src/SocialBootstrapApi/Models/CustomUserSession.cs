@@ -57,7 +57,7 @@ namespace SocialBootstrapApi.Models
                 }
             }
 
-            if (AppHost.Config.AdminUserNames.Contains(session.UserAuthName)
+            if (AppHost.AppConfig.AdminUserNames.Contains(session.UserAuthName)
                 && !session.HasRole(RoleNames.Admin))
             {
                 using (var assignRoles = authService.ResolveService<AssignRolesService>())
