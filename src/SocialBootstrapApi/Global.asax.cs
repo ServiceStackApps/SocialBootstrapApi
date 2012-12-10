@@ -38,6 +38,8 @@ namespace SocialBootstrapApi
 
 			RegisterGlobalFilters(GlobalFilters.Filters);
 			RegisterRoutes(RouteTable.Routes);
+
+            (new AppHost()).Init();
 		}
 
 		protected void Application_BeginRequest(object sender, EventArgs e)

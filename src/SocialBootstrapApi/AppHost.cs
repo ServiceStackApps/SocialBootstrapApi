@@ -21,8 +21,6 @@ using SocialBootstrapApi.Logic;
 using SocialBootstrapApi.Models;
 using SocialBootstrapApi.ServiceInterface;
 
-[assembly: WebActivator.PreApplicationStartMethod(typeof(SocialBootstrapApi.AppHost), "Start")]
-
 
 /**
  * ServiceStack's Social Bootstrap API MVC web project based on 

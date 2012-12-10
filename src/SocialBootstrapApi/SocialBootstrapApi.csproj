@@ -38,10 +38,6 @@
       <HintPath>packages\DotNetOpenAuth.Ultimate.4.1.4.12333\lib\net40-full\DotNetOpenAuth.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <Private>True</Private>
-      <HintPath>packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
-    </Reference>
     <Reference Include="ServiceStack, Version=3.9.32.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>packages\ServiceStack.3.9.32\lib\net35\ServiceStack.dll</HintPath>
@@ -124,7 +120,7 @@
     <Compile Include="ServiceInterface\TwitterUsersService.cs" />
     <Compile Include="ServiceInterface\TodoService.cs" />
     <Compile Include="ServiceInterface\HelloService.cs" />
-    <Compile Include="App_Start\AppHost.cs" />
+    <Compile Include="AppHost.cs" />
     <Compile Include="ServiceInterface\UserAuths.cs" />
     <Compile Include="ServiceInterface\UserProfileService.cs" />
     <Compile Include="ServiceInterface\UsersService.cs" />
