@@ -85,7 +85,7 @@ namespace SocialBootstrapApi
         public AppHost() //Tell ServiceStack the name and where to find your web services  
             : base("StarterTemplate ASP.NET Host", typeof(HelloService).Assembly) { }
 
-        public static AppConfig Config;
+        public static AppConfig AppConfig;
 
         public override void Configure(Funq.Container container)
         {
@@ -94,8 +94,8 @@ namespace SocialBootstrapApi
 
             //Register Typed Config some services might need to access
             var appSettings = new AppSettings();
-            Config = new AppConfig(appSettings);
-            container.Register(Config);
+            AppConfig = new AppConfig(appSettings);
+            container.Register(AppConfig);
 
             //Register all your dependencies: 
 

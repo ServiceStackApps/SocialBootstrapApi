@@ -192,7 +192,7 @@ namespace SocialBootstrapApi.Logic
 			if (twitterAuth.AccessToken != null)
 			{
 				webReq.Headers[HttpRequestHeader.Authorization] = OAuthAuthorizer.AuthorizeRequest(
-					twitterAuth.OAuthProvider, twitterAuth.AccessToken, twitterAuth.AccessTokenSecret, HttpMethod.Get, uri, null);
+					twitterAuth.OAuthProvider, twitterAuth.AccessToken, twitterAuth.AccessTokenSecret, HttpMethods.Get, uri, null);
 			}
 
 			using (var webRes = webReq.GetResponse())
@@ -209,7 +209,7 @@ namespace SocialBootstrapApi.Logic
 				if (twitterAuth.AccessToken != null)
 				{
 					webReq.Headers[HttpRequestHeader.Authorization] = OAuthAuthorizer.AuthorizeRequest(
-						twitterAuth.OAuthProvider, twitterAuth.AccessToken, twitterAuth.AccessTokenSecret, HttpMethod.Get, uri, null);
+                        twitterAuth.OAuthProvider, twitterAuth.AccessToken, twitterAuth.AccessTokenSecret, HttpMethods.Get, uri, null);
 				}
 
 			});
