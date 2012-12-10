@@ -69,12 +69,12 @@ namespace SocialBootstrapApi.ServiceInterface
             return new Response { Result = "Haz Sekritz!" };
         }
 
-        public Response Any(GetOnly request)
+        public Response Get(GetOnly request)
         {
             return new Response { Result = "Haz Sekritz!" };
         }
 
-        public Response Any(PostOnly request)
+        public Response Post(PostOnly request)
         {
             return new Response { Result = "Haz Sekritz!" };
         }
