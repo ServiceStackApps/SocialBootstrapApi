@@ -317,6 +317,20 @@
             </summary>
             <param name="context"></param>
         </member>
+        <member name="M:ServiceStack.WebHost.Endpoints.Support.HttpListenerBase.Resolve``1">
+            <summary>
+            Resolves from IoC container a specified type instance.
+            </summary>
+            <typeparam name="T">Type to be resolved.</typeparam>
+            <returns>Instance of <typeparamref name="T"/>.</returns>
+        </member>
+        <member name="M:ServiceStack.WebHost.Endpoints.Support.HttpListenerBase.ResolveService``1(System.Net.HttpListenerContext)">
+            <summary>
+            Resolves and auto-wires a ServiceStack Service
+            </summary>
+            <typeparam name="T">Type to be resolved.</typeparam>
+            <returns>Instance of <typeparamref name="T"/>.</returns>
+        </member>
         <member name="P:ServiceStack.WebHost.Endpoints.Support.HttpListenerBase.Plugins">
             TODO: plugin added with .Add method after host initialization won't be configured. Each plugin should have state so we can invoke Register method if host was already started.  
         </member>
@@ -1845,13 +1859,13 @@
             <summary>
             When <see cref="M:ServiceStack.MiniProfiler.Profiler.Start(ServiceStack.MiniProfiler.ProfileLevel)"/> is called, if the current request url contains any items in this property,
             no profiler will be instantiated and no results will be displayed.
-            Default value is { "/ss-", "/content/", "/scripts/", "/favicon.ico" }.
+            Default value is { "/ssr-", "/content/", "/scripts/", "/favicon.ico" }.
             </summary>
         </member>
         <member name="P:ServiceStack.MiniProfiler.Profiler.Settings.RouteBasePath">
             <summary>
             The path under which ALL routes are registered in, defaults to the application root.  For example, "~/myDirectory/" would yield
-            "/myDirectory/ss-includes.js" rather than just "/mini-profiler-includes.js"
+            "/myDirectory/ssr-includes.js" rather than just "/mini-profiler-includes.js"
             Any setting here should be in APP RELATIVE FORM, e.g. "~/myDirectory/"
             </summary>
         </member>
@@ -2461,6 +2475,24 @@
             More familiar name for the new crowd.
             </summary>
         </member>
+        <member name="M:ServiceStack.Configuration.AppSettings.GetString(System.String)">
+            <summary>
+            Returns string if exists, otherwise null
+            </summary>
+            <param name="name"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ServiceStack.Configuration.ISettings.Get(System.String)">
+            <summary>
+            Provides a common interface for Settings providers such as
+            ConfigurationManager or Azure's RoleEnvironment. The only
+            requirement is that if the implementation cannot find the
+            specified key, the return value must be null
+            </summary>
+            <param name="key">The key for the setting</param>
+            <returns>The string value of the specified key, or null if the key
+            was invalid</returns>
+        </member>
         <member name="T:ServiceStack.WebHost.Endpoints.Ext.AllFilesHandler">
             <summary>
             Summary description for $codebehindclassname$
@@ -2470,24 +2502,6 @@
             <summary>
             Render Markdown for text/markdown and text/plain ContentTypes
             </summary>
-        </member>
-        <member name="M:ServiceStack.ServiceHost.ServiceOperations.GetBaseTypeWithTheSameName(System.Type)">
-            <summary>
-            Gets the name of the base most type in the heirachy tree with the same.
-            
-            We get an exception when trying to create a schema with multiple types of the same name
-            like when inheriting from a DataContract with the same name.
-            </summary>
-            <param name="type">The type.</param>
-            <returns></returns>
-        </member>
-        <member name="M:ServiceStack.ServiceHost.ServiceOperations.LoadOperationTypes(System.Collections.Generic.IEnumerable{System.Type})">
-            <summary>
-            Loads the operation types into a dictionary.
-            If there are multiple operation types with the same name,
-            the operation type that is last will be the one 'discoverable' via the service.
-            </summary>
-            <param name="operationTypes">The operation types.</param>
         </member>
         <member name="M:ServiceStack.ServiceHost.HttpRequestExtensions.GetItemOrCookie(ServiceStack.ServiceHost.IHttpRequest,System.String)">
             <summary>
@@ -2694,6 +2708,16 @@
             ASP.NET requests
             </summary>
             <param name="context"></param>
+        </member>
+        <member name="M:ServiceStack.ServiceHost.XsdMetadata.GetBaseTypeWithTheSameName(System.Type)">
+            <summary>
+            Gets the name of the base most type in the heirachy tree with the same.
+            
+            We get an exception when trying to create a schema with multiple types of the same name
+            like when inheriting from a DataContract with the same name.
+            </summary>
+            <param name="type">The type.</param>
+            <returns></returns>
         </member>
         <member name="T:ServiceStack.MiniProfiler.Storage.IStorage">
             <summary>
@@ -2919,6 +2943,13 @@
         <member name="M:ServiceStack.WebHost.Endpoints.AppHostBase.Resolve``1">
             <summary>
             Resolves from IoC container a specified type instance.
+            </summary>
+            <typeparam name="T">Type to be resolved.</typeparam>
+            <returns>Instance of <typeparamref name="T"/>.</returns>
+        </member>
+        <member name="M:ServiceStack.WebHost.Endpoints.AppHostBase.ResolveService``1(System.Web.HttpContext)">
+            <summary>
+            Resolves and auto-wires a ServiceStack Service
             </summary>
             <typeparam name="T">Type to be resolved.</typeparam>
             <returns>Instance of <typeparamref name="T"/>.</returns>
@@ -3227,6 +3258,12 @@
             <param name="bodyPrefix">Add prefix to response body if any</param>
             <param name="bodySuffix">Add suffix to response body if any</param>
             <returns></returns>
+        </member>
+        <member name="T:ServiceStack.ServiceHost.DefaultRequestAttribute">
+            <summary>
+            Lets you Register new Services and the optional restPaths will be registered against 
+            this default Request Type
+            </summary>
         </member>
         <member name="M:ServiceStack.ServiceHost.ServiceManager.#ctor(Funq.Container,ServiceStack.ServiceHost.ServiceController)">
             <summary>

@@ -101,6 +101,18 @@
             leaving the implmentation in the 'Extensions' sub-namespace to force explicit opt-in
             </summary>
         </member>
+        <member name="M:ServiceStack.Common.Utils.ResponseStatusUtils.CreateResponseStatus(System.String,System.String,System.Collections.Generic.IEnumerable{ServiceStack.Validation.ValidationErrorField})">
+            <summary>
+            Creates the error response from the values provided.
+            
+            If the errorCode is empty it will use the first validation error code, 
+            if there is none it will throw an error.
+            </summary>
+            <param name="errorCode">The error code.</param>
+            <param name="errorMessage">The error message.</param>
+            <param name="validationErrors">The validation errors.</param>
+            <returns></returns>
+        </member>
         <member name="T:ServiceStack.ServiceClient.Web.ServiceClientBase">
             Need to provide async request options
             http://msdn.microsoft.com/en-us/library/86wf6409(VS.71).aspx
@@ -132,6 +144,21 @@
             <param name="baseUri">Base URI of the service</param>
             <param name="format">Override of the Format property for the service</param>
         </member>
+        <member name="F:ServiceStack.ServiceClient.Web.ServiceClientBase.disableAutoCompression">
+            <summary>
+            Whether to Accept Gzip,Deflate Content-Encoding and to auto decompress responses
+            </summary>
+        </member>
+        <member name="F:ServiceStack.ServiceClient.Web.ServiceClientBase.username">
+            <summary>
+            The user name for basic authentication
+            </summary>
+        </member>
+        <member name="F:ServiceStack.ServiceClient.Web.ServiceClientBase.password">
+            <summary>
+            The password for basic authentication
+            </summary>
+        </member>
         <member name="M:ServiceStack.ServiceClient.Web.ServiceClientBase.SetCredentials(System.String,System.String)">
             <summary>
             Sets the username and the password for basic authentication.
@@ -142,19 +169,16 @@
             Specifies if cookies should be stored
             </summary>
         </member>
-        <member name="P:ServiceStack.ServiceClient.Web.ServiceClientBase.DisableAutoCompression">
+        <member name="M:ServiceStack.ServiceClient.Web.ServiceClientBase.HandleResponseException``1(System.Exception,System.Object,System.String,System.Func{System.Net.WebRequest},System.Func{System.Net.WebRequest,System.Net.WebResponse},``0@)">
             <summary>
-            Whether to Accept Gzip,Deflate Content-Encoding and to auto decompress responses
-            </summary>
-        </member>
-        <member name="P:ServiceStack.ServiceClient.Web.ServiceClientBase.UserName">
-            <summary>
-            The user name for basic authentication
-            </summary>
-        </member>
-        <member name="P:ServiceStack.ServiceClient.Web.ServiceClientBase.Password">
-            <summary>
-            The password for basic authentication
+            Called by Send method if an exception occurs, for instance a System.Net.WebException because the server
+            returned an HTTP error code. Override if you want to handle specific exceptions or always want to parse the
+            response to a custom ErrorResponse DTO type instead of ServiceStack's ErrorResponse class. In case ex is a
+            <c>System.Net.WebException</c>, do not use
+            <c>createWebRequest</c>/<c>getResponse</c>/<c>HandleResponse&lt;TResponse&gt;</c> to parse the response
+            because that will result in the same exception again. Use
+            <c>ThrowWebServiceException&lt;YourErrorResponseType&gt;</c> to parse the response and to throw a
+            <c>WebServiceException</c> containing the parsed DTO. Then override Send to handle that exception.
             </summary>
         </member>
         <member name="P:ServiceStack.ServiceClient.Web.ServiceClientBase.Credentials">
@@ -596,6 +620,12 @@
             Gets the singleton <see cref="!:ClientIdentityMessageInspector"/> instance.
             </summary>
         </member>
+        <member name="M:ServiceStack.Common.HostContext.TrackDisposable(System.IDisposable)">
+            <summary>
+            Track any IDisposable's to dispose of at the end of the request in IAppHost.OnEndRequest()
+            </summary>
+            <param name="instance"></param>
+        </member>
         <member name="P:ServiceStack.Common.HostContext.Items">
             <summary>
             Gets a list of items for this request. 
@@ -910,18 +940,6 @@
             It will allow you to access raw response information. 
             Note that you should NOT consume the response stream as this is handled by ServiceStack
             </summary>
-        </member>
-        <member name="M:ServiceStack.Common.Utils.ResponseStatusUtils.CreateResponseStatus(System.String,System.String,System.Collections.Generic.IEnumerable{ServiceStack.Validation.ValidationErrorField})">
-            <summary>
-            Creates the error response from the values provided.
-            
-            If the errorCode is empty it will use the first validation error code, 
-            if there is none it will throw an error.
-            </summary>
-            <param name="errorCode">The error code.</param>
-            <param name="errorMessage">The error message.</param>
-            <param name="validationErrors">The validation errors.</param>
-            <returns></returns>
         </member>
     </members>
 </doc>
