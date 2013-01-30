@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Web.Mvc;
+using ServiceStack.Api.Swagger;
 using ServiceStack.Authentication.OpenId;
 using ServiceStack.CacheAccess;
 using ServiceStack.CacheAccess.Providers;
@@ -124,6 +125,8 @@ namespace SocialBootstrapApi
                 //EnableFeatures = Feature.All.Remove(disableFeatures),
                 AppendUtf8CharsetOnContentTypes = new HashSet<string> { ContentType.Html },
             });
+
+            Plugins.Add(new SwaggerFeature());
 
             //Set MVC to use the same Funq IOC as ServiceStack
             ControllerBuilder.Current.SetControllerFactory(new FunqControllerFactory(container));
