@@ -16,6 +16,7 @@ using ServiceStack.OrmLite.SqlServer;
 using ServiceStack.ServiceInterface;
 using ServiceStack.ServiceInterface.Admin;
 using ServiceStack.ServiceInterface.Auth;
+using ServiceStack.ServiceInterface.Cors;
 using ServiceStack.WebHost.Endpoints;
 using SocialBootstrapApi.Controllers;
 using SocialBootstrapApi.Logic;
@@ -127,6 +128,7 @@ namespace SocialBootstrapApi
             });
 
             Plugins.Add(new SwaggerFeature());
+            Plugins.Add(new CorsFeature());
 
             //Set MVC to use the same Funq IOC as ServiceStack
             ControllerBuilder.Current.SetControllerFactory(new FunqControllerFactory(container));
