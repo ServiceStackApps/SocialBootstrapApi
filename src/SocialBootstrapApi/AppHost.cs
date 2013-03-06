@@ -109,7 +109,7 @@ namespace SocialBootstrapApi
             //Enable Authentication an Registration
             ConfigureAuth(container);
 
-            //Create you're own custom User table
+            //Create your own custom User table
             var dbFactory = container.Resolve<IDbConnectionFactory>();
             dbFactory.Run(db => db.DropAndCreateTable<User>());
 
