@@ -7,7 +7,7 @@ To enable MVC Html helper's add ServiceStack.Mvc namespace to your views base cl
         <add namespace="System.Web.Mvc.Ajax" />
         <add namespace="System.Web.Mvc.Html" />
         <add namespace="System.Web.Routing" />
-        <add namespace="ServiceStack.Mvc" />    <!-- Enable Html Extensions -->
+        <add namespace="ServiceStack.Mvc" />    <!-- Enable Html Exentions -->
       </namespaces>
     </pages>
   </system.web.webPages.razor>
@@ -29,7 +29,7 @@ css/variables.less
 css/styles.less
 default.css
 
-Now every time you run '/bundler/bundler.cmd' it will scan these files, compiling and minifying any new or changed files. 
+Now everytime you run '/bundler/bundler.cmd' it will scan these files, compiling and minifying any new or changed files. 
 Tip: Give **bundler.cmd** a keyboard short-cut or run it as a post-build script so you can easily re-run it when your files have changed.
 
 You can then reference these bundles in your MVC _Layout.cshtml or View.cshtml pages with the @Html.RenderCssBundle() and @Html.RenderJsBundle() helpers:

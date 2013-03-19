@@ -184,7 +184,7 @@ namespace SocialBootstrapApi.Logic
 		public static string DownloadJsonFromUrl(this string url, TwitterAuth twitterAuth)
 		{
 			if (twitterAuth == null)
-				return url.DownloadJsonFromUrl();
+				return url.GetJsonFromUrl();
 
 			var uri = new Uri(url);
 			var webReq = (HttpWebRequest)WebRequest.Create(uri);
