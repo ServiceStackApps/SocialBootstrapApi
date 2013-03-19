@@ -1,6 +1,6 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SocialBootstrapApi", "SocialBootstrapApi.csproj", "{EFF33E09-C279-4BAD-BA7C-466A8683CA09}"
 EndProject
 Global
