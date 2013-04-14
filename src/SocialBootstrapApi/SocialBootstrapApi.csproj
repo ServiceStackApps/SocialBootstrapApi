@@ -116,6 +116,7 @@
     <Compile Include="Controllers\ControllerBase.cs" />
     <Compile Include="Controllers\SecureController.cs" />
     <Compile Include="Controllers\PublicController.cs" />
+    <Compile Include="ImageResizer\ImageService.cs" />
     <Compile Include="Models\CustomUserSession.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Logic\TwitterGateway.cs" />
@@ -202,6 +203,7 @@
     <Content Include="Content\js\localStorage-shim.js" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
+    <Content Include="ImageResizer\default.html" />
     <Content Include="README.txt" />
     <Content Include="swagger-ui\css\screen.css" />
     <Content Include="swagger-ui\images\pet_store_api.png" />
@@ -240,7 +242,9 @@
     <Content Include="Views\Secure\Index.cshtml" />
     <Content Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="uploads\thumbnails\" />
+  </ItemGroup>
   <ItemGroup>
     <None Include="Content\css\mixins.less">
       <Generator>LessGenerator</Generator>
