@@ -203,7 +203,7 @@
     <Content Include="Content\js\localStorage-shim.js" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
-    <Content Include="ImageResizer\index.html" />
+    <Content Include="ImageResizer\default.html" />
     <Content Include="README.txt" />
     <Content Include="swagger-ui\css\screen.css" />
     <Content Include="swagger-ui\images\pet_store_api.png" />
