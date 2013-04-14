@@ -4,14 +4,12 @@ using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
-using Funq;
 using ServiceStack.Common;
 using ServiceStack.Common.Utils;
 using ServiceStack.Common.Web;
 using ServiceStack.ServiceHost;
 using ServiceStack.ServiceInterface;
 using ServiceStack.Text;
-using ServiceStack.WebHost.Endpoints;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 
@@ -67,7 +65,7 @@ namespace SocialBootstrapApi.ImageResizer
                 }
             }
 
-            return HttpResult.Redirect("/ImageResizer/");
+            return HttpResult.Redirect("/");
         }
 
         private void WriteImage(Stream ms)
@@ -168,13 +166,11 @@ namespace SocialBootstrapApi.ImageResizer
                     g.PixelOffsetMode = PixelOffsetMode.HighQuality;
                     g.DrawImage(Image, new Rectangle(0, 0, newWidth, newHeight), startX, startY, newWidth, newHeight, GraphicsUnit.Pixel);
 
-                    using (var ms = new MemoryStream())
-                    {
-                        bmp.Save(ms, ImageFormat.Png);
-                        Image.Dispose();
-                        var outimage = Image.FromStream(ms);
-                        return outimage;
-                    }
+                    var ms = new MemoryStream();
+                    bmp.Save(ms, ImageFormat.Png);
+                    Image.Dispose();
+                    var outimage = Image.FromStream(ms);
+                    return outimage;
                 }
             }
         }
@@ -183,21 +179,7 @@ namespace SocialBootstrapApi.ImageResizer
         {
             Directory.GetFiles(UploadsDir).ToList().ForEach(File.Delete);
             Directory.GetFiles(ThumbnailsDir).ToList().ForEach(File.Delete);
-            return HttpResult.Redirect("/ImageResizer/");
-        }
-    }
-
-    public class AppHost : AppHostBase
-    {
-        public AppHost() : base("Image Resizer", typeof(AppHost).Assembly) { }
-        public override void Configure(Container container) { }
-    }
-
-    public class Global : System.Web.HttpApplication
-    {
-        protected void Application_Start(object sender, EventArgs e)
-        {
-            new AppHost().Init();
+            return HttpResult.Redirect("/");
         }
     }
 }
