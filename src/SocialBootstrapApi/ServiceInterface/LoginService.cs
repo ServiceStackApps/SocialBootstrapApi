@@ -1,9 +1,6 @@
 #define UseEmbeddedHtmlForm
 
-using ServiceStack.Common.Web;
-using ServiceStack.ServiceHost;
-using ServiceStack.ServiceInterface;
-using ServiceStack.Text;
+using ServiceStack;
 
 namespace SocialBootstrapApi.ServiceInterface
 {
@@ -41,7 +38,7 @@ namespace SocialBootstrapApi.ServiceInterface
 </body>
 </html>";
 
-        [AddHeader(ContentType = ContentType.Html)] //HTML is ASP.NET's default, but nice to be explicit
+        [AddHeader(ContentType = MimeTypes.Html)] //HTML is ASP.NET's default, but nice to be explicit
         public object Any(Login request)
         {
             return HtmlBody.Fmt(request.Redirect);

@@ -1,9 +1,7 @@
 using System;
 using System.Collections.Generic;
 using ChaweetApi.ServiceModel;
-using ServiceStack.Common;
-using ServiceStack.ServiceHost;
-using ServiceStack.ServiceInterface;
+using ServiceStack;
 using SocialBootstrapApi.Logic;
 
 namespace SocialBootstrapApi.ServiceInterface
@@ -27,10 +25,8 @@ namespace SocialBootstrapApi.ServiceInterface
 		public List<TwitterUser> Results { get; set; }
 	}
 
-	public class TwitterFriendsService : Service
+    public class TwitterFriendsService : AppServiceBase
 	{
-		public ITwitterGateway TwitterGateway { get; set; } //Injected in IOC as defined in AppHost
-
 		//Available on all HTTP Verbs (GET, POST, PUT, DELETE, etc) and endpoints JSON, XMl, JSV, etc
 	    public object Any(TwitterFriends request)
 		{
@@ -47,11 +43,11 @@ namespace SocialBootstrapApi.ServiceInterface
 	
 			//This caches and returns the most optimal result the browser can handle, e.g.
 			//If the browser requests json and accepts deflate - it returns a deflated json payload from cache
-			return base.RequestContext.ToOptimizedResultUsingCache(Cache, cacheKey, () =>
+			return base.Request.ToOptimizedResultUsingCache(Cache, cacheKey, () =>
 				new TwitterFriendsResponse {
 					Results = hasId
-						? TwitterGateway.GetFriends(ulong.Parse(request.UserId), request.Skip)
-						: TwitterGateway.GetFriends(request.ScreenName, request.Skip)
+                        ? AuthTwitterGateway.GetFriends(ulong.Parse(request.UserId), request.Skip)
+                        : AuthTwitterGateway.GetFriends(request.ScreenName, request.Skip)
 				});
 		}
 	}

@@ -4,11 +4,8 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using ChaweetApi.ServiceModel;
-using ServiceStack.Common;
-using ServiceStack.Common.Web;
-using ServiceStack.ServiceClient.Web;
-using ServiceStack.ServiceInterface;
-using ServiceStack.ServiceInterface.Auth;
+using ServiceStack;
+using ServiceStack.Auth;
 using ServiceStack.Text;
 using SocialBootstrapApi.Support;
 
@@ -33,12 +30,12 @@ namespace SocialBootstrapApi.Logic
 	{
 		public const int DefaultTake  = 100;
 		public const int ApiBatchSize = 100;
-		public const string UserUrl           = "http://api.twitter.com/1/users/lookup.json";
-		public const string FollowersUrl      = "http://api.twitter.com/1/followers/ids.json";
-		public const string FriendsUrl        = "http://api.twitter.com/1/friends/ids.json";
-		public const string UserTimelineUrl   = "http://api.twitter.com/1/statuses/user_timeline.json?include_entities=1&screen_name={0}";
-		public const string TweetsUrl         = "http://api.twitter.com/1/statuses/following_timeline.json?include_entities=1&screen_name={0}";
-		public const string DirectMessagesUrl = "https://api.twitter.com/1/direct_messages.json";
+		public const string UserUrl           = "https://api.twitter.com/1.1/users/lookup.json";
+		public const string FollowersUrl      = "https://api.twitter.com/1.1/followers/ids.json";
+		public const string FriendsUrl        = "https://api.twitter.com/1.1/friends/ids.json";
+		public const string UserTimelineUrl   = "https://api.twitter.com/1.1/statuses/user_timeline.json?include_entities=1&screen_name={0}";
+		public const string HomeTimelineUrl   = "https://api.twitter.com/1.1/statuses/home_timeline.json?include_entities=1&screen_name={0}";
+        public const string DirectMessagesUrl = "https://api.twitter.com/1.1/direct_messages.json";
 
 		public TwitterAuth Auth { get; set; }
 
@@ -125,7 +122,7 @@ namespace SocialBootstrapApi.Logic
 			if (screenName == null)
 				throw new ArgumentNullException("screenName");
 
-			var url =  TweetsUrl.Fmt(screenName).AddQueryParam("count", take.GetValueOrDefault(DefaultTake));
+            var url = UserTimelineUrl.Fmt(screenName).AddQueryParam("count", take.GetValueOrDefault(DefaultTake));
 			if (!string.IsNullOrEmpty(sinceId))
 				url = url.AddQueryParam("since_id", sinceId);
 			if (!string.IsNullOrEmpty(maxId))
@@ -142,7 +139,7 @@ namespace SocialBootstrapApi.Logic
 			if (screenName == null)
 				throw new ArgumentNullException("screenName");
 
-			var url =  UserTimelineUrl.Fmt(screenName).AddQueryParam("count", take.GetValueOrDefault(DefaultTake));
+            var url = HomeTimelineUrl.Fmt(screenName).AddQueryParam("count", take.GetValueOrDefault(DefaultTake));
 			if (!string.IsNullOrEmpty(sinceId))
 				url = url.AddQueryParam("since_id", sinceId);
 			if (!string.IsNullOrEmpty(maxId))
@@ -188,7 +185,7 @@ namespace SocialBootstrapApi.Logic
 
 			var uri = new Uri(url);
 			var webReq = (HttpWebRequest)WebRequest.Create(uri);
-			webReq.Accept = ContentType.Json;
+			webReq.Accept = MimeTypes.Json;
 			if (twitterAuth.AccessToken != null)
 			{
 				webReq.Headers[HttpRequestHeader.Authorization] = OAuthAuthorizer.AuthorizeRequest(
@@ -196,15 +193,16 @@ namespace SocialBootstrapApi.Logic
 			}
 
 			using (var webRes = webReq.GetResponse())
-				return webRes.DownloadText();
+				return webRes.ReadToEnd();
 		}
 
 		public static List<Task<string>> DownloadAllJsonAsync(this IEnumerable<string> urls, TwitterAuth twitterAuth)
 		{
 			if (twitterAuth == null)
-				return urls.DownloadAllAsync(ContentType.Json);
+                return urls.DownloadAllAsync(MimeTypes.Json);
 
-			return urls.DownloadAllAsync(ContentType.Json, (webReq, uri) => {
+            return urls.DownloadAllAsync(MimeTypes.Json, (webReq, uri) =>
+            {
 
 				if (twitterAuth.AccessToken != null)
 				{

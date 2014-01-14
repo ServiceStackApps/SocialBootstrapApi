@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
+using ServiceStack;
+using ServiceStack.Auth;
 using ServiceStack.OrmLite;
-using ServiceStack.ServiceHost;
-using ServiceStack.ServiceInterface.Auth;
 using SocialBootstrapApi.Models;
 
 namespace SocialBootstrapApi.ServiceInterface
@@ -18,7 +18,7 @@ namespace SocialBootstrapApi.ServiceInterface
 		{
 			this.Users = new List<User>();
 			this.UserAuths = new List<UserAuth>();
-			this.OAuthProviders = new List<UserOAuthProvider>();
+			this.OAuthProviders = new List<UserAuthDetails>();
 		}
 		public CustomUserSession UserSession { get; set; }
 
@@ -26,7 +26,7 @@ namespace SocialBootstrapApi.ServiceInterface
 
 		public List<UserAuth> UserAuths { get; set; }
 
-		public List<UserOAuthProvider> OAuthProviders { get; set; }
+        public List<UserAuthDetails> OAuthProviders { get; set; }
 	}
 
 	//Implementation. Can be called via any endpoint or format, see: http://servicestack.net/ServiceStack.Hello/
@@ -38,7 +38,7 @@ namespace SocialBootstrapApi.ServiceInterface
                 UserSession = base.UserSession,
                 Users = Db.Select<User>(),
                 UserAuths = Db.Select<UserAuth>(),
-                OAuthProviders = Db.Select<UserOAuthProvider>(),
+                OAuthProviders = Db.Select<UserAuthDetails>(),
             };
 
             response.UserAuths.ForEach(x => x.PasswordHash = "[Redacted]");

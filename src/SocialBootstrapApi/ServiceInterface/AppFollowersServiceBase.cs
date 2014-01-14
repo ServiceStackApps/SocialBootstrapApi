@@ -1,9 +1,7 @@
 using System;
 using System.Collections.Generic;
 using ChaweetApi.ServiceModel;
-using ServiceStack.Common;
-using ServiceStack.ServiceHost;
-using ServiceStack.ServiceInterface.ServiceModel;
+using ServiceStack;
 
 namespace SocialBootstrapApi.ServiceInterface
 {
@@ -48,11 +46,11 @@ namespace SocialBootstrapApi.ServiceInterface
 
 			//This caches and returns the most optimal result the browser can handle, e.g.
 			//If browser requests json and accepts deflate - it returns a deflated json payload from cache
-			return base.RequestContext.ToOptimizedResultUsingCache(Cache, cacheKey, () =>
+			return base.Request.ToOptimizedResultUsingCache(Cache, cacheKey, () =>
 				new TwitterFollowersResponse {
 					Results = hasId
-						? TwitterGateway.GetFollowers(ulong.Parse(request.UserId), request.Skip)
-						: TwitterGateway.GetFollowers(request.ScreenName, request.Skip)
+						? AuthTwitterGateway.GetFollowers(ulong.Parse(request.UserId), request.Skip)
+                        : AuthTwitterGateway.GetFollowers(request.ScreenName, request.Skip)
 				});
 		}
 	}

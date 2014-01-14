@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>ServiceStack.Common</id>
+    <version>4.0.7</version>
+    <title>Common libs for ServiceStack projects</title>
+    <authors>Service Stack</authors>
+    <owners>Service Stack</owners>
+    <licenseUrl>https://servicestack.net/terms</licenseUrl>
+    <projectUrl>https://github.com/ServiceStack/ServiceStack</projectUrl>
+    <iconUrl>https://servicestack.net/img/logo-32.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Common base library for ServiceStack projects.</description>
+    <summary>Opensource .NET and Mono REST Web Services framework</summary>
+    <copyright>Copyright 2013 Service Stack</copyright>
+    <language>en-US</language>
+    <tags>ServiceStack Common Framework Clients ServiceClients Gateway</tags>
+    <dependencies>
+      <dependency id="ServiceStack.Interfaces" version="4.0" />
+      <dependency id="ServiceStack.Text" version="4.0" />
+    </dependencies>
+  </metadata>
+</package>

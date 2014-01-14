@@ -1,5 +1,5 @@
 ﻿using System.Web.Mvc;
-using ServiceStack.ServiceInterface;
+using ServiceStack;
 
 namespace SocialBootstrapApi.Controllers
 {

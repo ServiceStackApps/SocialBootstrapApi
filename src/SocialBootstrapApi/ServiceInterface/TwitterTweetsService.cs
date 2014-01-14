@@ -1,8 +1,6 @@
 ﻿using System.Collections.Generic;
 using ChaweetApi.ServiceModel;
-using ServiceStack.Common;
-using ServiceStack.ServiceHost;
-using ServiceStack.ServiceInterface.ServiceModel;
+using ServiceStack;
 
 namespace SocialBootstrapApi.ServiceInterface
 {
@@ -33,7 +31,7 @@ namespace SocialBootstrapApi.ServiceInterface
 
 			//This caches and returns the most optimal result the browser can handle, e.g.
 			//If the browser requests json and accepts deflate - it returns a deflated json payload from cache
-			return base.RequestContext.ToOptimizedResultUsingCache(Cache, cacheKey, () =>
+			return base.Request.ToOptimizedResultUsingCache(Cache, cacheKey, () =>
 				new TwitterTweetsResponse {
 					Results = AuthTwitterGateway.GetTweets(
 						request.ScreenName, request.SinceId, request.MaxId, request.Take)

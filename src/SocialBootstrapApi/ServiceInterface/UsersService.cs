@@ -1,8 +1,6 @@
 using System.Collections.Generic;
-using ServiceStack.Common;
+using ServiceStack;
 using ServiceStack.OrmLite;
-using ServiceStack.ServiceInterface;
-using ServiceStack.ServiceInterface.ServiceModel;
 using SocialBootstrapApi.Models;
 
 namespace SocialBootstrapApi.ServiceInterface
@@ -33,9 +31,9 @@ namespace SocialBootstrapApi.ServiceInterface
 			if (request.UserIds.Length == 0)
 				return response;
 
-            var users = Db.Ids<User>(request.UserIds);
+            var users = Db.SelectByIds<User>(request.UserIds);
 
-			var userInfos = users.ConvertAll(x => x.TranslateTo<UserInfo>());
+			var userInfos = users.ConvertAll(x => x.ConvertTo<UserInfo>());
 
 			return new UsersResponse {
 				Results = userInfos

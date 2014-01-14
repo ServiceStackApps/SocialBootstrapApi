@@ -1,0 +1,141 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>ServiceStack.Mvc</name>
+    </assembly>
+    <members>
+        <member name="M:FluentValidation.Mvc.CustomizeValidatorAttribute.ToValidatorSelector">
+            <summary>
+            Builds a validator selector from the options specified in the attribute's properties.
+            </summary>
+        </member>
+        <member name="T:FluentValidation.Mvc.FluentValidationModelValidator">
+            <summary>
+            ModelValidator implementation that uses FluentValidation.
+            </summary>
+        </member>
+        <member name="T:FluentValidation.Mvc.FluentValidationModelValidatorProvider">
+            <summary>
+            Implementation of ModelValidatorProvider that uses FluentValidation.
+            </summary>
+        </member>
+        <member name="M:FluentValidation.Mvc.FluentValidationModelValidatorProvider.Configure(System.Action{FluentValidation.Mvc.FluentValidationModelValidatorProvider})">
+            <summary>
+            Initializes the FluentValidationModelValidatorProvider using the default options and adds it in to the ModelValidatorProviders collection.
+            </summary>
+        </member>
+        <member name="T:FluentValidation.Mvc.IValidatorInterceptor">
+            <summary>
+            Specifies an interceptor that can be used to provide hooks that will be called before and after MVC validation occurs.
+            </summary>
+        </member>
+        <member name="M:FluentValidation.Mvc.IValidatorInterceptor.BeforeMvcValidation(System.Web.Mvc.ControllerContext,ServiceStack.FluentValidation.ValidationContext)">
+            <summary>
+            Invoked before MVC validation takes place which allows the ValidationContext to be customized prior to validation.
+            It should return a ValidationContext object.
+            </summary>
+            <param name="controllerContext">Controller Context</param>
+            <param name="validationContext">Validation Context</param>
+            <returns>Validation Context</returns>
+        </member>
+        <member name="M:FluentValidation.Mvc.IValidatorInterceptor.AfterMvcValidation(System.Web.Mvc.ControllerContext,ServiceStack.FluentValidation.ValidationContext,ServiceStack.FluentValidation.Results.ValidationResult)">
+            <summary>
+            Invoked after MVC validation takes place which allows the result to be customized.
+            It should return a ValidationResult.
+            </summary>
+            <param name="controllerContext">Controller Context</param>
+            <param name="validationContext">Validation Context</param>
+            <param name="result">The result of validation.</param>
+            <returns>Validation Context</returns>
+        </member>
+        <member name="T:ServiceStack.Mvc.MiniProfiler.ProfilingActionFilter">
+            <summary>
+            This filter can be applied globally to hook up automatic action profiling
+            </summary>
+        </member>
+        <member name="M:ServiceStack.Mvc.MiniProfiler.ProfilingActionFilter.OnActionExecuting(System.Web.Mvc.ActionExecutingContext)">
+            <summary>
+            Happens before the action starts running
+            </summary>
+        </member>
+        <member name="M:ServiceStack.Mvc.MiniProfiler.ProfilingActionFilter.OnActionExecuted(System.Web.Mvc.ActionExecutedContext)">
+            <summary>
+            Happens after the action executes
+            </summary>
+        </member>
+        <member name="T:ServiceStack.Mvc.MiniProfiler.ProfilingViewEngine">
+            <summary>
+            You can wrap your view engines with this view to enable profiling on views and partial
+            </summary>
+        </member>
+        <member name="M:ServiceStack.Mvc.MiniProfiler.ProfilingViewEngine.#ctor(System.Web.Mvc.IViewEngine)">
+            <summary>
+            Wrap your view engines with this to allow profiling
+            </summary>
+            <param name="wrapped"></param>
+        </member>
+        <member name="M:ServiceStack.Mvc.MiniProfiler.ProfilingViewEngine.FindPartialView(System.Web.Mvc.ControllerContext,System.String,System.Boolean)">
+            <summary>
+            Find a partial
+            </summary>
+        </member>
+        <member name="M:ServiceStack.Mvc.MiniProfiler.ProfilingViewEngine.FindView(System.Web.Mvc.ControllerContext,System.String,System.String,System.Boolean)">
+            <summary>
+            Find a view
+            </summary>
+        </member>
+        <member name="M:ServiceStack.Mvc.MiniProfiler.ProfilingViewEngine.ReleaseView(System.Web.Mvc.ControllerContext,System.Web.Mvc.IView)">
+            <summary>
+            Find a partial
+            </summary>
+        </member>
+        <member name="F:ServiceStack.Mvc.ServiceStackController.userSession">
+            <summary>
+            Typed UserSession
+            </summary>
+        </member>
+        <member name="F:ServiceStack.Mvc.ServiceStackController.session">
+            <summary>
+            Dynamic Session Bag
+            </summary>
+        </member>
+        <member name="P:ServiceStack.Mvc.ServiceStackController.LoginRedirectUrl">
+            <summary>
+            Default redirct URL if [Authenticate] attribute doesn't permit access.
+            </summary>
+        </member>
+        <member name="P:ServiceStack.Mvc.ServiceStackController.AuthenticationErrorResult">
+            <summary>
+            To change the error result when authentication (<see cref="T:ServiceStack.AuthenticateAttribute"/>) 
+            fails from redirection to something else, 
+            override this property and return the appropriate result.
+            </summary>
+        </member>
+        <member name="P:ServiceStack.Mvc.ServiceStackController.AuthorizationErrorResult">
+            <summary>
+            To change the error result when authorization fails
+            to something else, override this property and return the appropriate result.
+            </summary>
+        </member>
+        <member name="M:ServiceStack.Mvc.FunqControllerFactory.#ctor(Funq.Container,System.Reflection.Assembly[])">
+            <summary>
+            Initializes a new instance of the <see cref="T:ServiceStack.Mvc.FunqControllerFactory"/> class.
+            </summary>
+            <param name="container">The container.</param>
+            <param name="assemblies">The assemblies to reflect for IController discovery.</param>
+        </member>
+        <member name="T:FluentValidation.Mvc.RuleSetForClientSideMessagesAttribute">
+            <summary>
+            Specifies which ruleset should be used when deciding which validators should be used to generate client-side messages.
+            </summary>
+        </member>
+        <member name="M:FluentValidation.Mvc.ValidationResultExtension.AddToModelState(ServiceStack.FluentValidation.Results.ValidationResult,System.Web.Mvc.ModelStateDictionary,System.String)">
+            <summary>
+            Stores the errors in a ValidationResult object to the specified modelstate dictionary.
+            </summary>
+            <param name="result">The validation result to store</param>
+            <param name="modelState">The ModelStateDictionary to store the errors in.</param>
+            <param name="prefix">An optional prefix. If ommitted, the property names will be the keys. If specified, the prefix will be concatenatd to the property name with a period. Eg "user.Name"</param>
+        </member>
+    </members>
+</doc>

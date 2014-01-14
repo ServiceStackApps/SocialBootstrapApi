@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>ServiceStack.Authentication.OpenId</name>
+    </assembly>
+    <members>
+        <member name="M:ServiceStack.Authentication.OpenId.OpenIdOAuthProvider.GetAttributeEx(DotNetOpenAuth.OpenId.RelyingParty.IAuthenticationResponse)">
+            <summary>
+            Extracts an Attribute Exchange response, if one exists
+            </summary>
+        </member>
+    </members>
+</doc>

@@ -1,12 +1,12 @@
 using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Text;
+using ServiceStack;
+using ServiceStack.Auth;
 using ServiceStack.Authentication.OpenId;
-using ServiceStack.Common;
+using ServiceStack.Configuration;
+using ServiceStack.Data;
 using ServiceStack.OrmLite;
-using ServiceStack.ServiceInterface;
-using ServiceStack.ServiceInterface.Auth;
-using ServiceStack.Text;
 
 namespace SocialBootstrapApi.Models
 {
@@ -19,12 +19,12 @@ namespace SocialBootstrapApi.Models
     {
         public string CustomId { get; set; }
 
-        public override void OnAuthenticated(IServiceBase authService, IAuthSession session, IOAuthTokens tokens, Dictionary<string, string> authInfo)
+        public override void OnAuthenticated(IServiceBase authService, IAuthSession session, IAuthTokens tokens, Dictionary<string, string> authInfo)
         {
             base.OnAuthenticated(authService, session, tokens, authInfo);
 
             //Populate all matching fields from this session to your own custom User table
-            var user = session.TranslateTo<User>();
+            var user = session.ConvertTo<User>();
             user.Id = int.Parse(session.UserAuthId);
             user.GravatarImageUrl64 = !session.Email.IsNullOrEmpty()
                 ? CreateGravatarUrl(session.Email, 64)
@@ -41,7 +41,7 @@ namespace SocialBootstrapApi.Models
                 }
                 else if (authToken.Provider == TwitterAuthProvider.Name)
                 {
-                    user.TwitterName = authToken.DisplayName;
+                    user.TwitterName = user.DisplayName = authToken.UserName;
                 }
                 else if (authToken.Provider == GoogleOpenIdOAuthProvider.Name)
                 {
@@ -70,7 +70,8 @@ namespace SocialBootstrapApi.Models
             }
 
             //Resolve the DbFactory from the IOC and persist the user info
-            authService.TryResolve<IDbConnectionFactory>().Run(db => db.Save(user));
+            using (var db = authService.TryResolve<IDbConnectionFactory>().Open())
+                db.Save(user);
         }
 
         private static string CreateGravatarUrl(string email, int size = 64)

@@ -1,27 +1,26 @@
-﻿using ServiceStack.ServiceHost;
-using ServiceStack.ServiceInterface;
+﻿using ServiceStack;
 
 namespace SocialBootstrapApi.ServiceInterface
 {
-    [Restrict(EndpointAttributes.Json)]
+    [Restrict(RequestAttributes.Json)]
     public class JsonOnly { }
 
-    [Restrict(EndpointAttributes.Xml)]
+    [Restrict(RequestAttributes.Xml)]
     public class XmlOnly { }
 
-    [Restrict(VisibilityTo = EndpointAttributes.Json)]
+    [Restrict(VisibilityTo = RequestAttributes.Json)]
     public class VisibleToJsonOnly { }
 
-    [Restrict(VisibilityTo = EndpointAttributes.Xml)]
+    [Restrict(VisibilityTo = RequestAttributes.Xml)]
     public class VisibleToXmlOnly { }
 
-    [Restrict(EndpointAttributes.Localhost)]
+    [Restrict(RequestAttributes.Localhost)]
     public class LocalhostOnly { }
 
-    [Restrict(EndpointAttributes.InternalNetworkAccess)]
+    [Restrict(RequestAttributes.InternalNetworkAccess)]
     public class InternalOnly { }
 
-    [Restrict(EndpointAttributes.External)]
+    [Restrict(RequestAttributes.External)]
     public class ExternalOnly { }
 
     public class GetOnly { }

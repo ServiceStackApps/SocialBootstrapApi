@@ -1,10 +1,8 @@
 using System.Linq;
+using ServiceStack;
+using ServiceStack.Auth;
 using ServiceStack.Authentication.OpenId;
-using ServiceStack.Common;
 using ServiceStack.OrmLite;
-using ServiceStack.ServiceInterface;
-using ServiceStack.ServiceInterface.Auth;
-using ServiceStack.ServiceInterface.ServiceModel;
 using SocialBootstrapApi.Models;
 
 namespace SocialBootstrapApi.ServiceInterface
@@ -46,13 +44,13 @@ namespace SocialBootstrapApi.ServiceInterface
 		{
 		    var session = base.UserSession;
 
-			var userProfile = session.TranslateTo<UserProfile>();
+			var userProfile = session.ConvertTo<UserProfile>();
 			userProfile.Id = int.Parse(session.UserAuthId);
 
-            var user = Db.QueryById<User>(userProfile.Id);
+            var user = Db.SingleById<User>(userProfile.Id);
 			userProfile.PopulateWith(user);
 
-            var userAuths = Db.Select<UserOAuthProvider>("UserAuthId = {0}", session.UserAuthId.ToInt());
+            var userAuths = Db.Select<UserAuthDetails>(q => q.UserAuthId == session.UserAuthId.ToInt());
 
 		    var googleAuth = userAuths.FirstOrDefault(x => x.Provider == GoogleOpenIdOAuthProvider.Name);
             if (googleAuth != null)

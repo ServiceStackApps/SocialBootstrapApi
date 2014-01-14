@@ -1,9 +1,6 @@
-﻿using System.Diagnostics;
-using System.Linq;
-using System.Text.RegularExpressions;
+﻿using System.Linq;
 using System.Web;
-using System.Web.Mvc;
-using ServiceStack.Common;
+using ServiceStack;
 
 namespace SocialBootstrapApi
 {

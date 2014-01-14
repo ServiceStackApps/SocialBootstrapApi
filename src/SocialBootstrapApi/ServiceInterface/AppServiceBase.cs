@@ -1,6 +1,6 @@
 ﻿using System.Linq;
-using ServiceStack.ServiceInterface;
-using ServiceStack.ServiceInterface.Auth;
+using ServiceStack;
+using ServiceStack.Auth;
 using SocialBootstrapApi.Logic;
 using SocialBootstrapApi.Models;
 
@@ -25,7 +25,7 @@ namespace SocialBootstrapApi.ServiceInterface
 			{
 				if (authGateway != null) return authGateway;
 
-				var authProvider = AuthService.AuthProviders.FirstOrDefault(x => x is TwitterAuthProvider) as TwitterAuthProvider;
+				var authProvider = AuthenticateService.AuthProviders.FirstOrDefault(x => x is TwitterAuthProvider) as TwitterAuthProvider;
 				var oAuthTokens = UserSession.GetOAuthTokens(TwitterAuthProvider.Name);
 
 				return authGateway = TwitterGateway.CreateAuthroizedGateway(

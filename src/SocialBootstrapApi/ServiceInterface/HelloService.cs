@@ -1,9 +1,7 @@
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
-using ServiceStack.ServiceHost;
-using ServiceStack.ServiceInterface;
-using ServiceStack.Text;
+using ServiceStack;
 
 namespace SocialBootstrapApi.ServiceInterface
 {

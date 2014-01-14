@@ -1,23 +1,18 @@
-using System;
 using System.Collections.Generic;
 using System.Web.Mvc;
+using ServiceStack;
 using ServiceStack.Api.Swagger;
+using ServiceStack.Auth;
 using ServiceStack.Authentication.OpenId;
-using ServiceStack.CacheAccess;
-using ServiceStack.CacheAccess.Providers;
-using ServiceStack.Common.Web;
+using ServiceStack.Caching;
 using ServiceStack.Configuration;
+using ServiceStack.Data;
 using ServiceStack.FluentValidation;
 using ServiceStack.MiniProfiler;
 using ServiceStack.MiniProfiler.Data;
 using ServiceStack.Mvc;
 using ServiceStack.OrmLite;
 using ServiceStack.OrmLite.SqlServer;
-using ServiceStack.ServiceInterface;
-using ServiceStack.ServiceInterface.Admin;
-using ServiceStack.ServiceInterface.Auth;
-using ServiceStack.ServiceInterface.Cors;
-using ServiceStack.WebHost.Endpoints;
 using SocialBootstrapApi.Controllers;
 using SocialBootstrapApi.Logic;
 using SocialBootstrapApi.Models;
@@ -44,7 +39,7 @@ namespace SocialBootstrapApi
     //Hold App wide configuration you want to accessible by your services
     public class AppConfig
     {
-        public AppConfig(IResourceManager appSettings)
+        public AppConfig(IAppSettings appSettings)
         {
             this.Env = appSettings.Get("Env", Env.Local);
             this.EnableCdn = appSettings.Get("EnableCdn", false);
@@ -110,8 +105,8 @@ namespace SocialBootstrapApi
             ConfigureAuth(container);
 
             //Create your own custom User table
-            var dbFactory = container.Resolve<IDbConnectionFactory>();
-            dbFactory.Run(db => db.DropAndCreateTable<User>());
+            using (var db = container.Resolve<IDbConnectionFactory>().Open())
+                db.DropAndCreateTable<User>();
 
             //Register application services
             container.Register(new TodoRepository());
@@ -122,9 +117,9 @@ namespace SocialBootstrapApi
 
             //Change the default ServiceStack configuration
             //const Feature disableFeatures = Feature.Jsv | Feature.Soap;
-            SetConfig(new EndpointHostConfig {
+            SetConfig(new HostConfig {
                 //EnableFeatures = Feature.All.Remove(disableFeatures),
-                AppendUtf8CharsetOnContentTypes = new HashSet<string> { ContentType.Html },
+                AppendUtf8CharsetOnContentTypes = new HashSet<string> { MimeTypes.Html },
             });
 
             Plugins.Add(new SwaggerFeature());
@@ -167,7 +162,8 @@ namespace SocialBootstrapApi
         {
             //Enable and register existing services you want this host to make use of.
             //Look in Web.config for examples on how to configure your oauth providers, e.g. oauth.facebook.AppId, etc.
-            var appSettings = new AppSettings();
+            var appSettings = new AppSettings(tier: "dev");
+            //var appSettings = new AppSettings(); //uncomment to use "live" config appSettings
 
             //Register all Authentication methods you want to enable for this web app.            
             Plugins.Add(new AuthFeature(
@@ -187,7 +183,7 @@ namespace SocialBootstrapApi
             Plugins.Add(new RegistrationFeature());
 
             //override the default registration validation with your own custom implementation
-            container.RegisterAs<CustomRegistrationValidator, IValidator<Registration>>();
+            container.RegisterAs<CustomRegistrationValidator, IValidator<Register>>();
 
             //Create a DB Factory configured to access the UserAuth SQL Server DB
             var connStr = appSettings.Get("SQLSERVER_CONNECTION_STRING", //AppHarbor or Local connection string
@@ -206,7 +202,7 @@ namespace SocialBootstrapApi
             if (appSettings.Get("RecreateAuthTables", false))
                 authRepo.DropAndReCreateTables(); //Drop and re-create all Auth and registration tables
             else
-                authRepo.CreateMissingTables();   //Create only the missing tables
+                authRepo.InitSchema();   //Create only the missing tables
 
             Plugins.Add(new RequestLogsFeature());
         }

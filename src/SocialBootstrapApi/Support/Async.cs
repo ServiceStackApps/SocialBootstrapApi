@@ -5,7 +5,7 @@ using System.IO;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
-using ServiceStack.Common.Web;
+using ServiceStack;
 using ServiceStack.Logging;
 
 namespace SocialBootstrapApi.Support
@@ -137,7 +137,7 @@ namespace SocialBootstrapApi.Support
 		public static Task<string> DownloadJsonAsync(this string url)
 		{
 			var request = (HttpWebRequest)WebRequest.Create(url);
-			request.Accept = ContentType.Json;
+			request.Accept = MimeTypes.Json;
 			return request.GetAsync()
 				.ContinueWith(t => {
 					try
@@ -157,7 +157,7 @@ namespace SocialBootstrapApi.Support
 			List<Task<string>> tasks = urls.ToList().Select(url => {
 					var uri = new Uri(url);
 					var request = (HttpWebRequest)WebRequest.Create(uri);
-					request.Accept = ContentType.Json;
+                    request.Accept = MimeTypes.Json;
 					if (filter != null)
 					{
 						filter(request, uri);
@@ -171,7 +171,7 @@ namespace SocialBootstrapApi.Support
 							catch (Exception ex)
 							{
 								Log.Error(ex);
-								if (contentType == ContentType.Json) return "[]";
+                                if (contentType == MimeTypes.Json) return "[]";
 								throw;
 							}
 						});
@@ -183,7 +183,7 @@ namespace SocialBootstrapApi.Support
 
 		public static List<Task<string>> DownloadAllJsonAsync(this IEnumerable<string> urls)
 		{
-			return DownloadAllAsync(urls, ContentType.Json);
+            return DownloadAllAsync(urls, MimeTypes.Json);
 		}
 	}
 }

@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>ServiceStack.Authentication.OAuth2</name>
+    </assembly>
+    <members>
+        <member name="T:ServiceStack.Authentication.OAuth2.LinkedInOAuth2Provider">
+            <summary>
+            Create new App at: https://www.linkedin.com/secure/developer
+            </summary>
+        </member>
+    </members>
+</doc>

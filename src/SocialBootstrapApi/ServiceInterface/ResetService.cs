@@ -1,7 +1,8 @@
+using ServiceStack;
+using ServiceStack.Auth;
+using ServiceStack.Data;
 using ServiceStack.OrmLite;
-using ServiceStack.ServiceHost;
-using ServiceStack.ServiceInterface;
-using ServiceStack.ServiceInterface.Auth;
+using ServiceStack.Web;
 using SocialBootstrapApi.Models;
 
 namespace SocialBootstrapApi.ServiceInterface
@@ -19,15 +20,14 @@ namespace SocialBootstrapApi.ServiceInterface
 
 	public class ResetService : Service
 	{
-		public IDbConnectionFactory DbFactory { get; set; }
-
-	    public object Any(Reset request)
+        //public 
+        object Any(Reset request)
 		{
             Db.DeleteAll<User>();
             Db.DeleteAll<UserAuth>();
-            Db.DeleteAll<UserOAuthProvider>();
+            Db.DeleteAll<UserAuthDetails>();
 
-			var httpRes = base.RequestContext.Get<IHttpResponse>();
+            var httpRes = (IHttpResponse)base.Request.Response;
 			httpRes.Cookies.DeleteCookie("ss-id");
 			httpRes.Cookies.DeleteCookie("ss-pid");
 			
