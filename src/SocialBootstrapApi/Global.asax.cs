@@ -36,20 +36,20 @@ namespace SocialBootstrapApi
 			);
 		}
 
-		protected void Application_Start()
-		{
-		    if (File.Exists(@"C:\src\appsettings.license.txt"))
-                Licensing.RegisterLicenseFromFile(@"C:\src\appsettings.license.txt");
-            else if (string.IsNullOrEmpty(ConfigUtils.GetNullableAppSetting("servicestack:license")))
+        protected void Application_Start()
+        {
+            Licensing.RegisterLicenseFromFileIfExists(@"C:\src\appsettings.license.txt");
+
+            if (!LicenseUtils.ActivatedLicenseFeatures().HasFlag(LicenseFeature.All))
                 throw new ConfigurationErrorsException("A valid license key is required for this demo");
 
             AreaRegistration.RegisterAllAreas();
 
-			RegisterGlobalFilters(GlobalFilters.Filters);
-			RegisterRoutes(RouteTable.Routes);
+            RegisterGlobalFilters(GlobalFilters.Filters);
+            RegisterRoutes(RouteTable.Routes);
 
-            (new AppHost()).Init();
-		}
+            new AppHost().Init();
+        }
 
 		protected void Application_BeginRequest(object sender, EventArgs e)
 		{
