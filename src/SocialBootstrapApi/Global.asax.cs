@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Configuration;
-using System.IO;
 using System.Web.Mvc;
 using System.Web.Routing;
 using ServiceStack;
-using ServiceStack.Configuration;
 using ServiceStack.MiniProfiler;
 
 namespace SocialBootstrapApi
@@ -38,7 +36,7 @@ namespace SocialBootstrapApi
 
         protected void Application_Start()
         {
-            Licensing.RegisterLicenseFromFileIfExists(@"C:\src\appsettings.license.txt");
+            Licensing.RegisterLicenseFromFileIfExists(@"~/appsettings.license.txt".MapHostAbsolutePath());
 
             if (!LicenseUtils.ActivatedLicenseFeatures().HasFlag(LicenseFeature.All))
                 throw new ConfigurationErrorsException("A valid license key is required for this demo");
