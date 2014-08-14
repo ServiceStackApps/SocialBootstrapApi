@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.IO;
 using System.Web.Mvc;
 using ServiceStack;
 using ServiceStack.Api.Swagger;
@@ -12,7 +13,6 @@ using ServiceStack.MiniProfiler;
 using ServiceStack.MiniProfiler.Data;
 using ServiceStack.Mvc;
 using ServiceStack.OrmLite;
-using ServiceStack.OrmLite.SqlServer;
 using SocialBootstrapApi.Controllers;
 using SocialBootstrapApi.Logic;
 using SocialBootstrapApi.Models;
@@ -89,12 +89,13 @@ namespace SocialBootstrapApi
             //Set JSON web services to return idiomatic JSON camelCase properties
             ServiceStack.Text.JsConfig.EmitCamelCaseNames = true;
 
-            //Register Typed Config some services might need to access
-            var appSettings = new AppSettings();
+            //Load environment config from text file if exists
+            var liveSettings = "~/appsettings.txt".MapHostAbsolutePath();
+            var appSettings = File.Exists(liveSettings)
+                ? (IAppSettings)new TextFileSettings(liveSettings)
+                : new AppSettings();
             AppConfig = new AppConfig(appSettings);
             container.Register(AppConfig);
-
-            //Register all your dependencies: 
 
             //Register a external dependency-free 
             container.Register<ICacheClient>(new MemoryCacheClient());
@@ -102,7 +103,7 @@ namespace SocialBootstrapApi
             //container.Register<IRedisClientsManager>(c => new PooledRedisClientManager("localhost:6379"));
 
             //Enable Authentication an Registration
-            ConfigureAuth(container);
+            ConfigureAuth(container, appSettings);
 
             //Create your own custom User table
             using (var db = container.Resolve<IDbConnectionFactory>().Open())
@@ -122,7 +123,8 @@ namespace SocialBootstrapApi
                 AppendUtf8CharsetOnContentTypes = new HashSet<string> { MimeTypes.Html },
             });
 
-            Plugins.Add(new SwaggerFeature());
+            Plugins.Add(new SwaggerFeature { UseBootstrapTheme = true });
+            Plugins.Add(new PostmanFeature());
             Plugins.Add(new CorsFeature());
 
             //Set MVC to use the same Funq IOC as ServiceStack
@@ -158,12 +160,15 @@ namespace SocialBootstrapApi
             ;
         }
 
-        private void ConfigureAuth(Funq.Container container)
+        private void ConfigureAuth(Funq.Container container, IAppSettings appSettings)
         {
             //Enable and register existing services you want this host to make use of.
             //Look in Web.config for examples on how to configure your oauth providers, e.g. oauth.facebook.AppId, etc.
-            var appSettings = new AppSettings(tier: "dev");
-            //var appSettings = new AppSettings(); //uncomment to use "live" config appSettings
+
+            SetConfig(new HostConfig
+            {
+                DebugMode = appSettings.Get("DebugMode", false),
+            });
 
             //Register all Authentication methods you want to enable for this web app.            
             Plugins.Add(new AuthFeature(
@@ -185,12 +190,11 @@ namespace SocialBootstrapApi
             //override the default registration validation with your own custom implementation
             container.RegisterAs<CustomRegistrationValidator, IValidator<Register>>();
 
-            //Create a DB Factory configured to access the UserAuth SQL Server DB
-            var connStr = appSettings.Get("SQLSERVER_CONNECTION_STRING", //AppHarbor or Local connection string
-                ConfigUtils.GetConnectionString("UserAuth"));
+            //Create a DB Factory configured to access the UserAuth PostgreSQL DB
+            var connStr = appSettings.GetString("ConnectionString");
             container.Register<IDbConnectionFactory>(
                 new OrmLiteConnectionFactory(connStr, //ConnectionString in Web.Config
-                    SqlServerOrmLiteDialectProvider.Instance) {
+                    PostgreSqlDialect.Provider) {
                         ConnectionFilter = x => new ProfiledDbConnection(x, Profiler.Current)
                     });
 

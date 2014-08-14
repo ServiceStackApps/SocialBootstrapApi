@@ -51,6 +51,12 @@
       <HintPath>packages\DotNetOpenAuth.Ultimate.4.3.4.13329\lib\net40-full\DotNetOpenAuth.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Mono.Security">
+      <HintPath>packages\Npgsql.2.0.14.3\lib\net45\Mono.Security.dll</HintPath>
+    </Reference>
+    <Reference Include="Npgsql">
+      <HintPath>packages\Npgsql.2.0.14.3\lib\net45\Npgsql.dll</HintPath>
+    </Reference>
     <Reference Include="ServiceStack, Version=4.0.31.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>packages\ServiceStack.4.0.31\lib\net40\ServiceStack.dll</HintPath>
@@ -65,7 +71,7 @@
     </Reference>
     <Reference Include="ServiceStack.Authentication.OpenId, Version=4.0.31.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>packages\ServiceStack.Authentication.OpenId.4.0.31\lib\net40\ServiceStack.Authentication.OpenId.dll</HintPath>
+      <HintPath>..\..\..\ServiceStack\src\ServiceStack.Authentication.OpenId\bin\Release\ServiceStack.Authentication.OpenId.dll</HintPath>
     </Reference>
     <Reference Include="ServiceStack.Client, Version=4.0.31.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -87,9 +93,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>packages\ServiceStack.OrmLite.4.0.31\lib\net40\ServiceStack.OrmLite.dll</HintPath>
     </Reference>
-    <Reference Include="ServiceStack.OrmLite.SqlServer, Version=4.0.31.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>packages\ServiceStack.OrmLite.SqlServer.4.0.31\lib\net40\ServiceStack.OrmLite.SqlServer.dll</HintPath>
+    <Reference Include="ServiceStack.OrmLite.PostgreSQL">
+      <HintPath>packages\ServiceStack.OrmLite.PostgreSQL.4.0.31\lib\net40\ServiceStack.OrmLite.PostgreSQL.dll</HintPath>
     </Reference>
     <Reference Include="ServiceStack.Redis, Version=4.0.31.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
