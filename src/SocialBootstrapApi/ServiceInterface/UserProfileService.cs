@@ -22,9 +22,6 @@ namespace SocialBootstrapApi.ServiceInterface
 		public string FacebookUserId { get; set; }
 		public string FacebookUserName { get; set; }
 		public string FacebookEmail { get; set; }
-        public string GoogleUserId { get; set; }
-        public string GoogleFullName { get; set; }
-        public string GoogleEmail { get; set; }
         public string YahooUserId { get; set; }
         public string YahooFullName { get; set; }
         public string YahooEmail { get; set; }
@@ -51,14 +48,6 @@ namespace SocialBootstrapApi.ServiceInterface
 			userProfile.PopulateWith(user);
 
             var userAuths = Db.Select<UserAuthDetails>(q => q.UserAuthId == session.UserAuthId.ToInt());
-
-		    var googleAuth = userAuths.FirstOrDefault(x => x.Provider == GoogleOpenIdOAuthProvider.Name);
-            if (googleAuth != null)
-            {
-                userProfile.GoogleUserId = googleAuth.UserId;
-                userProfile.GoogleFullName = googleAuth.FullName;
-                userProfile.GoogleEmail = googleAuth.Email;
-            }
 
             var yahooAuth = userAuths.FirstOrDefault(x => x.Provider == YahooOpenIdOAuthProvider.Name);
             if (yahooAuth != null)

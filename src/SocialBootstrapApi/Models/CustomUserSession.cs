@@ -43,12 +43,6 @@ namespace SocialBootstrapApi.Models
                 {
                     user.TwitterName = user.DisplayName = authToken.UserName;
                 }
-                else if (authToken.Provider == GoogleOpenIdOAuthProvider.Name)
-                {
-                    user.GoogleUserId = authToken.UserId;
-                    user.GoogleFullName = authToken.FullName;
-                    user.GoogleEmail = authToken.Email;
-                }
                 else if (authToken.Provider == YahooOpenIdOAuthProvider.Name)
                 {
                     user.YahooUserId = authToken.UserId;

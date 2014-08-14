@@ -36,15 +36,6 @@
             <dt>Email</dt><dd><%= facebookEmail %></dd>
         </dl>
     </div>
-<% } if (googleUserId) { %>
-    <div id="google-info">
-        <h4>Google Info</h4>
-        <dl>
-            <dt>User Id</dt><dd><%= googleUserId %></dd>
-            <dt>Full Name</dt><dd><%= googleFullName %></dd>
-            <dt>Email</dt><dd><%= googleEmail %></dd>
-        </dl>
-    </div>
 <% } if (yahooUserId) { %>
     <div id="yahoo-info">
         <h4>Yahoo Info</h4>
@@ -363,12 +354,6 @@
     </div>
     
     <h4 style="margin: 20px 0 10px 0;">Open Id Providers</h4>
-
-    <div id="google-signin">
-        <form action="@Url.Content("~/api/auth/googleopenid")" method="POST">
-            <input type="image" src="@Url.Content("~/Content/img/sign-in-with-google.png")" alt="Sign in with Google">
-        </form>
-    </div>
 
     <div id="yahoo-signin">
         <form action="@Url.Content("~/api/auth/yahooopenid")" method="POST">

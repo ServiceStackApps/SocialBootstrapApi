@@ -179,7 +179,6 @@ namespace SocialBootstrapApi
                     new FacebookAuthProvider(appSettings),      //Sign-in with Facebook
                     new DigestAuthProvider(appSettings),        //Sign-in with Digest Auth
                     new BasicAuthProvider(),                    //Sign-in with Basic Auth
-                    new GoogleOpenIdOAuthProvider(appSettings), //Sign-in with Google OpenId
                     new YahooOpenIdOAuthProvider(appSettings),  //Sign-in with Yahoo OpenId
                     new OpenIdOAuthProvider(appSettings),       //Sign-in with Custom OpenId
                 }));
