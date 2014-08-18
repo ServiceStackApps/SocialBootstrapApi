@@ -29,6 +29,6 @@ Here are some screenshots of the live app:
 
 ### Tweets 
 
-[![Tweets](http://www.servicestack.net/img/bootstrap-api-02-850.png)](http://bootstrapapi.apphb.com)
+[![](https://raw.githubusercontent.com/ServiceStack/Assets/master/img/livedemos/bootstrapapi.png)](http://bootstrapapi.servicestack.net)
 
-Follow [@demisbellot](http://twitter.com) for updates.
+Follow [@ServiceStack](http://twitter.com) or [+ServiceStack](https://plus.google.com/u/0/communities/112445368900682590445) for updates.
