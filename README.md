@@ -19,13 +19,13 @@ It includes a number of [Login/Auth options](https://github.com/ServiceStack/Ser
   - Basic Auth
   - Digest Auth
 
-A copy of this repo is hosted on [AppHarbor](https://appharbor.com) at [http://bootstrapapi.apphb.com/](http://bootstrapapi.apphb.com/).
+A Live Demo of this repo is hosted on  [http://bootstrapapi.servicestack.net/](http://bootstrapapi.servicestack.net/).
 
 Here are some screenshots of the live app:
 
 ### Home Page
 
-[![Home Page](http://www.servicestack.net/img/bootstrap-api-01-850.png)](http://bootstrapapi.apphb.com)
+[![Home Page](http://mono.servicestack.net/img/bootstrap-api-01-850.png)](http://bootstrapapi.apphb.com)
 
 ### Tweets 
 
