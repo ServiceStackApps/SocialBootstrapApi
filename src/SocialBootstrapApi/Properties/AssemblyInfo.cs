@@ -1,7 +1,6 @@
 ﻿using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-using System.Runtime.Serialization;
 
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
@@ -11,7 +10,7 @@ using System.Runtime.Serialization;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("SocialBootstrapApi")]
-[assembly: AssemblyCopyright("Copyright ©  2011")]
+[assembly: AssemblyCopyright("Copyright ©  2014")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -21,7 +20,7 @@ using System.Runtime.Serialization;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("64e29bcf-ea5f-47ee-a022-5cb06c907f72")]
+[assembly: Guid("0c63dae7-f17a-4a21-9715-f54d6717170a")]
 
 // Version information for an assembly consists of the following four values:
 //
@@ -34,6 +33,3 @@ using System.Runtime.Serialization;
 // by using the '*' as shown below:
 [assembly: AssemblyVersion("1.0.0.0")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
-
-[assembly: ContractNamespace("http://schemas.servicestack.net/types", ClrNamespace = "SocialBootstrapApi.ServiceInterface")]
-[assembly: ContractNamespace("http://schemas.servicestack.net/types", ClrNamespace = "ChaweetApi.ServiceModel")]

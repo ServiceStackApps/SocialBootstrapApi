@@ -54,18 +54,16 @@ namespace SocialBootstrapApi.Models
             if (AppHost.AppConfig.AdminUserNames.Contains(session.UserAuthName)
                 && !session.HasRole(RoleNames.Admin))
             {
-                using (var assignRoles = authService.ResolveService<AssignRolesService>())
-                {
-                    assignRoles.Post(new AssignRoles {
-                        UserName = session.UserAuthName,
-                        Roles = { RoleNames.Admin }
-                    });
-                }
+                var userAuthRepo = authService.TryResolve<IAuthRepository>();
+                var userAuth = userAuthRepo.GetUserAuth(session, tokens);
+                userAuthRepo.AssignRoles(userAuth, roles: new[] { RoleNames.Admin });
             }
 
             //Resolve the DbFactory from the IOC and persist the user info
             using (var db = authService.TryResolve<IDbConnectionFactory>().Open())
+            {
                 db.Save(user);
+            }
         }
 
         private static string CreateGravatarUrl(string email, int size = 64)
