@@ -4414,7 +4414,7 @@
 		},
 		loginSuccess: function(r) {
 			this.$form.removeClass("error");
-			this.set({ isAuthenticated: true });
+		    location.href = location.href;
 		},
 		loginError: function() {
 			this.$form.addClass("error");
