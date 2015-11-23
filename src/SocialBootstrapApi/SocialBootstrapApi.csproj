@@ -76,53 +76,56 @@
       <HintPath>packages\Npgsql.3.0.3\lib\net45\Npgsql.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="ServiceStack, Version=4.0.46.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>packages\ServiceStack.4.0.46\lib\net40\ServiceStack.dll</HintPath>
+    <Reference Include="nunit.framework, Version=3.0.5797.27534, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
+      <HintPath>packages\NUnit.3.0.0\lib\net45\nunit.framework.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="ServiceStack.Api.Swagger, Version=4.0.46.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>packages\ServiceStack.Api.Swagger.4.0.46\lib\net40\ServiceStack.Api.Swagger.dll</HintPath>
+    <Reference Include="ServiceStack">
+      <HintPath>packages\ServiceStack.4.0.48\lib\net40\ServiceStack.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceStack.Api.Swagger, Version=4.0.48.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\ServiceStack.Api.Swagger.4.0.48\lib\net40\ServiceStack.Api.Swagger.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="ServiceStack.Authentication.OpenId, Version=4.0.46.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>packages\ServiceStack.Authentication.OpenId.4.0.46\lib\net40\ServiceStack.Authentication.OpenId.dll</HintPath>
+    <Reference Include="ServiceStack.Authentication.OpenId, Version=4.0.48.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\ServiceStack.Authentication.OpenId.4.0.48\lib\net40\ServiceStack.Authentication.OpenId.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="ServiceStack.Client, Version=4.0.46.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>packages\ServiceStack.Client.4.0.46\lib\net40\ServiceStack.Client.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="ServiceStack.Client, Version=4.0.0.0, Culture=neutral, PublicKeyToken=e06fbc6124f57c43, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>packages\ServiceStack.Client.4.0.48\lib\net40\ServiceStack.Client.dll</HintPath>
     </Reference>
-    <Reference Include="ServiceStack.Common, Version=4.0.46.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>packages\ServiceStack.Common.4.0.46\lib\net40\ServiceStack.Common.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="ServiceStack.Common, Version=4.0.0.0, Culture=neutral, PublicKeyToken=e06fbc6124f57c43, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>packages\ServiceStack.Common.4.0.48\lib\net40\ServiceStack.Common.dll</HintPath>
     </Reference>
     <Reference Include="ServiceStack.Interfaces, Version=4.0.0.0, Culture=neutral, PublicKeyToken=e06fbc6124f57c43, processorArchitecture=MSIL">
-      <HintPath>packages\ServiceStack.Interfaces.4.0.46\lib\portable-wp80+sl5+net40+win8+monotouch+monoandroid+xamarin.ios10\ServiceStack.Interfaces.dll</HintPath>
+      <HintPath>packages\ServiceStack.Interfaces.4.0.48\lib\portable-wp80+sl5+net40+win8+monotouch+monoandroid+xamarin.ios10\ServiceStack.Interfaces.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="ServiceStack.Mvc, Version=4.0.46.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>packages\ServiceStack.Mvc.4.0.46\lib\net40\ServiceStack.Mvc.dll</HintPath>
+    <Reference Include="ServiceStack.Mvc, Version=4.0.48.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\ServiceStack.Mvc.4.0.48\lib\net40\ServiceStack.Mvc.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="ServiceStack.OrmLite, Version=4.0.46.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>packages\ServiceStack.OrmLite.4.0.46\lib\net45\ServiceStack.OrmLite.dll</HintPath>
+    <Reference Include="ServiceStack.OrmLite, Version=4.0.48.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\ServiceStack.OrmLite.4.0.48\lib\net45\ServiceStack.OrmLite.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="ServiceStack.OrmLite.PostgreSQL, Version=4.0.46.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>packages\ServiceStack.OrmLite.PostgreSQL.4.0.46\lib\net40\ServiceStack.OrmLite.PostgreSQL.dll</HintPath>
+    <Reference Include="ServiceStack.OrmLite.PostgreSQL, Version=4.0.48.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\ServiceStack.OrmLite.PostgreSQL.4.0.48\lib\net40\ServiceStack.OrmLite.PostgreSQL.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="ServiceStack.Redis, Version=4.0.46.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>packages\ServiceStack.Redis.4.0.46\lib\net40\ServiceStack.Redis.dll</HintPath>
+    <Reference Include="ServiceStack.Redis, Version=4.0.48.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\ServiceStack.Redis.4.0.48\lib\net40\ServiceStack.Redis.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="ServiceStack.Server, Version=4.0.46.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>packages\ServiceStack.Server.4.0.46\lib\net45\ServiceStack.Server.dll</HintPath>
+    <Reference Include="ServiceStack.Server, Version=4.0.48.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\ServiceStack.Server.4.0.48\lib\net45\ServiceStack.Server.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="ServiceStack.Text, Version=4.0.46.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>packages\ServiceStack.Text.4.0.46\lib\net40\ServiceStack.Text.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="ServiceStack.Text, Version=4.0.0.0, Culture=neutral, PublicKeyToken=e06fbc6124f57c43, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>packages\ServiceStack.Text.4.0.48\lib\net40\ServiceStack.Text.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
