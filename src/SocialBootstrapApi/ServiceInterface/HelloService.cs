@@ -73,7 +73,8 @@ namespace SocialBootstrapApi.ServiceInterface
                 var drawBrush = new SolidBrush(fgColor);
                 var drawRect = new RectangleF(0, 0, width, height);
 
-                var drawFormat = new StringFormat {
+                var drawFormat = new StringFormat
+                {
                     LineAlignment = StringAlignment.Center,
                     Alignment = StringAlignment.Center
                 };

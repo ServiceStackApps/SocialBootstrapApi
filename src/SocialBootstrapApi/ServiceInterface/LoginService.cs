@@ -5,10 +5,10 @@ using ServiceStack;
 namespace SocialBootstrapApi.ServiceInterface
 {
     [Route("/login")]
-	public class Login
-	{
-		public string Redirect { get; set; }
-	}
+    public class Login
+    {
+        public string Redirect { get; set; }
+    }
 
     public class LoginService : Service
     {
