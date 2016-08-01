@@ -78,6 +78,15 @@ namespace SocialBootstrapApi
             AppConfig = new AppConfig(appSettings);
             container.Register(AppConfig);
 
+            //Change the default ServiceStack configuration
+            //const Feature disableFeatures = Feature.Jsv | Feature.Soap;
+            SetConfig(new HostConfig
+            {
+                AppendUtf8CharsetOnContentTypes = new HashSet<string> { MimeTypes.Html },
+                HandlerFactoryPath = "api",
+                DebugMode = true,
+            });
+
             //Register a external dependency-free 
             container.Register<ICacheClient>(new MemoryCacheClient());
             //Configure an alt. distributed persistent cache that survives AppDomain restarts. e.g Redis
@@ -96,13 +105,6 @@ namespace SocialBootstrapApi
 
             //Configure Custom User Defined REST Paths for your services
             ConfigureServiceRoutes();
-
-            //Change the default ServiceStack configuration
-            //const Feature disableFeatures = Feature.Jsv | Feature.Soap;
-            SetConfig(new HostConfig {
-                //EnableFeatures = Feature.All.Remove(disableFeatures),
-                AppendUtf8CharsetOnContentTypes = new HashSet<string> { MimeTypes.Html },
-            });
 
             Plugins.Add(new SwaggerFeature { UseBootstrapTheme = true });
             Plugins.Add(new PostmanFeature());
@@ -145,11 +147,6 @@ namespace SocialBootstrapApi
         {
             //Enable and register existing services you want this host to make use of.
             //Look in Web.config for examples on how to configure your oauth providers, e.g. oauth.facebook.AppId, etc.
-
-            SetConfig(new HostConfig
-            {
-                DebugMode = appSettings.Get("DebugMode", false),
-            });
 
             //Register all Authentication methods you want to enable for this web app.            
             Plugins.Add(new AuthFeature(
