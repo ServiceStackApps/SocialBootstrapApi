@@ -51,10 +51,10 @@ namespace SocialBootstrapApi.Models
                 }
             }
 
+            var userAuthRepo = authService.TryResolve<IAuthRepository>();
             if (AppHost.AppConfig.AdminUserNames.Contains(session.UserAuthName)
-                && !session.HasRole(RoleNames.Admin))
+                && !session.HasRole(RoleNames.Admin, userAuthRepo))
             {
-                var userAuthRepo = authService.TryResolve<IAuthRepository>();
                 var userAuth = userAuthRepo.GetUserAuth(session, tokens);
                 userAuthRepo.AssignRoles(userAuth, roles: new[] { RoleNames.Admin });
             }
