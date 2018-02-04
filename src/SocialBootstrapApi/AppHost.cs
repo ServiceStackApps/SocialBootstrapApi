@@ -1,3 +1,5 @@
+//#define SQLSERVER //uncomment to use SQL Server
+
 using System.Collections.Generic;
 using System.IO;
 using System.Web.Mvc;
@@ -87,6 +89,8 @@ namespace SocialBootstrapApi
                 DebugMode = true,
             });
 
+            Plugins.Add(new MiniProfilerFeature());
+
             //Register a external dependency-free 
             container.Register<ICacheClient>(new MemoryCacheClient());
             //Configure an alt. distributed persistent cache that survives AppDomain restarts. e.g Redis
@@ -167,13 +171,22 @@ namespace SocialBootstrapApi
             //override the default registration validation with your own custom implementation
             container.RegisterAs<CustomRegistrationValidator, IValidator<Register>>();
 
+#if SQLSERVER
+            //SQL Server Example:
+            container.Register<IDbConnectionFactory>(new OrmLiteConnectionFactory(
+                "Server=localhost;Database=test;User Id=test;Password=test", SqlServer2012Dialect.Provider)
+            {
+                ConnectionFilter = x => new ProfiledDbConnection(x, Profiler.Current)
+            });
+#else
             //Create a DB Factory configured to access the UserAuth PostgreSQL DB
-            var connStr = appSettings.GetString("ConnectionString");
-            container.Register<IDbConnectionFactory>(
-                new OrmLiteConnectionFactory(connStr, //ConnectionString in Web.Config
-                    PostgreSqlDialect.Provider) {
-                        ConnectionFilter = x => new ProfiledDbConnection(x, Profiler.Current)
-                    });
+            var connStr = appSettings.GetString("ConnectionString");  //ConnectionString in Web.Config
+            container.Register<IDbConnectionFactory>(new OrmLiteConnectionFactory(connStr, PostgreSqlDialect.Provider)
+            {
+                ConnectionFilter = x => new ProfiledDbConnection(x, Profiler.Current)
+            });
+#endif
+
 
             //Store User Data into the referenced SqlServer database
             container.Register<IUserAuthRepository>(c =>
