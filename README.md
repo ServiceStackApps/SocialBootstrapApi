@@ -19,16 +19,14 @@ It includes a number of [Login/Auth options](https://github.com/ServiceStack/Ser
   - Basic Auth
   - Digest Auth
 
-A Live Demo of this repo is hosted on  [http://bootstrapapi.servicestack.net/](http://bootstrapapi.servicestack.net/).
-
 Here are some screenshots of the live app:
 
 ### Home Page
 
-[![Home Page](http://mono.servicestack.net/img/bootstrap-api-01-850.png)](http://bootstrapapi.apphb.com)
+![Home Page](http://mono.servicestack.net/img/bootstrap-api-01-850.png)
 
 ### Tweets 
 
-[![](https://raw.githubusercontent.com/ServiceStack/Assets/master/img/livedemos/bootstrapapi.png)](http://bootstrapapi.servicestack.net)
+![](https://raw.githubusercontent.com/ServiceStack/Assets/master/img/livedemos/bootstrapapi.png)
 
 Follow [@ServiceStack](http://twitter.com) or [+ServiceStack](https://plus.google.com/u/0/communities/112445368900682590445) for updates.
