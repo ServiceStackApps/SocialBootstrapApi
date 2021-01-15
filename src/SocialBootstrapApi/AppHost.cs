@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Web.Mvc;
 using ServiceStack;
-using ServiceStack.Api.Swagger;
+using ServiceStack.Api.OpenApi;
 using ServiceStack.Auth;
 using ServiceStack.Authentication.OpenId;
 using ServiceStack.Caching;
@@ -69,9 +69,6 @@ namespace SocialBootstrapApi
 
         public override void Configure(Funq.Container container)
         {
-            //Set JSON web services to return idiomatic JSON camelCase properties
-            ServiceStack.Text.JsConfig.EmitCamelCaseNames = true;
-
             //Load environment config from text file if exists
             var liveSettings = "~/appsettings.txt".MapHostAbsolutePath();
             var appSettings = File.Exists(liveSettings)
@@ -87,6 +84,7 @@ namespace SocialBootstrapApi
                 AppendUtf8CharsetOnContentTypes = new HashSet<string> { MimeTypes.Html },
                 HandlerFactoryPath = "api",
                 DebugMode = true,
+                UseCamelCase = true,
             });
 
             Plugins.Add(new MiniProfilerFeature());
@@ -110,7 +108,7 @@ namespace SocialBootstrapApi
             //Configure Custom User Defined REST Paths for your services
             ConfigureServiceRoutes();
 
-            Plugins.Add(new SwaggerFeature { UseBootstrapTheme = true });
+            Plugins.Add(new OpenApiFeature());
             Plugins.Add(new PostmanFeature());
             Plugins.Add(new CorsFeature());
 

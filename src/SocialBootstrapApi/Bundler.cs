@@ -18,7 +18,7 @@ namespace System.Web.Routing { }
 
 namespace ServiceStack
 {
-    public enum BundleOptions
+    public enum BundlerOptions
     {
         Normal,
         Minified,
@@ -29,7 +29,7 @@ namespace ServiceStack
     public static class Bundler
     {
         public static Func<bool> CachePaths = IsProduction;
-        public static Func<string, BundleOptions, string> DefaultUrlFilter = ProcessVirtualPathDefault;
+        public static Func<string, BundlerOptions, string> DefaultUrlFilter = ProcessVirtualPathDefault;
         public static Func<string, string> MapPathFallbackFn;
         public static bool UseMvc;
 
@@ -68,34 +68,21 @@ namespace ServiceStack
             return string.Empty;
         }
 
-        private static TVal GetOrAdd<TKey, TVal>(this Dictionary<TKey, TVal> map, TKey key, Func<TKey, TVal> factoryFn)
-        {
-            lock (map)
-            {
-                TVal ret;
-                if (!map.TryGetValue(key, out ret))
-                {
-                    map[key] = ret = factoryFn(key);
-                }
-                return ret;
-            }
-        }
-
         private static void SafeClear<TKey, TVal>(this Dictionary<TKey, TVal> map)
         {
             lock (map) map.Clear();
         }
 
-        static readonly Dictionary<string, string> VirutalPathCache = new Dictionary<string, string>();
-        private static string ProcessVirtualPathDefault(string virtualPath, BundleOptions options)
+        static readonly Dictionary<string, string> VirtualPathCache = new Dictionary<string, string>();
+        private static string ProcessVirtualPathDefault(string virtualPath, BundlerOptions options)
         {
-            if (!CachePaths()) VirutalPathCache.SafeClear();
+            if (!CachePaths()) VirtualPathCache.SafeClear();
 
-            return VirutalPathCache.GetOrAdd(virtualPath, str =>
+            return VirtualPathCache.GetOrAdd(virtualPath, str =>
             {
                 // The path that comes in starts with ~/ and must first be made absolute
 
-                if (options == BundleOptions.Minified || options == BundleOptions.MinifiedAndCombined)
+                if (options == BundlerOptions.Minified || options == BundlerOptions.MinifiedAndCombined)
                 {
                     if (virtualPath.EndsWith(".js") && !virtualPath.EndsWith(".min.js"))
                     {
@@ -130,7 +117,7 @@ namespace ServiceStack
             });
         }
 
-        private static string RewriteUrl(this string relativePath, BundleOptions options = BundleOptions.Normal)
+        private static string RewriteUrl(this string relativePath, BundlerOptions options = BundlerOptions.Normal)
         {
             return DefaultUrlFilter(relativePath, options);
         }
@@ -193,7 +180,7 @@ namespace ServiceStack
             return (IDictionary<string, object>)RouteValueDictionaryFactoryFn(attrs);
         }
 
-        public static MvcHtmlString Link(this HtmlHelper html, string rel, string href, object htmlAttributes = null, BundleOptions options = BundleOptions.Normal)
+        public static MvcHtmlString Link(this HtmlHelper html, string rel, string href, object htmlAttributes = null, BundlerOptions options = BundlerOptions.Normal)
         {
             if (string.IsNullOrEmpty(href))
                 return MvcHtmlString.Empty;
@@ -212,7 +199,7 @@ namespace ServiceStack
             return tag.ToString(TagRenderMode.SelfClosing).ToMvcHtmlString();
         }
 
-        public static MvcHtmlString Css(this HtmlHelper html, string href, string media = null, BundleOptions options = BundleOptions.Minified)
+        public static MvcHtmlString Css(this HtmlHelper html, string href, string media = null, BundlerOptions options = BundlerOptions.Minified)
         {
             return media != null
                    ? html.Link("stylesheet", href, new { media }, options)
@@ -250,7 +237,7 @@ namespace ServiceStack
             return tag.ToString(TagRenderMode.SelfClosing).ToMvcHtmlString();
         }
 
-        public static MvcHtmlString Js(this HtmlHelper html, string src, BundleOptions options = BundleOptions.Minified)
+        public static MvcHtmlString Js(this HtmlHelper html, string src, BundlerOptions options = BundlerOptions.Minified)
         {
             if (string.IsNullOrEmpty(src))
                 return MvcHtmlString.Empty;
@@ -278,7 +265,7 @@ namespace ServiceStack
 
         static readonly Dictionary<string, MvcHtmlString> BundleCache = new Dictionary<string, MvcHtmlString>();
 
-        public static MvcHtmlString RenderJsBundle(this HtmlHelper html, string bundlePath, BundleOptions options = BundleOptions.Minified)
+        public static MvcHtmlString RenderJsBundle(this HtmlHelper html, string bundlePath, BundlerOptions options = BundlerOptions.Minified)
         {
             if (string.IsNullOrEmpty(bundlePath))
                 return MvcHtmlString.Empty;
@@ -291,9 +278,9 @@ namespace ServiceStack
 
                 var baseUrl = VirtualPathUtility.GetDirectory(bundlePath);
 
-                if (options == BundleOptions.Combined)
+                if (options == BundlerOptions.Combined)
                     return html.Js(bundlePath.Replace(".bundle", ""), options);
-                if (options == BundleOptions.MinifiedAndCombined)
+                if (options == BundlerOptions.MinifiedAndCombined)
                     return html.Js(bundlePath.Replace(".js.bundle", ".min.js"), options);
 
                 var jsFiles = File.ReadAllLines(filePath);
@@ -319,7 +306,7 @@ namespace ServiceStack
             });
         }
 
-        public static MvcHtmlString RenderCssBundle(this HtmlHelper html, string bundlePath, BundleOptions options = BundleOptions.Minified, string media = null)
+        public static MvcHtmlString RenderCssBundle(this HtmlHelper html, string bundlePath, BundlerOptions options = BundlerOptions.Minified, string media = null)
         {
             if (string.IsNullOrEmpty(bundlePath))
                 return MvcHtmlString.Empty;
@@ -332,9 +319,9 @@ namespace ServiceStack
 
                 var baseUrl = VirtualPathUtility.GetDirectory(bundlePath);
 
-                if (options == BundleOptions.Combined)
+                if (options == BundlerOptions.Combined)
                     return html.Css(bundlePath.Replace(".bundle", ""), media, options);
-                if (options == BundleOptions.MinifiedAndCombined)
+                if (options == BundlerOptions.MinifiedAndCombined)
                     return html.Css(bundlePath.Replace(".css.bundle", ".min.css"), media, options);
 
                 var cssFiles = File.ReadAllLines(filePath);

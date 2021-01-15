@@ -18,9 +18,6 @@ namespace SocialBootstrapApi
         public bool EnableCdn { get; set; }
         public string CdnPrefix { get; set; }
         public List<string> AdminUserNames { get; set; }
-        public BundleOptions BundleOptions
-        {
-            get { return Env.In(Env.Local, Env.Dev) ? BundleOptions.Normal : BundleOptions.MinifiedAndCombined; }
-        }
+        public BundlerOptions BundlerOptions => Env.In(Env.Local, Env.Dev) ? BundlerOptions.Normal : BundlerOptions.MinifiedAndCombined;
     }
 }

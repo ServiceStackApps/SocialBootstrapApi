@@ -44,11 +44,9 @@ namespace SocialBootstrapApi
             var response = ForwardRequestToServiceStack();
             if (ServiceStackResponse.IsClosed) return new EmptyResult();
 
-            var httpResult = response as IHttpResult;
-            if (httpResult != null)
+            if (response is IHttpResult httpResult)
             {
-                string redirectUrl;
-                if (httpResult.Headers.TryGetValue(HttpHeaders.Location, out redirectUrl))
+                if (httpResult.Headers.TryGetValue(HttpHeaders.Location, out var redirectUrl))
                 {
                     return Redirect(redirectUrl);
                 }
